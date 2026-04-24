@@ -6,7 +6,7 @@ Every LLM call must return one of these models — no plain text.
 """
 
 from pydantic import BaseModel, Field
-from typing import List, Literal
+from typing import Any, List, Literal
 
 
 # ── Classifier ────────────────────────────────────────────────────────────────
@@ -35,6 +35,10 @@ class ClassifierOutput(BaseModel):
 class RCAItem(BaseModel):
     run_id: str
     error_type: str
+    affected_action: str = Field(
+        ...,
+        description="Exact action name from the workflow definition that caused the failure",
+    )
     root_cause: str = Field(..., description="Why the error occurred")
     fix_plan: str = Field(..., description="Step-by-step remediation plan")
     action_type: Literal["update_workflow", "retry", "config_change"] = Field(
@@ -49,13 +53,40 @@ class RCAOutput(BaseModel):
     analysis: List[RCAItem]
 
 
-# ── Fixer ─────────────────────────────────────────────────────────────────────
+# ── Fixer — surgical patch instructions ──────────────────────────────────────
+
+class ActionPatch(BaseModel):
+    """
+    A single targeted change to one property inside a workflow action.
+
+    property_path uses dot notation relative to the action root.
+    Examples:
+      "inputs.retryPolicy"
+      "inputs.uri"
+      "runAfter"
+    """
+    action_name: str = Field(..., description="Exact name of the action to patch")
+    property_path: str = Field(..., description="Dot-separated path within the action")
+    new_value: Any = Field(..., description="New value to set at property_path")
+    reason: str = Field(..., description="One-line explanation of why this change fixes the error")
+
+
+class WorkflowFixInstruction(BaseModel):
+    """
+    Complete set of patches the LLM wants applied to the workflow.
+    The Fixer applies each ActionPatch programmatically — never rewrites the whole JSON.
+    """
+    patches: List[ActionPatch]
+    summary: str = Field(..., description="Human-readable description of what was changed")
+
+
+# ── Fixer result ──────────────────────────────────────────────────────────────
 
 class FixResult(BaseModel):
     run_id: str
     status: Literal["success", "failed", "skipped"]
     details: str
-    workflow_patch: dict = Field(
-        default_factory=dict,
-        description="JSON patch applied to the workflow definition",
+    patches_applied: List[dict] = Field(
+        default_factory=list,
+        description="List of ActionPatch dicts that were applied",
     )

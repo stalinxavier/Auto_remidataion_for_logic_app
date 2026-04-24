@@ -3,71 +3,83 @@ _nodes/fixer_node.py
 --------------------
 Fixer Node — Step 4 of 4
 =========================
-For each RCA item:
-  - update_workflow → GET workflow definition, patch it via LLM, PUT it back
-  - retry           → trigger a re-run via ARM API
-  - config_change   → log the required change (human approval needed)
+Uses the workflow definition already downloaded by the Observer node.
+No redundant GET call is made.
 
-SAFETY: The node validates changes before PUT and never blindly overwrites.
-Low-confidence items (< 0.6) are skipped and flagged for human review.
+For each RCA item the node dispatches to one of three strategies:
 
-Input  : state["rca_output"]
+  update_workflow
+    1. Ask the LLM for surgical ActionPatch instructions
+       (action name + dot-path + new value) — NOT a full rewrite
+    2. Apply each patch programmatically via _apply_patch()
+    3. Validate structural integrity
+    4. PUT the patched definition back to Azure ARM
+
+  retry
+    POST to the ARM resubmit endpoint for the failed run.
+
+  config_change
+    Flagged for human review — never automated.
+
+SAFETY RULES
+------------
+  - Items with confidence < CONFIDENCE_THRESHOLD are skipped.
+  - Patches are applied one-by-one; a bad path raises KeyError and is caught.
+  - Structural validation (no top-level key removal) runs before every PUT.
+
+Input  : state["rca_output"]  +  state["workflow_definition"]
 Output : state["fixer_output"]
 
 Saved  : _temp/fixer_output_<timestamp>.json
+         _temp/patched_workflow_<timestamp>.json  (for update_workflow items)
 """
 
 import copy
 import json
 import logging
+from functools import reduce
 
 import requests
 
 from _config.config import settings
+from _llm.factory_llm import get_llm, call_llm_structured
+from _llm.models_llm import WorkflowFixInstruction
 from _util.file_ops import save_json
 
 logger = logging.getLogger(__name__)
 
-CONFIDENCE_THRESHOLD = 0.6  # items below this are skipped
+CONFIDENCE_THRESHOLD = 0.6
 
 
 # ── ARM helpers ───────────────────────────────────────────────────────────────
 
 def _get_arm_token() -> str:
     url = f"https://login.microsoftonline.com/{settings.AZURE_TENANT_ID}/oauth2/token"
-    data = {
-        "grant_type": "client_credentials",
-        "client_id": settings.AZURE_CLIENT_ID,
-        "client_secret": settings.AZURE_CLIENT_SECRET,
-        "resource": "https://management.azure.com/",
-    }
-    resp = requests.post(url, data=data, timeout=30)
+    resp = requests.post(
+        url,
+        data={
+            "grant_type": "client_credentials",
+            "client_id": settings.AZURE_CLIENT_ID,
+            "client_secret": settings.AZURE_CLIENT_SECRET,
+            "resource": "https://management.azure.com/",
+        },
+        timeout=30,
+    )
     resp.raise_for_status()
     return resp.json()["access_token"]
 
 
-def _workflow_url(workflow_name: str) -> str:
+def _workflow_url(name: str) -> str:
     return (
         f"https://management.azure.com/subscriptions/{settings.AZURE_SUBSCRIPTION_ID}"
         f"/resourceGroups/{settings.AZURE_RESOURCE_GROUP}"
-        f"/providers/Microsoft.Logic/workflows/{workflow_name}"
+        f"/providers/Microsoft.Logic/workflows/{name}"
         f"?api-version={settings.ARM_API_VERSION}"
     )
 
 
-def _get_workflow(token: str, workflow_name: str) -> dict:
-    """GET the current workflow definition from ARM."""
-    resp = requests.get(
-        _workflow_url(workflow_name),
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=30,
-    )
-    resp.raise_for_status()
-    return resp.json()
-
-
 def _put_workflow(token: str, workflow_name: str, definition: dict) -> dict:
-    """PUT (replace) the workflow definition in ARM."""
+    """PUT the updated workflow definition back to Azure ARM."""
     resp = requests.put(
         _workflow_url(workflow_name),
         headers={
@@ -82,50 +94,116 @@ def _put_workflow(token: str, workflow_name: str, definition: dict) -> dict:
 
 
 def _retry_run(token: str, workflow_name: str, run_id: str) -> None:
-    """POST to resubmit a failed run."""
+    """POST to the ARM resubmit endpoint to re-trigger a failed run."""
     url = (
         f"https://management.azure.com/subscriptions/{settings.AZURE_SUBSCRIPTION_ID}"
         f"/resourceGroups/{settings.AZURE_RESOURCE_GROUP}"
         f"/providers/Microsoft.Logic/workflows/{workflow_name}"
         f"/runs/{run_id}/resubmit?api-version={settings.ARM_API_VERSION}"
     )
-    resp = requests.post(
-        url,
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=30,
-    )
+    resp = requests.post(url, headers={"Authorization": f"Bearer {token}"}, timeout=30)
     resp.raise_for_status()
 
 
-# ── Patch generation (simple rule-based, LLM-free for safety) ─────────────────
+# ── Surgical patch application ────────────────────────────────────────────────
 
-def _build_patch(fix_plan: str, error_type: str, current_definition: dict) -> dict:
+def _set_nested(obj: dict, path: str, value) -> None:
     """
-    Apply a conservative patch to the workflow definition based on fix_plan.
-    Returns the modified definition. Only touches well-understood properties.
+    Set obj[part1][part2]...[partN] = value using a dot-separated path.
+    Creates intermediate dicts if they don't exist.
+    Raises KeyError if the first key (action_name level) does not exist.
     """
-    patched = copy.deepcopy(current_definition)
-    props = patched.setdefault("properties", {})
-    definition = props.setdefault("definition", {})
+    parts = path.split(".")
+    target = obj
+    for part in parts[:-1]:
+        if part not in target:
+            target[part] = {}
+        target = target[part]
+    target[parts[-1]] = value
 
-    if error_type == "Timeout":
-        # Extend HTTP action timeouts
-        actions = definition.get("actions", {})
-        for action_name, action_body in actions.items():
-            if action_body.get("type") in ("Http", "ApiConnection"):
-                inputs = action_body.setdefault("inputs", {})
-                inputs.setdefault("retryPolicy", {})
-                inputs["retryPolicy"] = {"type": "fixed", "count": 3, "interval": "PT30S"}
-                logger.info("[Fixer] Applied retry policy to action '%s'", action_name)
 
-    elif error_type == "Authentication":
-        # Flag authentication connections for refresh — log only
-        logger.warning(
-            "[Fixer] Authentication error detected. "
-            "Update the API connection credentials in the Azure portal."
+def _apply_patch(workflow: dict, action_name: str, property_path: str, new_value) -> dict:
+    """
+    Apply a single ActionPatch to a deep-copy of the workflow.
+    Raises KeyError if action_name does not exist in the definition.
+    """
+    patched = copy.deepcopy(workflow)
+    actions = (
+        patched.get("properties", {})
+        .get("definition", {})
+        .get("actions", {})
+    )
+    if action_name not in actions:
+        raise KeyError(
+            f"Action '{action_name}' not found in workflow. "
+            f"Available: {list(actions.keys())}"
         )
-
+    _set_nested(actions[action_name], property_path, new_value)
     return patched
+
+
+def _validate_structure(original: dict, patched: dict) -> None:
+    """Ensure no top-level ARM keys were lost during patching."""
+    lost = set(original.keys()) - set(patched.keys())
+    if lost:
+        raise ValueError(f"Patch removed top-level keys {lost} — aborting PUT")
+
+
+# ── LLM patch generation ──────────────────────────────────────────────────────
+
+FIX_SYSTEM_PROMPT = """
+You are an Azure Logic Apps workflow repair expert.
+
+You will receive:
+  - Error details (type, root cause, fix plan, affected action name)
+  - The full workflow definition JSON for that action
+
+Generate a list of surgical JSON patches to fix the error.
+Each patch specifies:
+  - action_name : exact name of the action (from the workflow)
+  - property_path : dot-separated path WITHIN the action (e.g. "inputs.retryPolicy")
+  - new_value : the new value to set
+  - reason : one sentence explaining why this fixes the error
+
+Rules:
+  - Only patch what is necessary. Do NOT regenerate the full workflow.
+  - Use only action names that exist in the provided workflow.
+  - For Timeout errors → add/update inputs.retryPolicy
+  - For Authentication errors → update inputs.authentication (type/audience)
+  - For Connector Failure → adjust inputs.uri or inputs.body
+  - For Payload Issue → fix inputs.body or inputs.queries
+
+Respond only with valid JSON matching the schema.
+""".strip()
+
+
+def _get_llm_fix_instructions(
+    llm,
+    item: dict,
+    workflow_definition: dict,
+) -> WorkflowFixInstruction:
+    """Ask the LLM what specific patches to apply."""
+    affected_action = item.get("affected_action", "")
+    actions = (
+        workflow_definition.get("properties", {})
+        .get("definition", {})
+        .get("actions", {})
+    )
+    action_json = json.dumps(
+        {affected_action: actions.get(affected_action, {})},
+        indent=2,
+    )
+
+    user_prompt = (
+        f"Run ID        : {item['run_id']}\n"
+        f"Error type    : {item['error_type']}\n"
+        f"Affected action: {affected_action}\n"
+        f"Root cause    : {item['root_cause']}\n"
+        f"Fix plan      : {item['fix_plan']}\n\n"
+        f"Action definition:\n{action_json}\n\n"
+        f"Generate the patches to fix this error."
+    )
+    return call_llm_structured(llm, FIX_SYSTEM_PROMPT, user_prompt, WorkflowFixInstruction)
 
 
 # ── Node entrypoint ───────────────────────────────────────────────────────────
@@ -134,84 +212,115 @@ def fixer_node(state: dict) -> dict:
     """
     LangGraph node: Fixer
     ----------------------
-    1. Read rca_output from state
-    2. For each item, dispatch to the appropriate fix strategy
-    3. Validate before any PUT
-    4. Save results and return updated state
+    1. Read rca_output + workflow_definition from state
+    2. For update_workflow items:
+         a. Ask LLM for ActionPatch instructions
+         b. Apply patches programmatically
+         c. Validate structure
+         d. PUT to Azure ARM
+    3. For retry items: POST to resubmit endpoint
+    4. For config_change items: flag for human review
+    5. Save fixer_output + patched workflow files to _temp
     """
     logger.info("[Fixer] Starting — applying fixes")
 
     rca_output: dict = state.get("rca_output", {})
     analysis: list[dict] = rca_output.get("analysis", [])
-
+    workflow_definition: dict = state.get("workflow_definition", {})
     workflow_name = settings.LOGIC_APP_NAME or state.get("workflow_name", "")
+
     fix_results = []
 
     if not analysis:
-        logger.warning("[Fixer] No RCA items to fix")
+        logger.warning("[Fixer] No RCA items to process")
         fixer_output = {"fix_results": []}
         save_json(fixer_output, "fixer_output")
         return {**state, "fixer_output": fixer_output}
 
     token = _get_arm_token()
+    llm = get_llm()
+
+    # Work on a single shared copy of the workflow for update_workflow items
+    # so multiple patches in one pipeline run accumulate correctly.
+    working_definition = copy.deepcopy(workflow_definition)
+    workflow_was_modified = False
 
     for item in analysis:
         run_id = item["run_id"]
         action_type = item.get("action_type", "retry")
         confidence = item.get("confidence", 0.0)
-        fix_plan = item.get("fix_plan", "")
-        error_type = item.get("error_type", "Unknown")
 
-        logger.info("[Fixer] run_id=%s action=%s confidence=%.2f", run_id, action_type, confidence)
+        logger.info(
+            "[Fixer] run_id=%s action=%s confidence=%.2f",
+            run_id, action_type, confidence,
+        )
 
-        # Safety gate
+        # ── Safety gate ───────────────────────────────────────────────────────
         if confidence < CONFIDENCE_THRESHOLD:
             fix_results.append({
                 "run_id": run_id,
                 "status": "skipped",
-                "details": f"Confidence {confidence:.2f} below threshold {CONFIDENCE_THRESHOLD}. Manual review required.",
-                "workflow_patch": {},
+                "details": (
+                    f"Confidence {confidence:.2f} below threshold "
+                    f"{CONFIDENCE_THRESHOLD}. Manual review required."
+                ),
+                "patches_applied": [],
             })
             continue
 
         try:
+            # ── Retry ─────────────────────────────────────────────────────────
             if action_type == "retry":
                 _retry_run(token, workflow_name, run_id)
                 fix_results.append({
                     "run_id": run_id,
                     "status": "success",
-                    "details": "Run resubmitted via ARM API",
-                    "workflow_patch": {},
+                    "details": "Run resubmitted via ARM resubmit API",
+                    "patches_applied": [],
                 })
 
+            # ── Update workflow ───────────────────────────────────────────────
             elif action_type == "update_workflow":
-                current_def = _get_workflow(token, workflow_name)
-                patched_def = _build_patch(fix_plan, error_type, current_def)
+                instructions: WorkflowFixInstruction = _get_llm_fix_instructions(
+                    llm, item, working_definition
+                )
+                logger.info(
+                    "[Fixer] LLM proposed %d patch(es): %s",
+                    len(instructions.patches),
+                    instructions.summary,
+                )
 
-                # Validate: ensure we did not lose top-level keys
-                assert set(current_def.keys()).issubset(set(patched_def.keys())), \
-                    "Patch removed top-level keys — aborting"
+                applied_patches = []
+                for patch in instructions.patches:
+                    working_definition = _apply_patch(
+                        working_definition,
+                        patch.action_name,
+                        patch.property_path,
+                        patch.new_value,
+                    )
+                    applied_patches.append(patch.model_dump())
+                    logger.info(
+                        "[Fixer] Patched action='%s' path='%s' reason='%s'",
+                        patch.action_name, patch.property_path, patch.reason,
+                    )
 
-                patch_summary = {
-                    "error_type": error_type,
-                    "fix_plan": fix_plan,
-                }
-                _put_workflow(token, workflow_name, patched_def)
-                logger.info("[Fixer] Workflow updated for run_id=%s", run_id)
+                workflow_was_modified = True
                 fix_results.append({
                     "run_id": run_id,
                     "status": "success",
-                    "details": "Workflow definition updated via ARM API",
-                    "workflow_patch": patch_summary,
+                    "details": instructions.summary,
+                    "patches_applied": applied_patches,
                 })
 
+            # ── Config change (human approval required) ───────────────────────
             elif action_type == "config_change":
-                # Config changes require human approval — log and skip
                 fix_results.append({
                     "run_id": run_id,
                     "status": "skipped",
-                    "details": f"Config change required — manual action: {fix_plan}",
-                    "workflow_patch": {},
+                    "details": (
+                        f"Config change requires human action: {item.get('fix_plan', '')}"
+                    ),
+                    "patches_applied": [],
                 })
 
         except Exception as exc:
@@ -220,8 +329,24 @@ def fixer_node(state: dict) -> dict:
                 "run_id": run_id,
                 "status": "failed",
                 "details": str(exc),
-                "workflow_patch": {},
+                "patches_applied": [],
             })
+
+    # ── Single PUT after all patches are applied ──────────────────────────────
+    if workflow_was_modified:
+        try:
+            _validate_structure(workflow_definition, working_definition)
+            save_json(working_definition, "patched_workflow")
+            logger.info("[Fixer] Pushing patched workflow to Azure ARM")
+            _put_workflow(token, workflow_name, working_definition)
+            logger.info("[Fixer] Workflow successfully updated in Azure Logic Apps")
+        except Exception as exc:
+            logger.error("[Fixer] PUT failed: %s", exc)
+            # Mark all update_workflow successes as failed
+            for r in fix_results:
+                if r["status"] == "success" and r["patches_applied"]:
+                    r["status"] = "failed"
+                    r["details"] = f"Patches generated but PUT failed: {exc}"
 
     fixer_output = {"fix_results": fix_results}
     path = save_json(fixer_output, "fixer_output")
