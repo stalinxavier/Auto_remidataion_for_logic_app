@@ -16,12 +16,14 @@ Endpoints
   GET  /health                 — health / config check
 """
 
+import json
 import logging
 import requests
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from _config.config import settings
+from _util.file_ops import load_latest_json
 from graph import build_graph
 
 logging.basicConfig(
@@ -170,12 +172,20 @@ def get_workflow(name: str):
 def update_workflow(name: str, body: WorkflowUpdateRequest):
     """
     Push an updated workflow definition to Azure ARM.
+    body.definition must be the FULL ARM payload:
+      { "location": "...", "properties": { "definition": {...}, "parameters": {...} } }
 
     Command:
         curl -X PUT http://localhost:8000/workflow/my-logic-app \\
              -H "Content-Type: application/json" \\
-             -d @updated_definition.json
+             -d @_temp/fixed_workflow_<timestamp>.json
     """
+    if "location" not in body.definition or "definition" not in body.definition.get("properties", {}):
+        raise HTTPException(
+            status_code=422,
+            detail="Body must include 'location' and 'properties.definition'. "
+                   "Send the full ARM payload, not just the definition block.",
+        )
     try:
         token = _get_arm_token()
         resp = requests.put(
@@ -192,4 +202,64 @@ def update_workflow(name: str, body: WorkflowUpdateRequest):
     except requests.HTTPError as exc:
         raise HTTPException(status_code=exc.response.status_code, detail=exc.response.text)
     except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
+
+@app.put("/update-workflow", tags=["Azure ARM"])
+def update_workflow_from_temp(workflow_name: str = ""):
+    """
+    Load the latest fixed_workflow from _temp/ and PUT it to Azure ARM.
+    This lets you re-push the last fixer output without re-running the pipeline.
+
+    Steps performed:
+      1. Load _temp/fixed_workflow_<latest>.json
+      2. Validate location + properties.definition are present
+      3. GET current workflow from ARM to confirm it exists
+      4. PUT the fixed workflow
+
+    Command:
+        curl -X PUT "http://localhost:8000/update-workflow?workflow_name=my-logic-app"
+    """
+    name = workflow_name or settings.LOGIC_APP_NAME
+    if not name:
+        raise HTTPException(status_code=422, detail="Provide workflow_name or set LOGIC_APP_NAME env var")
+
+    try:
+        fixed_workflow = load_latest_json("fixed_workflow")
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail="No fixed_workflow file found in _temp/. Run the pipeline first (POST /run).",
+        )
+
+    # Validate structure before touching Azure
+    if "location" not in fixed_workflow:
+        raise HTTPException(status_code=422, detail="fixed_workflow is missing 'location'")
+    if "definition" not in fixed_workflow.get("properties", {}):
+        raise HTTPException(status_code=422, detail="fixed_workflow is missing 'properties.definition'")
+    if "$connections" not in fixed_workflow.get("properties", {}).get("parameters", {}):
+        logger.warning("[/update-workflow] No $connections in parameters — workflow may use connectors that will break")
+
+    try:
+        token = _get_arm_token()
+        resp = requests.put(
+            _workflow_url(name),
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+            },
+            json=fixed_workflow,
+            timeout=60,
+        )
+        resp.raise_for_status()
+        logger.info("[/update-workflow] Workflow '%s' updated successfully", name)
+        return {
+            "status": "updated",
+            "workflow": name,
+            "response": resp.json(),
+        }
+    except requests.HTTPError as exc:
+        raise HTTPException(status_code=exc.response.status_code, detail=exc.response.text)
+    except Exception as exc:
+        logger.exception("[/update-workflow] Failed")
         raise HTTPException(status_code=500, detail=str(exc))

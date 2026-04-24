@@ -156,15 +156,16 @@ def observer_node(state: dict) -> dict:
 
     # ── 1. Download workflow definition ──────────────────────────────────────
     logger.info("[Observer] Downloading workflow definition for '%s'", workflow_name)
-    workflow_definition = _get_workflow_definition(token, workflow_name)
+    workflow = _get_workflow_definition(token, workflow_name)
 
-    action_names = list(
-        workflow_definition.get("properties", {})
-        .get("definition", {})
-        .get("actions", {})
-        .keys()
-    )
+    # Extract just the definition block — this is what the Fixer patches and PUTs back
+    definition = workflow.get("properties", {}).get("definition", {})
+
+    action_names = list(definition.get("actions", {}).keys())
     logger.info("[Observer] Workflow has %d actions: %s", len(action_names), action_names)
+
+    save_json(workflow, "original_workflow")
+    logger.info("[Observer] Original workflow saved to _temp/original_workflow_<timestamp>.json")
 
     # ── 2. Fetch failed runs with action detail ───────────────────────────────
     raw_runs = _list_failed_runs(token, workflow_name)
@@ -183,5 +184,6 @@ def observer_node(state: dict) -> dict:
     return {
         **state,
         "observer_output": observer_output,
-        "workflow_definition": workflow_definition,
+        "workflow_definition": workflow,          # full ARM object (location, properties, etc.)
+        "workflow_definition_only": definition,   # properties.definition — the patchable block
     }

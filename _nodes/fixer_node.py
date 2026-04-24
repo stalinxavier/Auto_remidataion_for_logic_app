@@ -78,15 +78,41 @@ def _workflow_url(name: str) -> str:
     )
 
 
-def _put_workflow(token: str, workflow_name: str, definition: dict) -> dict:
-    """PUT the updated workflow definition back to Azure ARM."""
+def _build_put_body(full_workflow: dict, updated_definition: dict) -> dict:
+    """
+    Build the ARM PUT body preserving location, parameters ($connections), and
+    any other properties — only swapping in the updated definition block.
+    """
+    original_props = full_workflow.get("properties", {})
+    return {
+        "location": full_workflow.get("location", ""),
+        "properties": {
+            **original_props,           # keeps parameters.$connections and everything else
+            "definition": updated_definition,
+        },
+    }
+
+
+def _validate_put_body(body: dict) -> None:
+    """Raise if the PUT body is missing fields Azure requires."""
+    if not body.get("location"):
+        raise ValueError("PUT body is missing 'location' — Azure will reject this request")
+    props = body.get("properties", {})
+    if "definition" not in props:
+        raise ValueError("PUT body is missing 'properties.definition' — Azure will reject this request")
+
+
+def _put_workflow(token: str, workflow_name: str, full_workflow: dict, updated_definition: dict) -> dict:
+    """PUT the patched workflow back to Azure ARM."""
+    body = _build_put_body(full_workflow, updated_definition)
+    _validate_put_body(body)
     resp = requests.put(
         _workflow_url(workflow_name),
         headers={
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
         },
-        json=definition,
+        json=body,
         timeout=60,
     )
     resp.raise_for_status()
@@ -122,17 +148,13 @@ def _set_nested(obj: dict, path: str, value) -> None:
     target[parts[-1]] = value
 
 
-def _apply_patch(workflow: dict, action_name: str, property_path: str, new_value) -> dict:
+def _apply_patch(definition: dict, action_name: str, property_path: str, new_value) -> dict:
     """
-    Apply a single ActionPatch to a deep-copy of the workflow.
-    Raises KeyError if action_name does not exist in the definition.
+    Apply a single ActionPatch to a deep-copy of the workflow *definition* block.
+    Raises KeyError if action_name does not exist in definition["actions"].
     """
-    patched = copy.deepcopy(workflow)
-    actions = (
-        patched.get("properties", {})
-        .get("definition", {})
-        .get("actions", {})
-    )
+    patched = copy.deepcopy(definition)
+    actions = patched.get("actions", {})
     if action_name not in actions:
         raise KeyError(
             f"Action '{action_name}' not found in workflow. "
@@ -143,10 +165,10 @@ def _apply_patch(workflow: dict, action_name: str, property_path: str, new_value
 
 
 def _validate_structure(original: dict, patched: dict) -> None:
-    """Ensure no top-level ARM keys were lost during patching."""
+    """Ensure no top-level definition keys (triggers, actions, outputs) were lost."""
     lost = set(original.keys()) - set(patched.keys())
     if lost:
-        raise ValueError(f"Patch removed top-level keys {lost} — aborting PUT")
+        raise ValueError(f"Patch removed definition keys {lost} — aborting PUT")
 
 
 # ── LLM patch generation ──────────────────────────────────────────────────────
@@ -180,15 +202,11 @@ Respond only with valid JSON matching the schema.
 def _get_llm_fix_instructions(
     llm,
     item: dict,
-    workflow_definition: dict,
+    definition: dict,
 ) -> WorkflowFixInstruction:
-    """Ask the LLM what specific patches to apply."""
+    """Ask the LLM what specific patches to apply for the failing action only."""
     affected_action = item.get("affected_action", "")
-    actions = (
-        workflow_definition.get("properties", {})
-        .get("definition", {})
-        .get("actions", {})
-    )
+    actions = definition.get("actions", {})
     action_json = json.dumps(
         {affected_action: actions.get(affected_action, {})},
         indent=2,
@@ -226,7 +244,8 @@ def fixer_node(state: dict) -> dict:
 
     rca_output: dict = state.get("rca_output", {})
     analysis: list[dict] = rca_output.get("analysis", [])
-    workflow_definition: dict = state.get("workflow_definition", {})
+    workflow_definition: dict = state.get("workflow_definition", {})          # full ARM object
+    definition: dict = state.get("workflow_definition_only", {})              # properties.definition
     workflow_name = settings.LOGIC_APP_NAME or state.get("workflow_name", "")
 
     fix_results = []
@@ -240,9 +259,13 @@ def fixer_node(state: dict) -> dict:
     token = _get_arm_token()
     llm = get_llm()
 
-    # Work on a single shared copy of the workflow for update_workflow items
-    # so multiple patches in one pipeline run accumulate correctly.
-    working_definition = copy.deepcopy(workflow_definition)
+    # Save original definition before any modifications for rollback / audit
+    save_json(definition, "original_workflow")
+    logger.info("[Fixer] Original workflow definition saved to _temp/original_workflow_<timestamp>.json")
+
+    # Work on a single shared copy of the definition block.
+    # Multiple patches in one pipeline run accumulate correctly.
+    working_definition = copy.deepcopy(definition)
     workflow_was_modified = False
 
     for item in analysis:
@@ -282,7 +305,7 @@ def fixer_node(state: dict) -> dict:
             # ── Update workflow ───────────────────────────────────────────────
             elif action_type == "update_workflow":
                 instructions: WorkflowFixInstruction = _get_llm_fix_instructions(
-                    llm, item, working_definition
+                    llm, item, working_definition  # working_definition is the definition block
                 )
                 logger.info(
                     "[Fixer] LLM proposed %d patch(es): %s",
@@ -335,10 +358,17 @@ def fixer_node(state: dict) -> dict:
     # ── Single PUT after all patches are applied ──────────────────────────────
     if workflow_was_modified:
         try:
-            _validate_structure(workflow_definition, working_definition)
-            save_json(working_definition, "patched_workflow")
-            logger.info("[Fixer] Pushing patched workflow to Azure ARM")
-            _put_workflow(token, workflow_name, working_definition)
+            _validate_structure(definition, working_definition)
+
+            # Build and save the full PUT body so it can be inspected or
+            # re-sent manually via the /update-workflow endpoint.
+            put_body = _build_put_body(workflow_definition, working_definition)
+            _validate_put_body(put_body)
+            save_json(put_body, "fixed_workflow")
+            logger.info("[Fixer] Fixed workflow saved to _temp/fixed_workflow_<timestamp>.json")
+
+            logger.info("[Fixer] Pushing patched workflow definition to Azure ARM")
+            _put_workflow(token, workflow_name, workflow_definition, working_definition)
             logger.info("[Fixer] Workflow successfully updated in Azure Logic Apps")
         except Exception as exc:
             logger.error("[Fixer] PUT failed: %s", exc)
