@@ -1,0 +1,52 @@
+{
+  "classified_errors": [
+    {
+      "run_id": "08584248426838775753156216004CU14",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed because the connector could not find the required resource, indicating a connector failure."
+    },
+    {
+      "run_id": "08584249301407721472868931994CU01",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed because the called API endpoint was not found, indicating a connector or endpoint issue."
+    },
+    {
+      "run_id": "08584249309164105638446655781CU31",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action 'Call_Auto_Remediation_API' failed with a 'NotFound' error, indicating a connector or endpoint issue."
+    },
+    {
+      "run_id": "08584251804183285282332841817CU13",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed because the connector could not find the required resource, indicating a connector failure."
+    },
+    {
+      "run_id": "08584264743900349529735010606CU16",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The host name 'your-api' could not be resolved, indicating a connector failure."
+    },
+    {
+      "run_id": "08584264784504640598986220034CU07",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The action failed due to an invalid or malformed Content-Type header in the request payload."
+    },
+    {
+      "run_id": "08584264787039824187378097600CU01",
+      "error_type": "Authentication",
+      "severity": "High",
+      "message": "The CLASSIFIER_AGENT action failed due to an unauthorized access error, indicating an authentication issue."
+    },
+    {
+      "run_id": "08584264805951705510340783046CU24",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The CLASSIFIER_AGENT action failed with status 429, indicating a connector failure likely due to throttling or rate limiting."
+    }
+  ]
+}

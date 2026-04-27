@@ -1,0 +1,154 @@
+{
+  "workflow_id": "auto-remediation-agent",
+  "total_failed": 8,
+  "workflow_action_names": [
+    "Call_Auto_Remediation_API",
+    "Parse_Response",
+    "Check_Auto_Fix_Result",
+    "Response"
+  ],
+  "errors": [
+    {
+      "run_id": "08584248426838775753156216004CU14",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-21T09:36:41.601714Z",
+      "end_time": "2026-04-21T09:36:41.9715516Z",
+      "failed_actions": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "status_code": "NotFound",
+          "error_message": "",
+          "start_time": "2026-04-21T09:36:41.7244632Z"
+        }
+      ],
+      "timestamp": "2026-04-24T13:38:01.922189+00:00"
+    },
+    {
+      "run_id": "08584249301407721472868931994CU01",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-20T09:19:04.7072604Z",
+      "end_time": "2026-04-20T09:19:05.0938716Z",
+      "failed_actions": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "status_code": "NotFound",
+          "error_message": "",
+          "start_time": "2026-04-20T09:19:04.800904Z"
+        }
+      ],
+      "timestamp": "2026-04-24T13:38:03.553113+00:00"
+    },
+    {
+      "run_id": "08584249309164105638446655781CU31",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-20T09:06:09.0687161Z",
+      "end_time": "2026-04-20T09:06:09.4532169Z",
+      "failed_actions": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "status_code": "NotFound",
+          "error_message": "",
+          "start_time": "2026-04-20T09:06:09.2131655Z"
+        }
+      ],
+      "timestamp": "2026-04-24T13:38:04.471288+00:00"
+    },
+    {
+      "run_id": "08584251804183285282332841817CU13",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-17T11:47:47.150675Z",
+      "end_time": "2026-04-17T11:47:47.4373785Z",
+      "failed_actions": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "status_code": "NotFound",
+          "error_message": "",
+          "start_time": "2026-04-17T11:47:47.2476748Z"
+        }
+      ],
+      "timestamp": "2026-04-24T13:38:05.605687+00:00"
+    },
+    {
+      "run_id": "08584264743900349529735010606CU16",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-02T12:21:35.4445608Z",
+      "end_time": "2026-04-02T12:21:57.2251561Z",
+      "failed_actions": [
+        {
+          "action_name": "FIXER_AGENT",
+          "status_code": "ActionFailed",
+          "error_message": "An action failed. No dependent actions succeeded.",
+          "start_time": "2026-04-02T12:21:57.0895434Z"
+        },
+        {
+          "action_name": "Restart_Service_API",
+          "status_code": "UnresolvableHostName",
+          "error_message": "The provided host name 'your-api' could not be resolved.",
+          "start_time": "2026-04-02T12:21:57.1065071Z"
+        }
+      ],
+      "timestamp": "2026-04-24T13:38:06.698741+00:00"
+    },
+    {
+      "run_id": "08584264784504640598986220034CU07",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-02T11:13:55.0158457Z",
+      "end_time": "2026-04-02T11:13:57.5137653Z",
+      "failed_actions": [
+        {
+          "action_name": "RCA_Agent",
+          "status_code": "BadRequest",
+          "error_message": "The provided input content is not valid: 'The provided content-type header value 'application/json\n' is not well formed.'.",
+          "start_time": "2026-04-02T11:13:57.3442854Z"
+        }
+      ],
+      "timestamp": "2026-04-24T13:38:07.932872+00:00"
+    },
+    {
+      "run_id": "08584264787039824187378097600CU01",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-02T11:09:41.4973161Z",
+      "end_time": "2026-04-02T11:09:42.5028286Z",
+      "failed_actions": [
+        {
+          "action_name": "CLASSIFIER_AGENT",
+          "status_code": "Unauthorized",
+          "error_message": "",
+          "start_time": "2026-04-02T11:09:41.6092961Z"
+        }
+      ],
+      "timestamp": "2026-04-24T13:38:08.882520+00:00"
+    },
+    {
+      "run_id": "08584264805951705510340783046CU24",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-02T10:38:10.3093763Z",
+      "end_time": "2026-04-02T10:39:44.6337658Z",
+      "failed_actions": [
+        {
+          "action_name": "CLASSIFIER_AGENT",
+          "status_code": "429",
+          "error_message": "",
+          "start_time": "2026-04-02T10:38:10.4397943Z"
+        }
+      ],
+      "timestamp": "2026-04-24T13:38:09.822919+00:00"
+    }
+  ]
+}

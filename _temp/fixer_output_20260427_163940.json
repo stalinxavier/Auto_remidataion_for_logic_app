@@ -1,0 +1,52 @@
+{
+  "fix_results": [
+    {
+      "run_id": "08584248426838775753156216004CU14",
+      "status": "failed",
+      "details": "Error code: 400 - {'error': {'code': None, 'message': \"Invalid schema for response_format 'WorkflowFixInstruction': In context=('properties', 'new_value'), schema must have a 'type' key.\", 'param': 'response_format', 'type': 'invalid_request_error'}}",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584249301407721472868931994CU01",
+      "status": "failed",
+      "details": "Error code: 400 - {'error': {'code': None, 'message': \"Invalid schema for response_format 'WorkflowFixInstruction': In context=('properties', 'new_value'), schema must have a 'type' key.\", 'param': 'response_format', 'type': 'invalid_request_error'}}",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584249309164105638446655781CU31",
+      "status": "failed",
+      "details": "Error code: 400 - {'error': {'code': None, 'message': \"Invalid schema for response_format 'WorkflowFixInstruction': In context=('properties', 'new_value'), schema must have a 'type' key.\", 'param': 'response_format', 'type': 'invalid_request_error'}}",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584251804183285282332841817CU13",
+      "status": "failed",
+      "details": "Error code: 400 - {'error': {'code': None, 'message': \"Invalid schema for response_format 'WorkflowFixInstruction': In context=('properties', 'new_value'), schema must have a 'type' key.\", 'param': 'response_format', 'type': 'invalid_request_error'}}",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584264743900349529735010606CU16",
+      "status": "failed",
+      "details": "Error code: 400 - {'error': {'code': None, 'message': \"Invalid schema for response_format 'WorkflowFixInstruction': In context=('properties', 'new_value'), schema must have a 'type' key.\", 'param': 'response_format', 'type': 'invalid_request_error'}}",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584264784504640598986220034CU07",
+      "status": "failed",
+      "details": "Error code: 400 - {'error': {'code': None, 'message': \"Invalid schema for response_format 'WorkflowFixInstruction': In context=('properties', 'new_value'), schema must have a 'type' key.\", 'param': 'response_format', 'type': 'invalid_request_error'}}",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584264787039824187378097600CU01",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Identify the API connection or authentication method used in the 'Call_Auto_Remediation_API' action.\n2. Verify that the credentials (such as API key, OAuth token, or service principal) are valid and have not expired.\n3. Update the API connection or secret in Azure Logic Apps to use valid credentials.\n4. Save and redeploy the workflow.\n5. Test the workflow to confirm successful authentication.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584264805951705510340783046CU24",
+      "status": "failed",
+      "details": "Error code: 400 - {'error': {'code': None, 'message': \"Invalid schema for response_format 'WorkflowFixInstruction': In context=('properties', 'new_value'), schema must have a 'type' key.\", 'param': 'response_format', 'type': 'invalid_request_error'}}",
+      "patches_applied": []
+    }
+  ]
+}

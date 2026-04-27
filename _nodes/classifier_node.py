@@ -38,11 +38,27 @@ Respond only with the JSON specified by the schema.
 """.strip()
 
 
+def _format_failed_actions(failed_actions: list) -> str:
+    if not failed_actions:
+        return "  (none)"
+    lines = []
+    for fa in failed_actions:
+        detail = (
+            f"  - Action : {fa.get('action_name', 'unknown')}\n"
+            f"    Status : {fa.get('status_code', 'unknown')}\n"
+            f"    Error  : {fa.get('error_message') or '(no message)'}"
+        )
+        lines.append(detail)
+    return "\n".join(lines)
+
+
 def _classify_single(llm, error: dict) -> ClassifiedError:
+    failed_actions_text = _format_failed_actions(error.get("failed_actions", []))
     user_prompt = (
         f"Run ID  : {error['run_id']}\n"
         f"Message : {error['error_message']}\n"
         f"Code    : {error.get('error_code', '')}\n"
+        f"Failed Actions:\n{failed_actions_text}\n"
         f"Classify this error."
     )
     result: ClassifierOutput = call_llm_structured(
@@ -54,6 +70,7 @@ def _classify_single(llm, error: dict) -> ClassifiedError:
     # LLM returns a list; take the first item
     item = result.classified_errors[0]
     item.run_id = error["run_id"]
+    print("++++++++++++++++++LLM classification result:+++++++++++++++++++++++++", item.model_dump())
     return item
 
 

@@ -1,0 +1,76 @@
+{
+  "analysis": [
+    {
+      "run_id": "08584248426838775753156216004CU14",
+      "error_type": "Connector Failure",
+      "affected_action": "Call_Auto_Remediation_API",
+      "root_cause": "The 'Call_Auto_Remediation_API' action failed because the HTTP connector could not locate the required resource. This typically means the 'uri' property is either incorrect (e.g., wrong endpoint URL), the resource has been deleted or moved, or the API connection is misconfigured.",
+      "fix_plan": "1. Verify the 'uri' property in the 'Call_Auto_Remediation_API' action for correctness (ensure the endpoint exists and is accessible).\n2. Check if the resource referenced by the URI is available and not deleted or moved.\n3. If the URI is correct, review the API connection configuration (authentication, permissions, etc.) to ensure it can access the resource.\n4. Update the workflow definition with the correct URI or fix the API connection as needed.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584249301407721472868931994CU01",
+      "error_type": "Connector Failure",
+      "affected_action": "Call_Auto_Remediation_API",
+      "root_cause": "The 'Call_Auto_Remediation_API' action failed because the HTTP connector attempted to call an API endpoint that does not exist or is incorrectly specified in the 'uri' property. This is likely due to a misconfigured or outdated endpoint URL.",
+      "fix_plan": "1. Review the 'uri' property in the 'Call_Auto_Remediation_API' action within the workflow definition.\n2. Verify that the endpoint URL is correct, active, and accessible.\n3. Update the 'uri' property to the correct API endpoint if necessary.\n4. Save and redeploy the workflow.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584249309164105638446655781CU31",
+      "error_type": "Connector Failure",
+      "affected_action": "Call_Auto_Remediation_API",
+      "root_cause": "The 'Call_Auto_Remediation_API' action failed with a 'NotFound' error, which means the HTTP endpoint specified in the 'uri' property is either incorrect, missing, or the target API is unavailable. This is not a transient error; it is likely due to a misconfigured or outdated URI in the workflow definition.",
+      "fix_plan": "1. Retrieve the current 'uri' value in the 'Call_Auto_Remediation_API' action.\n2. Verify the endpoint exists and is accessible (e.g., test with Postman or curl).\n3. If the endpoint has changed, update the 'uri' property in the workflow definition to the correct API endpoint.\n4. Save and redeploy the workflow.\n5. Optionally, add error handling for 404 responses to improve diagnostics.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584251804183285282332841817CU13",
+      "error_type": "Connector Failure",
+      "affected_action": "Call_Auto_Remediation_API",
+      "root_cause": "The 'Call_Auto_Remediation_API' action failed because the HTTP connector could not locate the required resource. This typically means the 'uri' property is either incorrect, missing, or points to a resource that no longer exists or is inaccessible (e.g., DNS resolution failure, endpoint decommissioned, or incorrect URL).",
+      "fix_plan": "1. Verify the 'uri' property in the 'Call_Auto_Remediation_API' action for correctness (check for typos, outdated endpoint, or missing value).\n2. Confirm the target resource is available and accessible from the Logic App environment (network, DNS, firewall).\n3. Update the workflow definition to use the correct and reachable 'uri' value for the HTTP action.\n4. Save and redeploy the Logic App.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584264743900349529735010606CU16",
+      "error_type": "Connector Failure",
+      "affected_action": "Call_Auto_Remediation_API",
+      "root_cause": "The 'Call_Auto_Remediation_API' action failed because the host name 'your-api' specified in the HTTP action's 'uri' property cannot be resolved. This indicates that the URI is either incorrectly configured, missing, or points to a non-existent or unreachable DNS name.",
+      "fix_plan": "1. Review the 'uri' property in the 'Call_Auto_Remediation_API' action within the workflow definition.\n2. Update the 'uri' to a valid, resolvable API endpoint hostname.\n3. Save and redeploy the workflow.\n4. Test the workflow to confirm the hostname resolves and the connector succeeds.",
+      "action_type": "update_workflow",
+      "confidence": 0.98
+    },
+    {
+      "run_id": "08584264784504640598986220034CU07",
+      "error_type": "Payload Issue",
+      "affected_action": "Call_Auto_Remediation_API",
+      "root_cause": "The 'Call_Auto_Remediation_API' action failed because the 'Content-Type' header in the HTTP request was either missing, invalid, or malformed. This caused the receiving API to reject the request payload.",
+      "fix_plan": "Update the workflow definition for 'Call_Auto_Remediation_API' to ensure the 'headers' property includes a valid 'Content-Type' (e.g., 'application/json') and that its value is correctly formatted. Validate that the header is present and matches the expected format for the target API.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584264787039824187378097600CU01",
+      "error_type": "Authentication",
+      "affected_action": "Call_Auto_Remediation_API",
+      "root_cause": "The 'Call_Auto_Remediation_API' action failed due to an unauthorized access error, which means the API connection used for this HTTP action is either missing, expired, or has invalid credentials.",
+      "fix_plan": "1. Identify the API connection or authentication method used in the 'Call_Auto_Remediation_API' action.\n2. Verify that the credentials (such as API key, OAuth token, or service principal) are valid and have not expired.\n3. Update the API connection or secret in Azure Logic Apps to use valid credentials.\n4. Save and redeploy the workflow.\n5. Test the workflow to confirm successful authentication.",
+      "action_type": "config_change",
+      "confidence": 0.98
+    },
+    {
+      "run_id": "08584264805951705510340783046CU24",
+      "error_type": "Connector Failure",
+      "affected_action": "Call_Auto_Remediation_API",
+      "root_cause": "The 'Call_Auto_Remediation_API' action failed with status 429 due to exceeding the rate limits imposed by the HTTP connector or the target API endpoint. This is a throttling issue caused by too many requests in a short period.",
+      "fix_plan": "1. Implement a retry policy on the 'Call_Auto_Remediation_API' action with exponential backoff to handle 429 errors gracefully.\n2. Update the workflow definition to include the retry policy in the action's properties.\n3. Optionally, review and adjust the frequency of workflow triggers to reduce request volume if possible.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    }
+  ]
+}
