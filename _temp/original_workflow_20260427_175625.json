@@ -1,0 +1,71 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "$connections": {
+      "defaultValue": {},
+      "type": "Object"
+    }
+  },
+  "triggers": {
+    "When_an_HTTP_request_is_received": {
+      "type": "Request",
+      "kind": "Http",
+      "inputs": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "log": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "actions": {
+    "Condition": {
+      "actions": {
+        "Send_an_email_(V2)": {
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connection": {
+                "name": "@parameters('$connections')['office365']['connectionId']"
+              }
+            },
+            "method": "post",
+            "body": {
+              "To": "a.palanichamy@sierradigitalinc.com",
+              "Subject": "\u26a0\ufe0f Error Detected in System Logs",
+              "Body": "<p class=\"editor-paragraph\">An ERROR was found in logs:<br><br>@{triggerBody()?['log']}</p>",
+              "Importance": "Normal"
+            },
+            "path": "/v2/Mail"
+          }
+        }
+      },
+      "runAfter": {},
+      "else": {
+        "actions": {
+          "Compose": {
+            "type": "Compose",
+            "inputs": "No issues detected in logs"
+          }
+        }
+      },
+      "expression": {
+        "and": [
+          {
+            "equals": [
+              "@contains(triggerBody()?['log'], 'ERROR')",
+              true
+            ]
+          }
+        ]
+      },
+      "type": "If"
+    }
+  },
+  "outputs": {}
+}

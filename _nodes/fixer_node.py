@@ -160,7 +160,11 @@ def _apply_patch(definition: dict, action_name: str, property_path: str, new_val
             f"Action '{action_name}' not found in workflow. "
             f"Available: {list(actions.keys())}"
         )
-    _set_nested(actions[action_name], property_path, new_value)
+    try:
+        parsed_value = json.loads(new_value)
+    except (json.JSONDecodeError, TypeError):
+        parsed_value = new_value
+    _set_nested(actions[action_name], property_path, parsed_value)
     return patched
 
 

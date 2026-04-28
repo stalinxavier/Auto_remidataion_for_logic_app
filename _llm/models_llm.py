@@ -6,7 +6,7 @@ Every LLM call must return one of these models — no plain text.
 """
 
 from pydantic import BaseModel, Field
-from typing import Any, List, Literal
+from typing import Dict, List, Literal, Optional, Union
 
 
 # ── Classifier ────────────────────────────────────────────────────────────────
@@ -67,7 +67,14 @@ class ActionPatch(BaseModel):
     """
     action_name: str = Field(..., description="Exact name of the action to patch")
     property_path: str = Field(..., description="Dot-separated path within the action")
-    new_value: Any = Field(..., description="New value to set at property_path")
+    new_value: str = Field(
+        ...,
+        description=(
+            "New value to set at property_path, serialized as a JSON string. "
+            "Scalars: '\"mystring\"', '42', 'true', 'null'. "
+            "Objects/arrays: '{\"count\": 3}', '[\"a\",\"b\"]'."
+        ),
+    )
     reason: str = Field(..., description="One-line explanation of why this change fixes the error")
 
 

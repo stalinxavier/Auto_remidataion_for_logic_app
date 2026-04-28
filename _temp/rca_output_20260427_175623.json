@@ -1,0 +1,454 @@
+{
+  "analysis": [
+    {
+      "run_id": "08584243144153554505730845094CU11",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being passed. Use an expression like 'if(empty(triggerOutputs()?['value']), false, contains(triggerOutputs()?['value'], 'searchTerm'))' to ensure 'contains' is only called with valid input.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144167449453209907057CU20",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because a previous action did not provide the expected data, or the input reference was missing or misconfigured.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function in the 'Condition' action is checked for null before use. Add a null check or default value to ensure the function always receives a valid collection, array, or string. Specifically, use the 'coalesce' function or add a pre-condition to validate the input.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144245186644372749078CU27",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the preceding logic did not ensure the input was properly initialized or checked for null before using 'contains'.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to include a null check before calling the 'contains' function. Use the 'if' or 'coalesce' function to ensure the input is not null, or add an additional condition to verify the input type before evaluating 'contains'.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144253208832399288717CU02",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, but received null, causing the failure.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use the 'if' or 'coalesce' function to ensure the input is not null, or provide a default empty value if null is detected.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144291305996730729051CU28",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, but received null, causing the failure.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use the 'if' expression to ensure the input is not null, or use the 'coalesce' function to provide a default value if null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144302648744874411770CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value was null. The 'contains' function requires a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use an expression like 'if(not(empty(<input>)), contains(<input>, <value>), false)' to prevent null values from being passed to 'contains'.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144351997271992385620CU19",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input that was null, instead of a collection, array, or string. This likely happened because a previous action did not provide the expected data, or the input reference was missing or misconfigured.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function in the 'Condition' action is checked for null before use. Add a null check or default value to ensure the input is always a collection, array, or string. For example, use the 'coalesce' function to provide a default empty array or string if the input is null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144354722155811731727CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the preceding action did not provide the expected input, or the input mapping is missing or incorrect.",
+      "fix_plan": "Update the workflow definition to ensure that the input to the 'Condition' action is always a valid collection, array, or string. Add a null check or default value assignment before the 'Condition' action to prevent null values from being passed to the 'contains' function.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144398699726698526760CU23",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the preceding logic did not ensure the input was properly initialized or checked for null before using 'contains'.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use an expression like 'if(empty(triggerOutputs()?['body']), false, contains(triggerOutputs()?['body'], 'value'))' to prevent null values from causing errors.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144455001090753786802CU16",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a valid collection, array, or string. This likely happened because the preceding action did not provide the expected input, or the input reference was missing or incorrect.",
+      "fix_plan": "Update the 'Condition' action to include a null check before using the 'contains' function. Use the 'if' or 'coalesce' function to ensure the input is not null, or modify the expression to handle null values gracefully. Validate that the input to 'Condition' is always a collection, array, or string.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243144459306819227540691CU03",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, but received null, causing the failure.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use the 'if' expression to ensure the input is not null, or use the 'coalesce' function to provide a default value if null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243145578555698771727222CU18",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the preceding action did not provide the expected input, or the input mapping is missing or incorrect.",
+      "fix_plan": "Update the workflow definition to ensure that the input to the 'Condition' action is always a valid collection, array, or string. Add a null check or default value assignment before the 'Condition' action to prevent null values from being passed to the 'contains' function.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243145590802142728165715CU00",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value was null. The function expects a collection, array, or string, not null. This likely happened because a previous action did not produce the expected output or the input mapping was missing.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function in the 'Condition' action is checked for null before use. Use the 'coalesce' function or add a null check to ensure the input is a valid collection, array, or string. Modify the 'Condition' action's expression to handle null values gracefully.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243145836125345355619941CU15",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the preceding action did not provide the expected input, or the input mapping is missing or incorrect.",
+      "fix_plan": "Update the workflow definition so that the input to the 'Condition' action is validated or defaulted to an empty string or array before using the 'contains' function. Add a check or use the coalesce function to ensure the input is not null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243145854327569076703669CU28",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on a value that was null, instead of a collection, array, or string. This likely happened because the input to the 'Condition' action was not properly initialized or was missing from the trigger or previous actions.",
+      "fix_plan": "Update the workflow definition to add a null check before using the 'contains' function in the 'Condition' action. Use the 'if' function to ensure the value is not null before calling 'contains', or provide a default value if the input is null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243146061696448698768843CU29",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, but received null, causing the failure.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use the 'if' expression to ensure the input is not null, or modify the logic to default to an empty collection/string if the input is null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243146090390053628262742CU07",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being used. Add a preceding action or expression to ensure the value is not null, or use the coalesce function to provide a default value if null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243146243701283996808547CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input to 'contains' was null. This likely happened because a previous action did not produce the expected collection, array, or string, or the input reference was missing or misconfigured.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function in the 'Condition' action is always a valid collection, array, or string. Add a null check or default value before calling 'contains' to prevent passing null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243146250356907238066375CU09",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being passed. Use the 'coalesce' function or add a null check in the Condition action to ensure a valid collection, array, or string is always provided.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243146402519870255977328CU20",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the upstream data source or variable was not initialized or populated before the condition was evaluated.",
+      "fix_plan": "Update the workflow definition to add a null check before using the 'contains' function in the 'Condition' action. Use the 'if' or 'coalesce' function to ensure the input is not null, or add a preceding action to initialize the value to an empty collection or string if it is null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243146407631004184272041CU28",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being passed. Use the 'coalesce' function or add a null check in the Condition action to ensure the input is always a valid collection, array, or string.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243146655585648034016237CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input to 'contains' was null. The function expects a collection, array, or string, but the workflow did not provide a valid value.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function in the 'Condition' action is always initialized to a valid collection, array, or string. Add a null check or default value assignment before the 'Condition' action to prevent null values.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243146847755131536693842CU09",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition to add a null check before using the 'contains' function in the 'Condition' action. Use the 'if' or 'coalesce' function to ensure the input is not null, or add a preceding condition to verify the input exists.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243146871412332721792510CU20",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, but received null, causing the failure.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use the 'if' or 'coalesce' function to ensure the input is not null, or provide a default empty value if null is detected.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243147082779905079056929CU15",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action's 'contains' function was called with a null value, which is not valid. This likely happened because the input to the 'contains' function was not properly initialized or mapped, resulting in a null instead of a collection, array, or string.",
+      "fix_plan": "Update the workflow definition to add a null check before calling the 'contains' function in the 'Condition' action. Use the 'if' or 'coalesce' function to ensure the input is not null, or provide a default empty value if null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243147117311217920847595CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being passed. Use the 'coalesce' function or add a null check in the Condition action to ensure a valid collection, array, or string is always provided.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243147236942688726221826CU21",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being passed. Use an expression like 'if(empty(triggerOutputs()?['value']), false, contains(triggerOutputs()?['value'], 'searchTerm'))' to ensure 'contains' is only called with valid input.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243147287307879422110155CU31",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value was null. The 'contains' function requires a collection, array, or string, and fails when given null.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use the 'if' or 'coalesce' function to ensure the input is not null, or default to an empty string/array if null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243147411697348224541814CU22",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being passed. Use an expression like 'if(empty(triggerOutputs()?['value']), false, contains(triggerOutputs()?['value'], 'searchTerm'))' to ensure 'contains' is only called with valid input.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243147729912918246703321CU16",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the upstream data source did not provide the expected input, or the input mapping to the 'Condition' action was missing or incorrect.",
+      "fix_plan": "Update the workflow definition to add a null check before the 'contains' function in the 'Condition' action. Use the 'if' or 'coalesce' function to ensure the input is not null, or add a preceding action to validate and default the input value to an empty string or array if null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243147735802684291636814CU02",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input to 'contains' was null. The function expects a collection, array, or string, but the workflow did not provide a valid value.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function in the 'Condition' action is always initialized to a valid collection, array, or string. Add a null check or default value assignment before the 'Condition' action to prevent null values.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168552726089968519744CU23",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition to add a null check before the 'contains' function is called in the 'Condition' action. Use the 'if' or 'coalesce' function to ensure the input is not null, or modify the condition logic to handle null values gracefully.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168592786742810462773CU19",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input to 'contains' was null. The function expects a collection, array, or string, but received a null value, likely due to missing or improperly mapped input data.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use an expression like 'if(not(equals(triggerOutputs()?['value'], null)), contains(triggerOutputs()?['value'], 'searchTerm'), false)' to ensure 'contains' is only called when the input is not null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168608354005765348929CU11",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, but received null, causing the failure.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use an expression like 'if(not(equals(triggerOutputs()?['value'], null)), contains(triggerOutputs()?['value'], 'searchTerm'), false)' to ensure 'contains' is only called with valid input.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168649866761644993231CU18",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value was null. The 'contains' function requires a collection, array, or string, and fails when given null.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use an expression like 'if(not(equals(triggerOutputs()?['value'], null)), contains(triggerOutputs()?['value'], 'searchTerm'), false)' to ensure 'contains' is only called with valid input.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168662255540581945949CU21",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the upstream data source or variable was not initialized or populated before the condition was evaluated.",
+      "fix_plan": "Update the workflow definition to add a null check before using the 'contains' function in the 'Condition' action. Use the 'if' or 'coalesce' function to ensure the input is not null, or add a preceding action to initialize the value to an empty string or array if it is null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168698858558408886128CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the upstream data source or action did not provide the expected input, or the workflow did not validate the input before using it.",
+      "fix_plan": "Update the 'Condition' action to check if the input value is not null before using the 'contains' function. Use an additional condition or expression to ensure the input is a valid collection, array, or string. For example, wrap the 'contains' function with an 'and' condition that first checks for non-null input.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168711951404127480132CU02",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, but received null, causing the failure.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use the 'if' or 'coalesce' function to ensure the input is not null, or provide a default value if it is null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168753569279891610247CU26",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the upstream data source did not provide the expected input, or the input mapping is missing or incorrect.",
+      "fix_plan": "Update the workflow definition to add a null check before the 'contains' function is called in the 'Condition' action. Use the 'if' or 'coalesce' function to ensure the input is not null, or provide a default value if it is. This prevents the 'contains' function from receiving a null value.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168763987275141887347CU28",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a valid collection, array, or string. This likely happened because the preceding action did not provide the expected input, or the input mapping was missing or incorrect.",
+      "fix_plan": "Update the workflow definition to ensure that the input to the 'Condition' action is always a valid collection, array, or string. Add a null check or default value assignment before the 'Condition' action to prevent null values from being passed to the 'contains' function.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243168805514287254550008CU26",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input value that was null, instead of a collection, array, or string. This likely happened because the upstream action did not provide the expected input, or the input mapping is missing or incorrect.",
+      "fix_plan": "Update the workflow definition to ensure that the input to the 'Condition' action is always a valid collection, array, or string. Add a null check or default value assignment before the 'Condition' action to prevent null values from being passed to the 'contains' function.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243169572998205736484446CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value was null. The 'contains' function requires a collection, array, or string, and fails when given null.",
+      "fix_plan": "Update the workflow definition to add a null check before the 'contains' function is called in the 'Condition' action. Use the 'if' or 'coalesce' function to ensure the input is not null, or add a preceding condition to handle null values.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243169579566683689568184CU14",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action uses the 'contains' function, but the input provided to 'contains' is null. The function expects a collection, array, or string, but the workflow did not supply a valid value, likely due to missing or incorrect input mapping.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function in the 'Condition' action is always a valid collection, array, or string. Add a null check or default value assignment before the 'Condition' action to ensure the input is not null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243169629228417511836602CU19",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being used. Add a preceding action or expression to ensure the value is not null, or use the coalesce function to provide a default value if null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243169632276512546646566CU22",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being passed. Use the 'coalesce' function or add a null check in the Condition action to ensure the input is always a valid collection, array, or string.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243169681406759403660148CU02",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, but received null, causing the failure.",
+      "fix_plan": "Update the workflow definition for the 'Condition' action to add a null check before calling the 'contains' function. Use the 'if' or 'coalesce' function to ensure the input is not null, or provide a default value if it is null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243169684670442058009802CU03",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value provided to 'contains' was null. The function expects a collection, array, or string, not null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before being passed. Use an expression like 'if(empty(triggerOutputs()?['value']), false, contains(triggerOutputs()?['value'], ...))' to ensure 'contains' only receives valid input.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243169734536744996677564CU06",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action used the 'contains' function, but the input value was null. The 'contains' function requires a collection, array, or string, and fails when given null.",
+      "fix_plan": "Update the workflow definition so that the input to the 'contains' function is checked for null before calling 'contains'. Use an expression like 'if(not(empty(<input>)), contains(<input>, <value>), false)' to prevent null values from causing errors.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243169736030571972428774CU31",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action attempted to use the 'contains' function on an input that was null, instead of a collection, array, or string. This likely happened because the preceding action did not provide the expected input, or the input reference was incorrect or missing.",
+      "fix_plan": "Update the 'Condition' action to check if the input is not null before using the 'contains' function. Add a null check or default value to ensure the function always receives a valid collection, array, or string. Specifically, modify the workflow definition to use an expression like: if(not(empty(triggerOutputs()?['body']?['yourProperty'])), contains(triggerOutputs()?['body']?['yourProperty'], 'value'), false).",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584243169781479717730407404CU06",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The 'Condition' action uses the 'contains' function, but the input provided to 'contains' is null. The function expects a collection, array, or string, but received no value, likely due to missing or uninitialized input from a previous step.",
+      "fix_plan": "Update the workflow definition to add a null check before using the 'contains' function in the 'Condition' action. Use the 'if' function or a similar approach to ensure the input is not null before calling 'contains'.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    }
+  ]
+}
