@@ -1,0 +1,10 @@
+{
+  "classified_errors": [
+    {
+      "run_id": "08584241425485609646615064851CU01",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    }
+  ]
+}

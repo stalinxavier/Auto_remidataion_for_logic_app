@@ -1,0 +1,304 @@
+{
+  "classified_errors": [
+    {
+      "run_id": "08584242351048774447492235738CU07",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function failed because it received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242351257025697701220399CU21",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242351475090169281985578CU10",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242351640819185545258097CU14",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242351804329052180186790CU00",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242351949246559054695304CU27",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242352105531306773910395CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242352253626123659944333CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242352514835105390822627CU18",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242352517149887623809263CU15",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242354874727804895667911CU17",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242354883661899243090762CU05",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action failed because it received a null value instead of a valid collection."
+    },
+    {
+      "run_id": "08584242356461226523930524996CU03",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242356508926940643003356CU18",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242356731229783867229435CU27",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242356783915003336561948CU21",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242357039078643040343414CU10",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242357097891319520202426CU11",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242357654551288259840031CU20",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242357655250168394486509CU20",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242358227982256547018344CU29",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242358308279791588785775CU19",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242358600219617481680390CU25",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242358607479772608899907CU25",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242359505889967957441098CU31",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242359558166066416896227CU09",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242359801882935593507864CU29",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242359853790913972685076CU23",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242394851556889270131625CU31",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242394907071589626565934CU22",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action failed because it received a null value instead of a valid collection."
+    },
+    {
+      "run_id": "08584242474667371810161104557CU02",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242474829485197942697174CU28",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242474858654060332791337CU27",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242475031004744553129218CU21",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242475061647793946388137CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242475240775634987892689CU16",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242475259762332367469723CU14",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242475384390406501965740CU20",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242475387623014635307333CU03",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242475512395981118370616CU08",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242475512439018616272675CU14",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242476733913498281135436CU13",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242476769537866619493273CU25",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242476873394754790259812CU22",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242476909150762172856758CU09",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242477051558518679122805CU17",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action failed because it received a null value instead of a valid collection."
+    },
+    {
+      "run_id": "08584242477109496595463561231CU21",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242477298277746069083564CU27",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    },
+    {
+      "run_id": "08584242477317172841760112025CU05",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function failed because it received a null value instead of a valid collection, array, or string."
+    },
+    {
+      "run_id": "08584242479909391663687287073CU14",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'contains' function in the 'Condition' action received a null value instead of a collection, array, or string."
+    }
+  ]
+}

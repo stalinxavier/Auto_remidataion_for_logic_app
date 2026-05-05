@@ -577,3 +577,7 @@ cd C:\Users\StalinEdwinPrakash\Documents\Auto_remidataion_for_logic_app
 curl.exe http://localhost:8000/health
 curl.exe -X POST http://localhost:8000/run
 ```
+
+
+
+

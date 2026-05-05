@@ -1,0 +1,10 @@
+{
+  "fix_results": [
+    {
+      "run_id": "08584241425485609646615064851CU01",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate is signed by a trusted certificate authority. 3. If using a self-signed certificate, add it to the trusted root store for the Logic App. 4. Update the endpoint or certificate as needed. 5. Test the connection from the Logic App to confirm resolution.",
+      "patches_applied": []
+    }
+  ]
+}

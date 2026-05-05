@@ -1,0 +1,13 @@
+{
+  "analysis": [
+    {
+      "run_id": "08584241425485609646615064851CU01",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's connector not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate is signed by a trusted certificate authority. 3. If using a self-signed certificate, add it to the trusted root store for the Logic App. 4. Update the endpoint or certificate as needed. 5. Test the connection from the Logic App to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    }
+  ]
+}

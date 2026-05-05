@@ -1,0 +1,29 @@
+{
+  "workflow_id": "RUNTIME_ERRORS",
+  "total_failed": 1,
+  "workflow_action_names": [
+    "Get_Customer_Info",
+    "Parse_Customer_Response",
+    "Check_Customer_Status",
+    "Return_Success_Response"
+  ],
+  "errors": [
+    {
+      "run_id": "08584241425485609646615064851CU01",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-29T12:05:36.9185371Z",
+      "end_time": "2026-04-29T12:07:29.388329Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-29T12:05:37.051113Z"
+        }
+      ],
+      "timestamp": "2026-04-29T12:22:15.302088+00:00"
+    }
+  ]
+}

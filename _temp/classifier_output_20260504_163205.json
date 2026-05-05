@@ -1,0 +1,304 @@
+{
+  "classified_errors": [
+    {
+      "run_id": "08584239631969593225446389284CU16",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584239641815073683495656611CU26",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The 'Get_Customer_Info' action failed due to an SSL connection error, preventing the HTTP request from succeeding."
+    },
+    {
+      "run_id": "08584239641952346833610035199CU31",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584239642145006016745153081CU28",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584239642347790817269959177CU01",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584239642506578921675511855CU19",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584239642682287765740970932CU27",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584239642844691506559113238CU24",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240004958627059649045996CU07",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240005146984394791688654CU22",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240005333504087513790162CU11",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240005516156487093525982CU07",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240005717397315824178702CU08",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240005914672983356037886CU29",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240006113686275657255226CU15",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240006314394353465260007CU27",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240006493247110766880784CU04",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240006684722014777523556CU27",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240006893846788354115870CU24",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240007105675268141845641CU27",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240007313324590619784617CU23",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240007516596494631820774CU19",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240008027184012253384207CU26",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240008205576532370373595CU14",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240008414851323111297852CU24",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240008606755539579573231CU28",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240008805838212319733267CU18",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240606791691327340926130CU04",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240607625692713758788566CU05",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240607830653715458152092CU03",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240608005349028392532987CU07",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240608185553034242003152CU05",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The 'Get_Customer_Info' action failed due to an SSL connection error, preventing the HTTP request from succeeding."
+    },
+    {
+      "run_id": "08584240655727898215718302754CU20",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240766177297584781980636CU23",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240766796809476950326779CU01",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240766932738748225728388CU26",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The 'Get_Customer_Info' action failed due to an SSL connection error, preventing the HTTP request from succeeding."
+    },
+    {
+      "run_id": "08584240767044644960744240595CU23",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240767196883232944325987CU18",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240772354471475514395576CU26",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240773484559379331471949CU08",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240773708355481870860507CU11",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240773911407532066770162CU03",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240773979129715400014931CU18",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240776525738310289281016CU21",
+      "error_type": "Connector Failure",
+      "severity": "High",
+      "message": "The action failed due to an SSL connection error when attempting to connect to the external service."
+    },
+    {
+      "run_id": "08584240782026528001197205357CU10",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The action failed because the expected 'customerId' property was missing from the trigger payload."
+    },
+    {
+      "run_id": "08584240784206503001394271055CU13",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The action failed because the expected 'customerId' property was missing from the trigger payload."
+    },
+    {
+      "run_id": "08584240785371194250171035413CU02",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The action failed because the expected 'customerId' property was missing from the trigger payload."
+    },
+    {
+      "run_id": "08584240788567186610980221992CU30",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The action failed because the expected 'customerId' property was missing from the trigger payload."
+    },
+    {
+      "run_id": "08584240791638221422435647060CU19",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The action failed because the expected 'customerId' property was missing from the trigger payload."
+    },
+    {
+      "run_id": "08584240796280195329194445286CU31",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The action failed because the expected 'customerId' property was missing from the trigger payload."
+    }
+  ]
+}

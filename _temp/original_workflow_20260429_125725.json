@@ -1,0 +1,272 @@
+{
+  "properties": {
+    "provisioningState": "Succeeded",
+    "createdTime": "2026-04-02T06:54:08.4176517Z",
+    "changedTime": "2026-04-28T12:02:40.0941895Z",
+    "state": "Enabled",
+    "version": "08584242291253994760",
+    "accessEndpoint": "https://prod-03.southindia.logic.azure.com:443/workflows/4ccbe88f4c1c40d4816baae7642c2813",
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {},
+      "triggers": {
+        "Observer_Agent": {
+          "type": "Request",
+          "kind": "Http",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "TimeGenerated": {
+                  "type": "string"
+                },
+                "WorkflowName": {
+                  "type": "string"
+                },
+                "RunId": {
+                  "type": "string"
+                },
+                "Status": {
+                  "type": "string"
+                },
+                "ActionName": {
+                  "type": "string"
+                },
+                "ErrorCode": {
+                  "type": "string"
+                },
+                "ErrorMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "actions": {
+        "Call_Auto_Remediation_API": {
+          "runAfter": {},
+          "type": "Http",
+          "inputs": {
+            "uri": "https://correct-endpoint.example.com/remediate",
+            "method": "POST",
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "TimeGenerated": "@{triggerBody()?['TimeGenerated']}",
+              "WorkflowName": "@{triggerBody()?['WorkflowName']}",
+              "RunId": "@{triggerBody()?['RunId']}",
+              "Status": "@{triggerBody()?['Status']}",
+              "ActionName": "@{triggerBody()?['ActionName']}",
+              "ErrorCode": "@{triggerBody()?['ErrorCode']}",
+              "ErrorMessage": "@{triggerBody()?['ErrorMessage']}"
+            },
+            "retryPolicy": {
+              "type": "exponential",
+              "interval": "PT10S",
+              "count": 5,
+              "minimumInterval": "PT10S",
+              "maximumInterval": "PT2M"
+            }
+          }
+        },
+        "Parse_Response": {
+          "runAfter": {
+            "Call_Auto_Remediation_API": [
+              "Succeeded"
+            ]
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Call_Auto_Remediation_API')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workflow_name": {
+                  "type": "string"
+                },
+                "run_id": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "error_type": {
+                  "type": "string"
+                },
+                "severity": {
+                  "type": "string"
+                },
+                "root_cause": {
+                  "type": "string"
+                },
+                "auto_fix_status": {
+                  "type": "string"
+                },
+                "manual_steps_count": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "Check_Auto_Fix_Result": {
+          "actions": {
+            "Auto_Fix_Success": {
+              "type": "Compose",
+              "inputs": {
+                "result": "success",
+                "message": "Auto-fix applied successfully",
+                "root_cause": "@body('Parse_Response')?['root_cause']",
+                "error_type": "@body('Parse_Response')?['error_type']"
+              }
+            }
+          },
+          "runAfter": {
+            "Parse_Response": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {
+              "Manual_Fix_Required": {
+                "type": "Compose",
+                "inputs": {
+                  "result": "manual_required",
+                  "message": "Manual remediation required",
+                  "root_cause": "@body('Parse_Response')?['root_cause']",
+                  "severity": "@body('Parse_Response')?['severity']",
+                  "auto_fix_status": "@body('Parse_Response')?['auto_fix_status']",
+                  "manual_steps_count": "@body('Parse_Response')?['manual_steps_count']"
+                }
+              }
+            }
+          },
+          "expression": {
+            "equals": [
+              "@body('Parse_Response')?['auto_fix_status']",
+              "SUCCEEDED"
+            ]
+          },
+          "type": "If"
+        },
+        "Response": {
+          "runAfter": {
+            "Check_Auto_Fix_Result": [
+              "Succeeded"
+            ]
+          },
+          "type": "Response",
+          "kind": "Http",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "workflow": "@{triggerBody()?['WorkflowName']}",
+              "run_id": "@{triggerBody()?['RunId']}",
+              "classification": "@body('Parse_Response')?['error_type']",
+              "severity": "@body('Parse_Response')?['severity']",
+              "root_cause": "@body('Parse_Response')?['root_cause']",
+              "remediation_status": "@body('Parse_Response')?['auto_fix_status']",
+              "final_action": "@outputs('Check_Auto_Fix_Result')"
+            }
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "parameters": {},
+    "endpointsConfiguration": {
+      "workflow": {
+        "outgoingIpAddresses": [
+          {
+            "address": "104.211.210.192"
+          },
+          {
+            "address": "104.211.218.202"
+          },
+          {
+            "address": "52.172.101.114"
+          },
+          {
+            "address": "52.172.101.181"
+          },
+          {
+            "address": "52.140.5.116"
+          },
+          {
+            "address": "52.172.98.23"
+          },
+          {
+            "address": "52.140.2.252"
+          },
+          {
+            "address": "52.140.0.225"
+          },
+          {
+            "address": "52.140.7.114"
+          },
+          {
+            "address": "52.172.101.204"
+          }
+        ],
+        "accessEndpointIpAddresses": [
+          {
+            "address": "52.140.4.233"
+          },
+          {
+            "address": "52.172.100.99"
+          },
+          {
+            "address": "52.140.5.154"
+          },
+          {
+            "address": "52.140.1.153"
+          },
+          {
+            "address": "52.172.96.103"
+          },
+          {
+            "address": "52.140.2.150"
+          },
+          {
+            "address": "52.172.103.116"
+          },
+          {
+            "address": "52.172.99.31"
+          }
+        ]
+      },
+      "connector": {
+        "outgoingIpAddresses": [
+          {
+            "address": "13.71.127.26"
+          },
+          {
+            "address": "13.71.125.22"
+          },
+          {
+            "address": "20.192.184.32/27"
+          },
+          {
+            "address": "40.78.194.240/28"
+          },
+          {
+            "address": "20.192.152.64/27"
+          },
+          {
+            "address": "20.192.152.96/28"
+          },
+          {
+            "address": "52.172.80.0/26"
+          }
+        ]
+      }
+    }
+  },
+  "id": "/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/auto-remediation-agent",
+  "name": "auto-remediation-agent",
+  "type": "Microsoft.Logic/workflows",
+  "location": "southindia"
+}

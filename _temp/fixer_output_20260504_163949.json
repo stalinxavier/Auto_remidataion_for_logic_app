@@ -1,0 +1,359 @@
+{
+  "fix_results": [
+    {
+      "run_id": "08584239631969593225446389284CU16",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted root store for the Logic App environment.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584239641815073683495656611CU26",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted root store for the Logic App environment.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584239641952346833610035199CU31",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted root store for the Logic App environment.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm the SSL issue is resolved.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584239642145006016745153081CU28",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and trusted by Azure Logic Apps.\n3. Confirm that the endpoint supports TLS 1.2 or higher, as required by Azure.\n4. If the certificate is invalid or expired, update it on the remote server.\n5. If the endpoint uses an unsupported TLS version, reconfigure it to use TLS 1.2 or higher.\n6. Test the connection from the Logic App after making these changes.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584239642347790817269959177CU01",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If using a self-signed certificate, add the certificate to the trusted store of the Logic App's environment.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584239642506578921675511855CU19",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property for validity and expiration.\n2. Ensure the certificate is signed by a trusted Certificate Authority and is not self-signed or revoked.\n3. Confirm that the external service supports TLS 1.2 or higher, as required by Azure Logic Apps.\n4. If the certificate is invalid or expired, update or replace it on the external service.\n5. If the certificate is valid, check the 'headers' property for any custom settings that may affect SSL negotiation.\n6. After remediation, re-run the Logic App to confirm successful connection.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584239642682287765740970932CU27",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service (check for expiration, validity, and correct hostname).\n2. Ensure the external service supports TLS 1.2 or higher, as required by Azure Logic Apps.\n3. Update the external service's certificate if it is expired or invalid.\n4. If the certificate is valid, check the 'uri' property in the 'Get_Customer_Info' action for correct HTTPS usage.\n5. Test the connection from Logic Apps to the external service after making changes.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584239642844691506559113238CU24",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted Certificate Authority.\n3. If the certificate is self-signed or untrusted, add the CA to the trusted store or update the certificate to a valid one.\n4. Update the API connection or endpoint configuration if necessary to reference the correct certificate.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240004958627059649045996CU07",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and matches the domain.\n3. If using a self-signed certificate, add it to the trusted root store for the Logic App environment.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240005146984394791688654CU22",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted Certificate Authority.\n3. If the certificate is self-signed or from an untrusted CA, update the external service to use a certificate from a trusted CA.\n4. If the certificate is valid, check the Logic App's network configuration for any custom SSL validation settings or firewall restrictions.\n5. After resolving the certificate issue, re-run the Logic App to confirm successful connection.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240005333504087513790162CU11",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate is signed by a trusted certificate authority. 3. If using a self-signed certificate, add it to the trusted root store for the Logic App's connector. 4. Update the endpoint's certificate if necessary. 5. Test the connection from the Logic App to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240005516156487093525982CU07",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the target endpoint specified in the 'uri' property for validity and expiration.\n2. Ensure the endpoint supports TLS 1.2 or higher, as required by Azure Logic Apps.\n3. Update the endpoint's certificate if it is expired or invalid.\n4. If the certificate is valid, check the Logic App's HTTP connector settings for any custom TLS/SSL configuration and update as needed.\n5. Test the connection from the Logic App to the endpoint to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240005717397315824178702CU08",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate is signed by a trusted certificate authority. 3. Update the external service's certificate if it is expired or invalid. 4. If using a self-signed certificate, add it to the trusted store for the Logic App connector. 5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240005914672983356037886CU29",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and trusted by Azure Logic Apps.\n3. Confirm that the external service supports TLS 1.2 or higher, as required by Azure.\n4. If the certificate is invalid or expired, update it on the external service.\n5. If the TLS version is unsupported, configure the external service to use a compatible version.\n6. Test the connection from Logic Apps to the external service after making changes.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240006113686275657255226CU15",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property for validity and expiration.\n2. Ensure the certificate is trusted by Azure Logic Apps (public CA, correct chain).\n3. Confirm that the external service supports TLS 1.2 or higher, as required by Azure Logic Apps.\n4. If the certificate is invalid or expired, update or renew it on the external service.\n5. If the endpoint uses a self-signed certificate, consider switching to a certificate from a trusted CA or configure Logic Apps to accept it (if possible).",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240006314394353465260007CU27",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the external service's SSL certificate is valid, not expired, and matches the endpoint domain.\n2. Check the 'uri' property in the 'Get_Customer_Info' action for correctness (ensure it uses 'https' and the correct domain).\n3. Update the workflow to specify supported TLS versions if required.\n4. If the certificate is self-signed, ensure the Logic App environment trusts it.\n5. After correcting the certificate or endpoint, re-run the workflow to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240006493247110766880784CU04",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If using a self-signed certificate, add the certificate to the trusted store or update the connector configuration to trust it.\n4. Update the workflow or API connection configuration if necessary to reference the correct endpoint or certificate.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240006684722014777523556CU27",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and trusted by Azure Logic Apps.\n3. Confirm that the external service supports TLS 1.2 or higher, as required by Azure Logic Apps.\n4. If the certificate is invalid, update or replace it on the external service.\n5. If the certificate chain is incomplete, add any missing intermediate certificates.\n6. Test the connection from Logic Apps after making changes.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240006893846788354115870CU24",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted store or use a certificate from a recognized CA.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240007105675268141845641CU27",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service for validity and expiration.\n2. Ensure the certificate chain is complete and trusted by Azure Logic Apps.\n3. Confirm that the external service supports TLS 1.2 or higher, as required by Azure.\n4. Update the external service's certificate or configuration if needed.\n5. Test the connection from Logic Apps to the external endpoint to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240007313324590619784617CU23",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted Certificate Authority.\n3. If the certificate is self-signed or untrusted, add the certificate to the trusted store or update the endpoint to use a valid certificate.\n4. Update the workflow or API connection configuration if necessary to reference the correct endpoint.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240007516596494631820774CU19",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and trusted by Azure Logic Apps.\n3. Confirm that the external service supports TLS 1.2 or higher, as required by Azure.\n4. If the certificate is invalid or expired, update or renew it on the external service.\n5. If the TLS version is unsupported, configure the external service to use a compatible version.\n6. Test the connection from Logic Apps to the external service after making changes.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240008027184012253384207CU26",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property for validity and expiration.\n2. Ensure the certificate is signed by a trusted certificate authority and matches the domain.\n3. If using a self-signed certificate, add it to the trusted root store for the Logic App environment.\n4. Update the external service's certificate if it is expired or invalid.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240008205576532370373595CU14",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If using a self-signed certificate, add the certificate to the trusted store for the Logic App connector.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240008414851323111297852CU24",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If using a self-signed certificate, add the certificate to the trusted store of the Logic App environment.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240008606755539579573231CU28",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service (check for expiration, validity, and correct configuration).\n2. Ensure the certificate is signed by a trusted certificate authority.\n3. If using a self-signed certificate, add it to the trusted root store for the Logic App connector.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240008805838212319733267CU18",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted root store or use a certificate from a recognized CA.\n4. Update the endpoint or connector configuration if necessary to use a valid certificate.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240606791691327340926130CU04",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate is signed by a trusted certificate authority. 3. If using a self-signed certificate, add it to the trusted root store for the Logic App connector. 4. Update the endpoint's certificate if necessary. 5. Test the connection from the Logic App to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240607625692713758788566CU05",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted Certificate Authority.\n3. If the certificate is self-signed, add it to the trusted store or update the service to use a CA-signed certificate.\n4. Update the workflow or API connection configuration if necessary to reference the correct endpoint or certificate.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240607830653715458152092CU03",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service endpoint for validity and expiration.\n2. Ensure the certificate chain is complete and trusted by Azure Logic Apps.\n3. Check that the external service supports TLS 1.2 or higher, as required by Azure.\n4. Update the external service's certificate or TLS configuration if needed.\n5. Test the connection from Logic Apps to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240608005349028392532987CU07",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and matches the domain.\n3. If using a self-signed certificate, add it to the trusted root store for the Logic App environment.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240608185553034242003152CU05",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain matching.\n2. Ensure the certificate is signed by a trusted certificate authority recognized by Azure.\n3. If using a self-signed certificate, add it to the trusted root store in the Logic App's environment or switch to a CA-signed certificate.\n4. Test the connection from the Logic App to the endpoint using tools like OpenSSL or Azure's diagnostic logs.\n5. Update the endpoint or certificate as needed and re-run the Logic App.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240655727898215718302754CU20",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If using a self-signed certificate, add the certificate to the trusted root store for the Logic App's integration runtime.\n4. Update the API connection or network configuration to trust the certificate if necessary.\n5. Test the connection from the Logic App to the external service to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240766177297584781980636CU23",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted root store or use a certificate from a recognized CA.\n4. Update the API connection or HTTP action configuration to trust the certificate if necessary.\n5. Test the connection to confirm the SSL error is resolved.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240766796809476950326779CU01",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted store of the Logic App's environment or use a certificate from a recognized CA.\n4. Update the endpoint if necessary to use a valid SSL certificate.\n5. Test the connection from the Logic App to confirm the SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240766932738748225728388CU26",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If using a self-signed certificate, add the certificate to the trusted store for the Logic App environment.\n4. Update the endpoint or certificate as needed to resolve the SSL error.\n5. Test the HTTP action to confirm successful connection.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240767044644960744240595CU23",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service (check for expiration, validity, and correct domain).\n2. Ensure the external service supports TLS 1.2 or higher, as required by Azure Logic Apps.\n3. Update the certificate if expired or invalid.\n4. If the certificate is valid, check the 'uri' property in the 'Get_Customer_Info' action for correct HTTPS usage.\n5. Test the connection from a Logic App to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240767196883232944325987CU18",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and matches the domain.\n3. If using a self-signed certificate, add it to the trusted root store for the Logic App environment.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240772354471475514395576CU26",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the external service's SSL certificate is valid, not expired, and matches the endpoint domain.\n2. Ensure the HTTP action's 'uri' property is correct and uses 'https'.\n3. Check if the Logic App's environment supports the required TLS version for the external service.\n4. If the certificate is self-signed or from an untrusted CA, update the external service to use a certificate from a trusted CA.\n5. After resolving certificate or endpoint issues, re-run the Logic App.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240773484559379331471949CU08",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the target endpoint specified in the 'uri' property for validity and expiration.\n2. Ensure the certificate chain is complete and trusted by Azure Logic Apps.\n3. Confirm that the endpoint supports TLS 1.2 or higher, as required by Azure Logic Apps.\n4. If the certificate is invalid or expired, update it on the remote server.\n5. If the endpoint uses an unsupported TLS version, reconfigure it to use TLS 1.2 or higher.\n6. Test the connection from Logic Apps after making these changes.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240773708355481870860507CU11",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate chain is complete and trusted by Azure Logic Apps. 3. If using a self-signed certificate, add it to the trusted root store or switch to a certificate from a recognized CA. 4. Update the endpoint or certificate as needed. 5. Test the connection from the Logic App to confirm resolution.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240773911407532066770162CU03",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and matches the domain.\n3. If using a self-signed certificate, add it to the trusted root store for the Logic App environment.\n4. Update the external service's certificate if necessary.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240773979129715400014931CU18",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate is signed by a trusted certificate authority. 3. Update the external service's certificate if necessary. 4. If the certificate is valid, check the Logic App's HTTP connector settings for any custom certificate validation options. 5. Test the connection after remediation.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584240776525738310289281016CU21",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 409 Client Error: Conflict for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/RUNTIME_ERRORS?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Get_Customer_Info",
+          "property_path": "inputs.uri",
+          "new_value": "\"https://api.newcustomerservice.com/v1/customers/@{triggerBody()?['customerId']}\"",
+          "reason": "Updates the endpoint URI to a new domain, ensuring the SSL certificate matches and resolves the connector failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584240782026528001197205357CU10",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 409 Client Error: Conflict for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/RUNTIME_ERRORS?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Parse_Customer_Response",
+          "property_path": "inputs.schema.properties.customerId",
+          "new_value": "{\"type\": \"string\"}",
+          "reason": "Add 'customerId' property to the ParseJson schema to match the expected payload and prevent schema validation errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584240784206503001394271055CU13",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 409 Client Error: Conflict for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/RUNTIME_ERRORS?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Parse_Customer_Response",
+          "property_path": "inputs.schema.properties.customerId",
+          "new_value": "null",
+          "reason": "Removes the 'customerId' property from the schema since it is not present in the actual response, preventing schema validation failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584240785371194250171035413CU02",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 409 Client Error: Conflict for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/RUNTIME_ERRORS?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Parse_Customer_Response",
+          "property_path": "inputs.schema.properties.customerId",
+          "new_value": "{\"type\": \"string\"}",
+          "reason": "Defines 'customerId' as a string in the schema to ensure the parser expects the correct type."
+        }
+      ]
+    },
+    {
+      "run_id": "08584240788567186610980221992CU30",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 409 Client Error: Conflict for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/RUNTIME_ERRORS?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Parse_Customer_Response",
+          "property_path": "inputs.schema.properties.customerId",
+          "new_value": "null",
+          "reason": "Removes 'customerId' from the schema to match the actual response format, preventing schema validation failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584240791638221422435647060CU19",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 409 Client Error: Conflict for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/RUNTIME_ERRORS?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Parse_Customer_Response",
+          "property_path": "inputs.schema.properties.customerId",
+          "new_value": "{\"type\": \"string\"}",
+          "reason": "Defines 'customerId' as a required string property in the schema to ensure it is parsed correctly."
+        },
+        {
+          "action_name": "Parse_Customer_Response",
+          "property_path": "inputs.schema.required",
+          "new_value": "[\"customerId\"]",
+          "reason": "Adds 'customerId' to the required array so the action fails with a clear error if it is missing from the payload."
+        }
+      ]
+    },
+    {
+      "run_id": "08584240796280195329194445286CU31",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 409 Client Error: Conflict for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/RUNTIME_ERRORS?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Parse_Customer_Response",
+          "property_path": "inputs.content",
+          "new_value": "{\"id\": \"@body('Get_Customer_Info')?['id']\", \"name\": \"@body('Get_Customer_Info')?['name']\", \"email\": \"@body('Get_Customer_Info')?['email']\", \"status\": \"@body('Get_Customer_Info')?['status']\", \"address\": \"@body('Get_Customer_Info')?['address']\", \"customerId\": \"@body('Get_Customer_Info')?['customerId']\"}",
+          "reason": "Ensures the 'customerId' property is explicitly included in the content passed to ParseJson, preventing schema validation failure."
+        }
+      ]
+    }
+  ]
+}

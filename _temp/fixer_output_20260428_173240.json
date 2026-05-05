@@ -1,0 +1,101 @@
+{
+  "fix_results": [
+    {
+      "run_id": "08584248426838775753156216004CU14",
+      "status": "success",
+      "details": "The 'inputs.uri' property of the 'Call_Auto_Remediation_API' action was updated to point to the correct API endpoint, fixing the NotFound error.",
+      "patches_applied": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "property_path": "inputs.uri",
+          "new_value": "\"https://correct-endpoint.example.com/remediate\"",
+          "reason": "Updating the 'uri' property to the correct API endpoint resolves the NotFound connector failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584249301407721472868931994CU01",
+      "status": "success",
+      "details": "Updated the 'inputs.uri' property in the 'Call_Auto_Remediation_API' action to the correct API endpoint to fix the connector failure.",
+      "patches_applied": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "property_path": "inputs.uri",
+          "new_value": "\"https://correct-endpoint.example.com/remediate\"",
+          "reason": "Updating the 'uri' property to the correct, reachable API endpoint resolves the NotFound connector failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584249309164105638446655781CU31",
+      "status": "success",
+      "details": "Updated the 'inputs.uri' property in the 'Call_Auto_Remediation_API' action to point to a valid endpoint, fixing the connector failure.",
+      "patches_applied": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "property_path": "inputs.uri",
+          "new_value": "\"https://valid-endpoint.example.com/remediate\"",
+          "reason": "Updating the 'uri' property to a valid, reachable endpoint resolves the NotFound connector failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584251804183285282332841817CU13",
+      "status": "success",
+      "details": "Updated the 'inputs.uri' property in the 'Call_Auto_Remediation_API' action to point to the correct API endpoint, resolving the connector failure.",
+      "patches_applied": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "property_path": "inputs.uri",
+          "new_value": "\"https://correct-endpoint.example.com/remediate\"",
+          "reason": "Updating the 'uri' property to the correct endpoint ensures the HTTP connector can locate the required resource and prevents connector failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584264743900349529735010606CU16",
+      "status": "success",
+      "details": "Updated the 'inputs.uri' property of 'Call_Auto_Remediation_API' to use a valid hostname, resolving the connector failure caused by an unresolvable host.",
+      "patches_applied": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "property_path": "inputs.uri",
+          "new_value": "\"https://correct-endpoint.example.com/remediate\"",
+          "reason": "Replaces the placeholder hostname 'your-api' with a valid, resolvable API endpoint to fix the connector failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584264784504640598986220034CU07",
+      "status": "success",
+      "details": "Explicitly set the 'Content-Type' header to 'application/json' in the 'Call_Auto_Remediation_API' action to resolve the payload issue.",
+      "patches_applied": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "property_path": "inputs.headers.Content-Type",
+          "new_value": "\"application/json\"",
+          "reason": "Ensures the 'Content-Type' header is explicitly set to 'application/json', matching the payload format and preventing API rejection."
+        }
+      ]
+    },
+    {
+      "run_id": "08584264787039824187378097600CU01",
+      "status": "skipped",
+      "details": "Config change requires human action: 1. Review the authentication method required by the Auto Remediation API (e.g., API key, OAuth token).\n2. Update the 'headers' property in the 'Call_Auto_Remediation_API' action to include valid authentication credentials.\n3. If using a managed API connection, ensure the connection is properly configured and not expired.\n4. Test the workflow after updating credentials to confirm successful authentication.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584264805951705510340783046CU24",
+      "status": "success",
+      "details": "Added an exponential retry policy to the 'Call_Auto_Remediation_API' action to handle 429 throttling errors gracefully.",
+      "patches_applied": [
+        {
+          "action_name": "Call_Auto_Remediation_API",
+          "property_path": "inputs.retryPolicy",
+          "new_value": "{\"type\": \"exponential\", \"interval\": \"PT10S\", \"count\": 5, \"minimumInterval\": \"PT10S\", \"maximumInterval\": \"PT2M\"}",
+          "reason": "Adding an exponential retry policy allows the action to automatically retry on 429 errors, respecting typical API rate limits and reducing the chance of repeated throttling."
+        }
+      ]
+    }
+  ]
+}

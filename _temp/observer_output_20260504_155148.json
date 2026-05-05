@@ -1,0 +1,862 @@
+{
+  "workflow_id": "RUNTIME_ERRORS",
+  "total_failed": 50,
+  "workflow_action_names": [
+    "Get_Customer_Info",
+    "Parse_Customer_Response",
+    "Check_Customer_Status",
+    "Return_Success_Response"
+  ],
+  "errors": [
+    {
+      "run_id": "08584239631969593225446389284CU16",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T13:54:48.5206699Z",
+      "end_time": "2026-05-01T15:45:54.5047958Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T13:54:48.8690571Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:07.551932+00:00"
+    },
+    {
+      "run_id": "08584239641815073683495656611CU26",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T13:38:23.9722572Z",
+      "end_time": "2026-05-01T15:44:37.8018348Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T13:38:25.816603Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:08.266977+00:00"
+    },
+    {
+      "run_id": "08584239641952346833610035199CU31",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T13:38:10.2453206Z",
+      "end_time": "2026-05-01T15:22:04.0322722Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T13:38:10.4976294Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:09.156526+00:00"
+    },
+    {
+      "run_id": "08584239642145006016745153081CU28",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T13:37:50.9790812Z",
+      "end_time": "2026-05-01T15:34:14.5062256Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T13:37:51.2209825Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:09.937353+00:00"
+    },
+    {
+      "run_id": "08584239642347790817269959177CU01",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T13:37:30.7007979Z",
+      "end_time": "2026-05-01T15:29:20.4409751Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T13:37:30.8502021Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:11.322380+00:00"
+    },
+    {
+      "run_id": "08584239642506578921675511855CU19",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T13:37:14.8220409Z",
+      "end_time": "2026-05-01T15:33:36.2250155Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T13:37:17.4229663Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:12.071674+00:00"
+    },
+    {
+      "run_id": "08584239642682287765740970932CU27",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T13:36:57.2511371Z",
+      "end_time": "2026-05-01T15:28:35.8166853Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T13:36:57.6802556Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:12.953443+00:00"
+    },
+    {
+      "run_id": "08584239642844691506559113238CU24",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T13:36:41.0108753Z",
+      "end_time": "2026-05-01T15:43:44.8800777Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T13:36:41.9635664Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:13.870257+00:00"
+    },
+    {
+      "run_id": "08584240004958627059649045996CU07",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:33:09.617392Z",
+      "end_time": "2026-05-01T05:18:19.0085625Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:33:10.6107219Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:14.780810+00:00"
+    },
+    {
+      "run_id": "08584240005146984394791688654CU22",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:32:50.781041Z",
+      "end_time": "2026-05-01T05:36:33.4046854Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:32:51.1229214Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:15.573508+00:00"
+    },
+    {
+      "run_id": "08584240005333504087513790162CU11",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:32:32.1294352Z",
+      "end_time": "2026-05-01T05:38:58.308621Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:32:33.3018218Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:16.275318+00:00"
+    },
+    {
+      "run_id": "08584240005516156487093525982CU07",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:32:13.8645274Z",
+      "end_time": "2026-05-01T05:33:25.0685298Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:32:14.3024754Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:17.029643+00:00"
+    },
+    {
+      "run_id": "08584240005717397315824178702CU08",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:31:53.7403763Z",
+      "end_time": "2026-05-01T05:31:08.2564348Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:31:54.3545657Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:17.714047+00:00"
+    },
+    {
+      "run_id": "08584240005914672983356037886CU29",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:31:34.0126178Z",
+      "end_time": "2026-05-01T05:54:23.2777985Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:31:34.6083771Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:18.415535+00:00"
+    },
+    {
+      "run_id": "08584240006113686275657255226CU15",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:31:14.1112684Z",
+      "end_time": "2026-05-01T05:20:11.5333827Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:31:14.3829875Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:19.150724+00:00"
+    },
+    {
+      "run_id": "08584240006314394353465260007CU27",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:30:54.0401642Z",
+      "end_time": "2026-05-01T05:35:16.2754399Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:30:55.2126526Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:19.921461+00:00"
+    },
+    {
+      "run_id": "08584240006493247110766880784CU04",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:30:36.1551424Z",
+      "end_time": "2026-05-01T05:42:29.3936231Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:30:36.2774692Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:20.670885+00:00"
+    },
+    {
+      "run_id": "08584240006684722014777523556CU27",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:30:17.0076885Z",
+      "end_time": "2026-05-01T05:52:07.3572989Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:30:17.5018183Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:21.758366+00:00"
+    },
+    {
+      "run_id": "08584240006893846788354115870CU24",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:29:56.095Z",
+      "end_time": "2026-05-01T05:45:10.6896622Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:29:56.2680128Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:22.523284+00:00"
+    },
+    {
+      "run_id": "08584240007105675268141845641CU27",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:29:34.9121019Z",
+      "end_time": "2026-05-01T05:37:53.5564994Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:29:35.2827312Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:23.432672+00:00"
+    },
+    {
+      "run_id": "08584240007313324590619784617CU23",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:29:14.1471345Z",
+      "end_time": "2026-05-01T05:44:16.1267876Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:29:14.3286985Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:24.449358+00:00"
+    },
+    {
+      "run_id": "08584240007516596494631820774CU19",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:28:53.8200472Z",
+      "end_time": "2026-05-01T05:14:51.1997305Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:28:54.7121993Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:25.290796+00:00"
+    },
+    {
+      "run_id": "08584240008027184012253384207CU26",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:28:02.7611912Z",
+      "end_time": "2026-05-01T05:46:53.4744372Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:28:03.4663963Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:26.083238+00:00"
+    },
+    {
+      "run_id": "08584240008205576532370373595CU14",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:27:44.9219736Z",
+      "end_time": "2026-05-01T05:35:20.7949634Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:27:46.6565132Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:26.851571+00:00"
+    },
+    {
+      "run_id": "08584240008414851323111297852CU24",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:27:23.994332Z",
+      "end_time": "2026-05-01T05:19:42.2722613Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:27:24.4801479Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:27.606988+00:00"
+    },
+    {
+      "run_id": "08584240008606755539579573231CU28",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:27:04.8045446Z",
+      "end_time": "2026-05-01T05:16:13.9929703Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:27:04.9241103Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:28.360592+00:00"
+    },
+    {
+      "run_id": "08584240008805838212319733267CU18",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-01T03:26:44.8957708Z",
+      "end_time": "2026-05-01T05:46:06.9096994Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-05-01T03:26:45.6681212Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:29.326839+00:00"
+    },
+    {
+      "run_id": "08584240606791691327340926130CU04",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T10:50:06.3108419Z",
+      "end_time": "2026-04-30T13:12:25.202157Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T10:50:07.1519693Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:30.025599+00:00"
+    },
+    {
+      "run_id": "08584240607625692713758788566CU05",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T10:48:42.9106038Z",
+      "end_time": "2026-04-30T13:17:07.4222499Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T10:48:43.8368226Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:30.843473+00:00"
+    },
+    {
+      "run_id": "08584240607830653715458152092CU03",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T10:48:22.4144609Z",
+      "end_time": "2026-04-30T12:40:03.875353Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T10:48:22.538294Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:31.666421+00:00"
+    },
+    {
+      "run_id": "08584240608005349028392532987CU07",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T10:48:04.9449467Z",
+      "end_time": "2026-04-30T13:03:14.9256512Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T10:48:06.2081695Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:32.559864+00:00"
+    },
+    {
+      "run_id": "08584240608185553034242003152CU05",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T10:47:46.9247592Z",
+      "end_time": "2026-04-30T13:00:33.1212537Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T10:47:47.3465402Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:33.396163+00:00"
+    },
+    {
+      "run_id": "08584240655727898215718302754CU20",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T09:28:32.6895632Z",
+      "end_time": "2026-04-30T12:02:14.8364306Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T09:28:33.4383454Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:34.362209+00:00"
+    },
+    {
+      "run_id": "08584240766177297584781980636CU23",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:24:27.7500439Z",
+      "end_time": "2026-04-30T08:37:10.1244433Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:24:28.0520835Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:35.402669+00:00"
+    },
+    {
+      "run_id": "08584240766796809476950326779CU01",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:23:25.7985375Z",
+      "end_time": "2026-04-30T08:46:15.4869822Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:23:26.2306541Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:36.138000+00:00"
+    },
+    {
+      "run_id": "08584240766932738748225728388CU26",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:23:12.2056619Z",
+      "end_time": "2026-04-30T08:44:07.1464534Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:23:13.3155368Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:36.995642+00:00"
+    },
+    {
+      "run_id": "08584240767044644960744240595CU23",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:23:01.0154204Z",
+      "end_time": "2026-04-30T08:15:10.9255312Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:23:01.6626606Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:37.747760+00:00"
+    },
+    {
+      "run_id": "08584240767196883232944325987CU18",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:22:45.7915437Z",
+      "end_time": "2026-04-30T08:12:19.8478682Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:22:46.241283Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:38.503340+00:00"
+    },
+    {
+      "run_id": "08584240772354471475514395576CU26",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:14:10.0326389Z",
+      "end_time": "2026-04-30T08:36:40.2644361Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:14:10.4792191Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:39.277972+00:00"
+    },
+    {
+      "run_id": "08584240773484559379331471949CU08",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:12:17.0238883Z",
+      "end_time": "2026-04-30T08:27:38.6882642Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:12:17.2804239Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:40.182298+00:00"
+    },
+    {
+      "run_id": "08584240773708355481870860507CU11",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:11:54.6444103Z",
+      "end_time": "2026-04-30T08:13:58.8518015Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:11:54.885849Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:40.955855+00:00"
+    },
+    {
+      "run_id": "08584240773911407532066770162CU03",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:11:34.3388523Z",
+      "end_time": "2026-04-30T08:34:40.7775795Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:11:35.2858049Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:41.823350+00:00"
+    },
+    {
+      "run_id": "08584240773979129715400014931CU18",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:11:27.5669052Z",
+      "end_time": "2026-04-30T08:12:03.8262604Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:11:27.7307111Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:42.559188+00:00"
+    },
+    {
+      "run_id": "08584240776525738310289281016CU21",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T06:07:12.9063403Z",
+      "end_time": "2026-04-30T08:38:44.8283752Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "HTTP request failed as there is an error: 'The SSL connection could not be established, see inner exception.'.",
+          "start_time": "2026-04-30T06:07:13.1315616Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:43.481456+00:00"
+    },
+    {
+      "run_id": "08584240782026528001197205357CU10",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T05:58:02.8266782Z",
+      "end_time": "2026-04-30T05:58:04.1173595Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Get_Customer_Info' inputs at line '0' and column '0': 'The template language expression 'triggerBody()['customerId']' cannot be evaluated because property 'customerId' doesn't exist, available properties are ''. Please see https://aka.ms/logicexpressions for usage details.'.",
+          "start_time": "2026-04-30T05:58:03.9701519Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:44.182861+00:00"
+    },
+    {
+      "run_id": "08584240784206503001394271055CU13",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T05:54:24.8295466Z",
+      "end_time": "2026-04-30T05:54:25.5622901Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Get_Customer_Info' inputs at line '0' and column '0': 'The template language expression 'triggerBody()['customerId']' cannot be evaluated because property 'customerId' doesn't exist, available properties are ''. Please see https://aka.ms/logicexpressions for usage details.'.",
+          "start_time": "2026-04-30T05:54:25.3762163Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:44.895962+00:00"
+    },
+    {
+      "run_id": "08584240785371194250171035413CU02",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T05:52:28.3605285Z",
+      "end_time": "2026-04-30T05:52:28.8935619Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Get_Customer_Info' inputs at line '0' and column '0': 'The template language expression 'triggerBody()['customerId']' cannot be evaluated because property 'customerId' doesn't exist, available properties are ''. Please see https://aka.ms/logicexpressions for usage details.'.",
+          "start_time": "2026-04-30T05:52:28.6804438Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:45.855379+00:00"
+    },
+    {
+      "run_id": "08584240788567186610980221992CU30",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T05:47:08.761214Z",
+      "end_time": "2026-04-30T05:47:09.1372837Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Get_Customer_Info' inputs at line '0' and column '0': 'The template language expression 'triggerBody()['customerId']' cannot be evaluated because property 'customerId' doesn't exist, available properties are ''. Please see https://aka.ms/logicexpressions for usage details.'.",
+          "start_time": "2026-04-30T05:47:08.9720792Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:46.666211+00:00"
+    },
+    {
+      "run_id": "08584240791638221422435647060CU19",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T05:42:01.6578247Z",
+      "end_time": "2026-04-30T05:42:02.0095891Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Get_Customer_Info' inputs at line '0' and column '0': 'The template language expression 'triggerBody()['customerId']' cannot be evaluated because property 'customerId' doesn't exist, available properties are ''. Please see https://aka.ms/logicexpressions for usage details.'.",
+          "start_time": "2026-04-30T05:42:01.8361132Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:47.407279+00:00"
+    },
+    {
+      "run_id": "08584240796280195329194445286CU31",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-04-30T05:34:17.4602647Z",
+      "end_time": "2026-04-30T05:34:17.7549024Z",
+      "failed_actions": [
+        {
+          "action_name": "Get_Customer_Info",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Get_Customer_Info' inputs at line '0' and column '0': 'The template language expression 'triggerBody()['customerId']' cannot be evaluated because property 'customerId' doesn't exist, available properties are ''. Please see https://aka.ms/logicexpressions for usage details.'.",
+          "start_time": "2026-04-30T05:34:17.5708944Z"
+        }
+      ],
+      "timestamp": "2026-05-04T10:21:48.552851+00:00"
+    }
+  ]
+}

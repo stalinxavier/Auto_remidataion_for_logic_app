@@ -1,0 +1,654 @@
+{
+  "fix_results": [
+    {
+      "run_id": "08584242351048774447492235738CU07",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "\"@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')\"",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, defaulting to an empty string if null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242351257025697701220399CU21",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the function error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242351475090169281985578CU10",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the payload issue."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242351640819185545258097CU14",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242351804329052180186790CU00",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the function from failing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242351949246559054695304CU27",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing runtime errors when the log is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242352105531306773910395CU01",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is not null, preventing runtime errors when 'log' is missing or null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242352253626123659944333CU01",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the payload issue."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242352514835105390822627CU18",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the payload issue."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242352517149887623809263CU15",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the payload error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242354874727804895667911CU17",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "This change ensures that the input to the 'contains' function is never null by using the 'coalesce' function, preventing the payload issue error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242354883661899243090762CU05",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the payload issue."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242356461226523930524996CU03",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@contains(coalesce(triggerBody()?['log'], ''), 'ERROR')",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the payload issue."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242356508926940643003356CU18",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "Adds a null check before calling 'contains' to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242356731229783867229435CU27",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "This patch ensures the 'contains' function only runs if the input is not null, preventing the payload error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242356783915003336561948CU21",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "\"@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)\"",
+          "reason": "Adds a null check before calling 'contains' to prevent the function from failing when input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242357039078643040343414CU10",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "Adds a null check before calling 'contains' to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242357097891319520202426CU11",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "Adds a null check before using 'contains' to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242357654551288259840031CU20",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "This change ensures that the 'contains' function is only called when 'log' is not null, preventing null input errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242357655250168394486509CU20",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "Adds a null check before calling 'contains' to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242358227982256547018344CU29",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "Wraps the 'contains' function in a null check to ensure it only runs when the input is not null, preventing the payload error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242358308279791588785775CU19",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "Wraps the 'contains' function in a null check to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242358600219617481680390CU25",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"and\":[{\"equals\":[\"@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)\",true]}]}",
+          "reason": "Replaces the condition expression to ensure 'contains' is only called when 'log' is not null, preventing null input errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242358607479772608899907CU25",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "\"@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)\"",
+          "reason": "Wraps the 'contains' function with a null check using 'if' and 'equals' to prevent null input errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242359505889967957441098CU31",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "Wraps the 'contains' function with a null check to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242359558166066416896227CU09",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(triggerBody()?['log'], 'ERROR'), false)",
+          "reason": "Adds a null check before calling 'contains' to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242359801882935593507864CU29",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(string(triggerBody()?['log']), 'ERROR'), false)",
+          "reason": "Wraps the input to 'contains' in a 'string()' function to ensure it is always a valid string, preventing null input errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242359853790913972685076CU23",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@if(not(equals(triggerBody()?['log'], null)), contains(string(triggerBody()?['log']), 'ERROR'), false)",
+          "reason": "Wraps the 'contains' function with a null check to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242394851556889270131625CU31",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"and\":[{\"equals\":[\"@and(not(equals(triggerBody()?['log'], null)), contains(string(triggerBody()?['log']), 'ERROR'))\",true]}]}",
+          "reason": "Wraps the 'contains' function with a null check to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242394907071589626565934CU22",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(equals(triggerBody()?['log'], null)), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to default to an empty string if null, preventing errors when input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242474667371810161104557CU02",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(equals(triggerBody()?['log'], null)), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "This change ensures that the input to 'contains' is never null by using 'coalesce' to provide a default empty string, preventing runtime errors when 'log' is missing or uninitialized."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242474829485197942697174CU28",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(triggerBody()?['log'])), contains(string(triggerBody()?['log']), 'ERROR'))",
+          "reason": "Adds a null/empty check before calling 'contains' to prevent errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242474858654060332791337CU27",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"and\":[{\"equals\":[\"@and(not(empty(triggerBody()?['log'])), contains(string(triggerBody()?['log']), 'ERROR'))\",true]}]}",
+          "reason": "Replaces the condition to use 'not(empty(...))' before 'contains', ensuring the input is not null or empty before evaluating 'contains'."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242475031004744553129218CU21",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "Wraps the input in 'coalesce' to ensure it is not null before using 'contains', preventing runtime errors when the value is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242475061647793946388137CU00",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is not null, preventing the function from failing when the log is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242475240775634987892689CU16",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "Adds a null check using 'coalesce' and 'empty' before calling 'contains', preventing errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242475259762332367469723CU14",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "This change ensures that the input to 'contains' is never null by using 'coalesce' to provide a default empty string, preventing the function from failing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242475384390406501965740CU20",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "This change ensures that the 'contains' function is only called on a non-null string, preventing errors when 'log' is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242475387623014635307333CU03",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "Adds a null check using 'coalesce' to ensure the input to 'contains' is not null, preventing the payload issue."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242475512395981118370616CU08",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "\"@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))\"",
+          "reason": "Adds a null check using 'coalesce' to ensure 'contains' is only called on a valid string, preventing errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242475512439018616272675CU14",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "This expression ensures 'contains' is only called when the input is not null, preventing the payload issue."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242476733913498281135436CU13",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "This change ensures that the input to 'contains' is never null by using 'coalesce', preventing the payload issue error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242476769537866619493273CU25",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "\"@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))\"",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is not null, preventing the function from failing when log is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242476873394754790259812CU22",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "Wraps the input to 'contains' with 'coalesce' and 'string' to ensure it is never null, preventing the error when input is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242476909150762172856758CU09",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "\"@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))\"",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is not null, preventing the payload issue."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242477051558518679122805CU17",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))",
+          "reason": "Adds a null check using 'coalesce' and 'empty' before calling 'contains', preventing errors when the input is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242477109496595463561231CU21",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "\"@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))\"",
+          "reason": "Wraps the input to 'contains' with 'coalesce' to ensure it is never null, preventing the function from failing when log is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242477298277746069083564CU27",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"and\":[{\"equals\":[\"@and(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'))\",true]}]}",
+          "reason": "This change ensures the 'contains' function is only called on a non-null string by using 'coalesce' to provide a default value if 'log' is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242477317172841760112025CU05",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), if(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'), false))",
+          "reason": "Wraps the 'contains' function in an 'if' statement to ensure it is only called when the input is not null, preventing null input errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584242479909391663687287073CU14",
+      "status": "failed",
+      "details": "Patches generated but PUT failed: 400 Client Error: Bad Request for url: https://management.azure.com/subscriptions/c474dc7c-4f50-490b-a886-847fad508a71/resourceGroups/logicapp-rg/providers/Microsoft.Logic/workflows/Log_Monitoring_Flow?api-version=2019-05-01",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression.and[0].equals[0]",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['log'], ''))), if(not(empty(coalesce(triggerBody()?['log'], ''))), contains(string(coalesce(triggerBody()?['log'], '')), 'ERROR'), false))",
+          "reason": "Adds a null/empty check before calling 'contains' to prevent errors when input is null."
+        }
+      ]
+    }
+  ]
+}

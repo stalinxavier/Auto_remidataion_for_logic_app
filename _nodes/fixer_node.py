@@ -79,16 +79,13 @@ def _workflow_url(name: str) -> str:
 
 
 def _build_put_body(full_workflow: dict, updated_definition: dict) -> dict:
-    """
-    Build the ARM PUT body preserving location, parameters ($connections), and
-    any other properties — only swapping in the updated definition block.
-    """
     original_props = full_workflow.get("properties", {})
     return {
         "location": full_workflow.get("location", ""),
         "properties": {
-            **original_props,           # keeps parameters.$connections and everything else
+            **original_props,
             "definition": updated_definition,
+            "state": "Enabled",  # ← Explicitly override state
         },
     }
 

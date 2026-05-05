@@ -1,0 +1,454 @@
+{
+  "analysis": [
+    {
+      "run_id": "08584239631969593225446389284CU16",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP request to the external service could not establish a secure connection. This is typically caused by an expired, invalid, or mismatched SSL certificate on the external service endpoint, or by the Logic App not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted root store for the Logic App environment.\n4. Update the endpoint or certificate as needed to resolve the SSL error.\n5. Test the connection from the Logic App to confirm successful SSL handshake.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584239641815073683495656611CU26",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP connector could not establish a secure connection to the target endpoint. This is typically caused by an expired, invalid, or unsupported SSL certificate on the remote server, or a mismatch in TLS protocol versions between the Logic App and the endpoint.",
+      "fix_plan": "1. Verify the SSL certificate on the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and trusted by Azure Logic Apps.\n3. Confirm that the endpoint supports TLS 1.2 or higher, as required by Azure.\n4. If the certificate is invalid or expired, update or replace it on the remote server.\n5. If the endpoint uses an unsupported TLS version, update its configuration to support TLS 1.2 or higher.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584239641952346833610035199CU31",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP connector could not establish a secure connection to the target endpoint. This is typically caused by an expired, invalid, or misconfigured SSL certificate on the remote server, or by the connector not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate of the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted root store or update the endpoint to use a certificate from a recognized CA.\n4. Update the workflow or connector configuration to reference the correct endpoint and ensure proper SSL validation settings.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584239642145006016745153081CU28",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP connector could not establish a secure connection to the target endpoint. This is typically caused by an expired, invalid, or mismatched SSL certificate on the remote server, or by the connector not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate of the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed or from an untrusted CA, update the endpoint to use a certificate from a trusted CA.\n4. If the certificate is valid, check the connector configuration for any custom certificate validation settings and update as needed.\n5. After resolving the certificate issue, re-run the Logic App to confirm successful execution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584239642347790817269959177CU01",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an invalid, expired, or untrusted SSL certificate on the target endpoint, or a mismatch in TLS protocol versions between Logic Apps and the external service.",
+      "fix_plan": "1. Verify the SSL certificate of the external service (check for validity, expiration, and trust chain).\n2. Ensure the external service supports TLS 1.2 or higher, as required by Azure Logic Apps.\n3. Update the external service's certificate if it is invalid or expired.\n4. If the certificate is valid, check the Logic App's HTTP action settings for any custom TLS/SSL configuration and update as needed.\n5. Test the connection from Logic Apps to the external service after making changes.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584239642506578921675511855CU19",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which typically occurs when the target endpoint's SSL certificate is expired, invalid, or not trusted by Azure Logic Apps. This prevented the HTTP connector from establishing a secure connection.",
+      "fix_plan": "1. Verify the SSL certificate of the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted Certificate Authority.\n3. If the certificate is self-signed or not trusted, update the endpoint to use a valid certificate or configure the connector to accept the certificate if appropriate.\n4. Test the connection from Azure Logic Apps to confirm the SSL issue is resolved.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584239642682287765740970932CU27",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's environment not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and matches the domain.\n3. If the certificate is self-signed, add it to the trusted root store of the Logic App environment.\n4. If the certificate has changed, update the API connection or endpoint configuration to reflect the new certificate.\n5. Test the connection from the Logic App to the external service to confirm SSL handshake succeeds.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584239642844691506559113238CU24",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or not trusted by the Logic App's runtime environment.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted Certificate Authority.\n3. If the certificate is self-signed or untrusted, update the external service to use a valid certificate.\n4. Optionally, update the workflow's HTTP action to allow untrusted certificates only if security requirements permit (set 'ignoreSslErrors' to true in the action's properties).",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240004958627059649045996CU07",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's environment not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain matching.\n2. Ensure the certificate is signed by a trusted certificate authority recognized by Azure.\n3. If using a self-signed certificate, add it to the trusted root store in the Logic App's environment or switch to a CA-signed certificate.\n4. Update the endpoint if necessary to use a valid certificate.\n5. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240005146984394791688654CU22",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's environment not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate chain is complete and trusted by Azure. 3. If using a self-signed certificate, add it to the trusted root store in Azure. 4. Update the endpoint or certificate as needed. 5. Test the connection from the Logic App to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240005333504087513790162CU11",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or unsupported SSL certificate on the target endpoint, or a mismatch in TLS protocol versions between Logic Apps and the external service.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint for validity and expiration.\n2. Ensure the certificate chain is complete and trusted by Azure Logic Apps.\n3. Confirm that the external service supports TLS 1.2 or higher, as required by Azure.\n4. If the certificate is invalid or expired, update it on the external service.\n5. If the certificate chain is incomplete, add the missing intermediate certificates.\n6. Test the connection from Logic Apps after making the necessary changes.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240005516156487093525982CU07",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's environment not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain matching.\n2. Ensure the certificate is signed by a trusted certificate authority recognized by Azure.\n3. If using a self-signed certificate, add it to the trusted root store in the Logic App's environment or switch to a CA-signed certificate.\n4. Test the connection from the Logic App to the endpoint using tools like OpenSSL or Azure diagnostics to confirm SSL handshake success.\n5. Update the endpoint or certificate as needed and re-run the Logic App.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240005717397315824178702CU08",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP request could not establish a secure connection. This is typically caused by an invalid, expired, or untrusted SSL certificate on the target endpoint, or a mismatch in TLS protocol versions between the Logic App and the endpoint.",
+      "fix_plan": "1. Verify the SSL certificate on the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and trusted by Azure Logic Apps.\n3. Check that the endpoint supports TLS 1.2 or higher, as required by Azure.\n4. If the certificate is self-signed, add it to the trusted root store or use a certificate from a trusted CA.\n5. Update the endpoint configuration or certificate as needed to resolve the SSL error.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240005914672983356037886CU29",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or the Logic App is unable to establish a secure connection due to certificate trust issues.",
+      "fix_plan": "1. Verify the SSL certificate of the external service (check for expiration, validity, and correct domain).\n2. Ensure the certificate chain is complete and trusted by Azure Logic Apps.\n3. If using a self-signed certificate, add it to the trusted root store or switch to a certificate from a recognized CA.\n4. Update the workflow's HTTP action to set 'ignoreSslErrors' to false (if currently true) to enforce proper validation.\n5. Test the connection after certificate remediation.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240006113686275657255226CU15",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or unsupported SSL certificate on the target endpoint, or a mismatch in TLS protocol versions between Logic Apps and the external service.",
+      "fix_plan": "1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property for validity and expiration.\n2. Ensure the certificate is signed by a trusted Certificate Authority and is not self-signed or revoked.\n3. Confirm that the external service supports TLS 1.2 or higher, as required by Azure Logic Apps.\n4. If the certificate is invalid or expired, update or replace it on the external service.\n5. Test the connection from Logic Apps to the external service after remediation.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240006314394353465260007CU27",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP request to the external service could not establish a secure connection. This is typically caused by an expired, invalid, or mismatched SSL certificate on the external service endpoint, or by the Logic App's connector not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate chain is complete and trusted by Azure Logic Apps. 3. If the certificate is self-signed or from a non-standard CA, update the endpoint to use a certificate from a trusted CA. 4. Test the connection from Logic Apps after certificate update. 5. Optionally, update the workflow's HTTP action to use 'ignoreSslErrors' only if absolutely necessary and after risk assessment.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240006493247110766880784CU04",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP request to the external service could not establish a secure connection. This is typically caused by an expired, invalid, or misconfigured SSL certificate on the external service, or by the Logic App's connector not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property for validity and expiration.\n2. Ensure the certificate is signed by a trusted certificate authority and is correctly installed on the external service.\n3. If using a self-signed certificate, add the certificate to the trusted store for the Logic App or update the connector configuration to trust it.\n4. Test the connection from the Logic App to confirm SSL handshake succeeds.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240006684722014777523556CU27",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or not trusted by the Logic App's runtime environment.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted Certificate Authority.\n3. If the certificate is self-signed or untrusted, update the external service to use a valid certificate.\n4. Optionally, update the Logic App's HTTP action to allow untrusted certificates (not recommended for production).\n5. Test the connection after certificate update to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240006893846788354115870CU24",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or not trusted by the Logic App runtime.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted Certificate Authority.\n3. If the certificate is self-signed, add it to the trusted store or update the service to use a CA-signed certificate.\n4. Update the workflow or API connection configuration if necessary to reference the correct endpoint or certificate.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240007105675268141845641CU27",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's environment not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate chain is complete and trusted by Azure Logic Apps. 3. If using a self-signed certificate, add it to the trusted root store or switch to a certificate from a recognized authority. 4. Update the endpoint or connector configuration if necessary to use a valid certificate.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240007313324590619784617CU23",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP request to the external service could not establish a secure connection. This is typically caused by an expired, invalid, or misconfigured SSL certificate on the external service, or a mismatch in TLS protocol versions between the Logic App and the service.",
+      "fix_plan": "1. Verify the SSL certificate validity and configuration on the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is not expired, is trusted, and matches the domain.\n3. Confirm that the external service supports the required TLS protocol versions (e.g., TLS 1.2 or higher).\n4. If the certificate is invalid or expired, update or renew it on the external service.\n5. Optionally, update the Logic App HTTP action to use a compatible TLS version if needed.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240007516596494631820774CU19",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP connector could not establish a secure connection to the target endpoint. This is typically caused by an invalid, expired, or unsupported SSL certificate on the remote server, or a mismatch in TLS protocol versions between Logic Apps and the endpoint.",
+      "fix_plan": "1. Verify the SSL certificate on the target endpoint specified in the 'uri' property for validity and expiration.\n2. Ensure the certificate is signed by a trusted Certificate Authority and is not self-signed unless explicitly allowed.\n3. Check that the endpoint supports TLS 1.2 or higher, as required by Azure Logic Apps.\n4. Update the endpoint's certificate or TLS configuration if necessary.\n5. Optionally, update the workflow's HTTP action to use a different endpoint or adjust headers if required.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240008027184012253384207CU26",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or not trusted by the Logic App's runtime environment.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted Certificate Authority.\n3. If the certificate is self-signed or not trusted, add the certificate to the trusted store or update the service to use a valid certificate.\n4. Update the workflow or API connection configuration if necessary to reference the correct endpoint or certificate.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240008205576532370373595CU14",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP connector could not establish a secure connection to the target endpoint. This is typically caused by an expired, invalid, or unsupported SSL certificate on the remote server, or a mismatch in TLS protocol versions between the Logic App and the endpoint.",
+      "fix_plan": "1. Verify the SSL certificate on the target endpoint specified in the 'uri' property for validity and expiration.\n2. Ensure the certificate chain is complete and trusted by Azure Logic Apps.\n3. Confirm that the endpoint supports TLS 1.2 or higher, as required by Azure.\n4. Update the endpoint's certificate or TLS settings if necessary.\n5. Test the connection from the Logic App to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240008414851323111297852CU24",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP request could not establish a secure connection. This is typically caused by an expired, invalid, or misconfigured SSL certificate on the target endpoint, or by the endpoint using a TLS version not supported by Azure Logic Apps.",
+      "fix_plan": "1. Verify the SSL certificate of the target endpoint specified in the 'uri' property for validity and expiration.\n2. Ensure the endpoint supports TLS 1.2 or higher, as required by Azure Logic Apps.\n3. If the certificate is expired or invalid, update or replace it on the target server.\n4. If the endpoint uses a self-signed certificate, add the certificate to the trusted store or use a valid CA-signed certificate.\n5. Test the HTTP action after certificate correction to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240008606755539579573231CU28",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's environment not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain matching.\n2. Ensure the certificate is signed by a trusted certificate authority recognized by Azure.\n3. If using a self-signed certificate, add it to the trusted root store in the Logic App's environment or switch to a CA-signed certificate.\n4. Test the endpoint using tools like OpenSSL or Postman to confirm SSL connectivity.\n5. Update the endpoint or certificate as needed and re-run the Logic App.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240008805838212319733267CU18",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP request to the external service could not establish a secure connection. This is typically caused by an expired, invalid, or misconfigured SSL certificate on the external service, or a mismatch in TLS protocol versions between Logic Apps and the service.",
+      "fix_plan": "1. Verify the SSL certificate of the external service (check for expiration, validity, and correct domain).\n2. Ensure the external service supports TLS 1.2 or higher, as required by Azure Logic Apps.\n3. Update the certificate if expired or invalid.\n4. If the certificate is valid, check the 'uri' property in the 'Get_Customer_Info' action for correct HTTPS usage.\n5. Test the connection from a Logic App to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240606791691327340926130CU04",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or not trusted by the Logic App's runtime environment.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted Certificate Authority.\n3. If the certificate is self-signed, add it to the trusted store or update the service to use a CA-signed certificate.\n4. Update the workflow's HTTP action to use the correct endpoint and ensure 'headers' do not override SSL validation settings.\n5. Test the connection to confirm SSL issues are resolved.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240607625692713758788566CU05",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP connector could not establish a secure connection to the target endpoint. This is typically caused by an expired, invalid, or unsupported SSL certificate on the remote server, or a mismatch in TLS protocol versions between the Logic App and the endpoint.",
+      "fix_plan": "1. Verify the SSL certificate on the target endpoint for validity and expiration.\n2. Ensure the endpoint supports TLS 1.2 or higher, as required by Azure Logic Apps.\n3. Update the endpoint's certificate if it is expired or invalid.\n4. If the endpoint uses a self-signed certificate, add it to the trusted root store or use a certificate from a recognized CA.\n5. Test the connection from the Logic App to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240607830653715458152092CU03",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's connector not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint for validity, expiration, and correct domain. 2. Ensure the certificate is signed by a trusted certificate authority. 3. If using a self-signed certificate, add it to the trusted root store for the Logic App connector. 4. Update the endpoint certificate if necessary. 5. Test the connection from the Logic App to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240608005349028392532987CU07",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP connector could not establish a secure connection to the target endpoint. This is typically caused by an expired, invalid, or unsupported SSL certificate on the remote server, or a mismatch in TLS protocol versions between the Logic App and the endpoint.",
+      "fix_plan": "1. Verify the SSL certificate on the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and trusted by Azure Logic Apps.\n3. Check that the endpoint supports TLS 1.2 or higher, as required by Azure.\n4. If the certificate is invalid or expired, update or renew it on the remote server.\n5. If the endpoint uses an unsupported TLS version, update its configuration to support TLS 1.2 or higher.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240608185553034242003152CU05",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP request to the external service could not establish a secure connection. This is typically caused by an expired, invalid, or misconfigured SSL certificate on the external service, or a mismatch in TLS protocol versions between Logic Apps and the target endpoint.",
+      "fix_plan": "1. Verify the SSL certificate of the external service (check for expiration, validity, and correct hostname).\n2. Ensure the external service supports TLS 1.2 or higher, as required by Azure Logic Apps.\n3. Update the external service's certificate if necessary.\n4. If the certificate is valid, check the 'uri' property in the 'Get_Customer_Info' action for correct HTTPS usage.\n5. After resolving certificate or protocol issues, re-run the Logic App.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240655727898215718302754CU20",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or not trusted by the Logic App's environment.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted Certificate Authority.\n3. If the certificate is self-signed or untrusted, update the external service to use a valid certificate.\n4. Optionally, update the workflow's HTTP action to allow untrusted certificates only if security requirements permit (set 'ignoreSslErrors' to true in the action's properties).",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240766177297584781980636CU23",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP connector could not establish a secure connection to the target endpoint. This is typically caused by an expired, invalid, or misconfigured SSL certificate on the remote server, or a mismatch in TLS settings between the Logic App and the endpoint.",
+      "fix_plan": "1. Verify the SSL certificate on the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and trusted by Azure Logic Apps.\n3. Check that the endpoint supports the required TLS versions (1.2 or higher).\n4. If the certificate is invalid, update or replace it on the remote server.\n5. If the endpoint uses a self-signed certificate, add it to the trusted root store or use a certificate from a trusted CA.\n6. Test the connection from Azure Logic Apps to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240766796809476950326779CU01",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or misconfigured SSL certificate on the target endpoint, or by the connector not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted root store or update the endpoint to use a certificate from a recognized CA.\n4. Update the workflow or API connection configuration to trust the certificate if necessary.\n5. Test the connection to confirm the SSL error is resolved.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240766932738748225728388CU26",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's environment not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted store of the Logic App's environment or use a certificate from a recognized CA.\n4. Update the endpoint if necessary to use a valid SSL certificate.\n5. Test the connection from the Logic App to confirm the SSL handshake succeeds.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240767044644960744240595CU23",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or not trusted by the Logic App's runtime environment.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted Certificate Authority.\n3. If the certificate is self-signed or untrusted, add the CA to the trusted store or update the certificate to a valid one.\n4. Update the workflow's HTTP action to use the correct endpoint with a valid SSL certificate.\n5. Test the connection to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240767196883232944325987CU18",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP request could not establish a secure connection to the target endpoint. This is typically caused by an invalid, expired, or mismatched SSL certificate on the remote server, or by the workflow referencing an HTTP endpoint instead of HTTPS.",
+      "fix_plan": "1. Verify that the 'uri' property in the 'Get_Customer_Info' action uses 'https://' and not 'http://'.\n2. Check the SSL certificate of the target endpoint for validity, expiration, and correct domain matching.\n3. If the certificate is invalid or expired, update or renew it on the remote server.\n4. If the certificate is valid, ensure that the workflow's HTTP action is configured to accept the certificate (if self-signed, add it to trusted roots or enable appropriate settings).\n5. Test the connection after making these changes.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240772354471475514395576CU26",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or not trusted by Azure Logic Apps.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted Certificate Authority.\n3. If the certificate is self-signed or untrusted, update it to a valid certificate.\n4. Confirm that the Azure Logic App can establish a secure connection to the external service after the certificate update.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240773484559379331471949CU08",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, which indicates that the HTTP connector could not establish a secure connection to the target endpoint. This is typically caused by an expired, invalid, or unsupported SSL certificate on the remote server, or a mismatch in TLS protocol versions between Logic Apps and the endpoint.",
+      "fix_plan": "1. Verify the SSL certificate on the target endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and trusted by Azure Logic Apps.\n3. Confirm that the endpoint supports TLS 1.2 or higher, as required by Azure Logic Apps.\n4. If the certificate is invalid or expired, update or renew it on the remote server.\n5. If the endpoint uses an unsupported TLS version, update its configuration to support TLS 1.2 or higher.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240773708355481870860507CU11",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's connector not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate on the external service endpoint (check for expiration, validity, and correct hostname).\n2. Ensure the certificate chain is complete and trusted by Azure Logic Apps.\n3. If using a self-signed certificate, add it to the trusted root store or switch to a certificate from a recognized CA.\n4. Update the endpoint configuration if necessary to use a valid certificate.\n5. Test the connection from the Logic App to confirm resolution.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240773911407532066770162CU03",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the external service's SSL certificate is either expired, invalid, or the Logic App's HTTP connector is not configured to trust the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate of the external service (check expiration, validity, and CA trust).\n2. If expired or invalid, update the certificate on the external service.\n3. If the certificate is valid, ensure the Logic App's HTTP connector is configured to accept the certificate (add CA to trusted list if needed).\n4. Test the connection from the Logic App to the external service after making changes.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240773979129715400014931CU18",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error, indicating that the HTTP connector could not establish a secure connection to the external service. This is typically caused by an expired, invalid, or mismatched SSL certificate on the target endpoint, or by the Logic App's environment not trusting the certificate authority.",
+      "fix_plan": "1. Verify the SSL certificate of the external service endpoint specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and issued by a trusted certificate authority.\n3. If the certificate is self-signed, add it to the trusted store of the Logic App's environment or update the endpoint to use a certificate from a recognized CA.\n4. Update the workflow or API connection configuration if necessary to reference the correct endpoint or certificate.",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240776525738310289281016CU21",
+      "error_type": "Connector Failure",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed due to an SSL connection error when connecting to the external service. This typically occurs when the target endpoint's SSL certificate is expired, invalid, or not trusted by Azure Logic Apps.",
+      "fix_plan": "1. Verify the SSL certificate of the external service specified in the 'uri' property of 'Get_Customer_Info'.\n2. Ensure the certificate is valid, not expired, and signed by a trusted Certificate Authority.\n3. If the certificate is self-signed or untrusted, update the external service to use a valid certificate.\n4. Optionally, update the workflow's HTTP action to allow untrusted certificates (not recommended for production).",
+      "action_type": "config_change",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240782026528001197205357CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_Customer_Response",
+      "root_cause": "The 'Parse_Customer_Response' action failed because the trigger payload did not contain the required 'customerId' property, which is necessary for parsing according to the defined schema.",
+      "fix_plan": "Update the workflow trigger or the 'Get_Customer_Info' action to ensure that the 'customerId' property is included in the payload before it reaches 'Parse_Customer_Response'. Verify the schema in 'Parse_Customer_Response' matches the actual payload structure returned by 'Get_Customer_Info'.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240784206503001394271055CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_Customer_Response",
+      "root_cause": "The 'Parse_Customer_Response' action failed because the trigger payload did not contain the required 'customerId' property. This indicates that the preceding 'Get_Customer_Info' HTTP action either did not return the expected property or the schema in 'Parse_Customer_Response' is not aligned with the actual response.",
+      "fix_plan": "1. Review the output of 'Get_Customer_Info' to confirm if 'customerId' is present in the response.\n2. If missing, update the HTTP request in 'Get_Customer_Info' to ensure it retrieves 'customerId'.\n3. If present but not parsed, update the schema in 'Parse_Customer_Response' to correctly reference 'customerId'.\n4. Test the workflow to verify the fix.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240785371194250171035413CU02",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_Customer_Response",
+      "root_cause": "The 'Parse_Customer_Response' action failed because the trigger payload did not include the required 'customerId' property, which is expected by the ParseJson schema. This likely means the preceding 'Get_Customer_Info' HTTP action did not return a response containing 'customerId', or the schema in 'Parse_Customer_Response' is incorrectly defined.",
+      "fix_plan": "1. Review the HTTP response from 'Get_Customer_Info' to confirm if 'customerId' is present in the payload.\n2. If missing, update the 'uri' or request parameters in 'Get_Customer_Info' to ensure 'customerId' is included in the response.\n3. If present, verify and update the schema in 'Parse_Customer_Response' to correctly reference 'customerId'.\n4. Test the workflow to confirm the payload now includes 'customerId' and the ParseJson action succeeds.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240788567186610980221992CU30",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_Customer_Response",
+      "root_cause": "The 'Parse_Customer_Response' action failed because the trigger payload did not contain the required 'customerId' property. This indicates that the preceding 'Get_Customer_Info' HTTP action either did not return the expected property or the schema in 'Parse_Customer_Response' is incorrectly defined and expects 'customerId' when it may not always be present.",
+      "fix_plan": "1. Review the response from 'Get_Customer_Info' to confirm if 'customerId' is included in the payload.\n2. If missing, update the HTTP request in 'Get_Customer_Info' to ensure it retrieves 'customerId'.\n3. If the schema in 'Parse_Customer_Response' expects 'customerId' but it is optional, modify the schema to make 'customerId' optional.\n4. Test the workflow with sample payloads to confirm the fix.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240791638221422435647060CU19",
+      "error_type": "Payload Issue",
+      "affected_action": "Get_Customer_Info",
+      "root_cause": "The 'Get_Customer_Info' action failed because the trigger payload did not include the required 'customerId' property, which is necessary for constructing the HTTP request to retrieve customer information.",
+      "fix_plan": "Update the workflow trigger definition to ensure that the 'customerId' property is always present in the incoming payload. Validate the trigger schema to require 'customerId' and add error handling to check for its presence before executing 'Get_Customer_Info'.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584240796280195329194445286CU31",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_Customer_Response",
+      "root_cause": "The 'Parse_Customer_Response' action failed because the trigger payload did not contain the required 'customerId' property, which is expected by the ParseJson schema. This likely means the preceding 'Get_Customer_Info' HTTP action did not return a payload with 'customerId', or the schema in 'Parse_Customer_Response' is incorrectly defined.",
+      "fix_plan": "1. Review the output of 'Get_Customer_Info' to confirm if 'customerId' is present in the response.\n2. If missing, update the HTTP request in 'Get_Customer_Info' to ensure it retrieves 'customerId'.\n3. If present, verify the schema in 'Parse_Customer_Response' includes 'customerId' as a required property.\n4. Update the schema in 'Parse_Customer_Response' to match the actual response structure from 'Get_Customer_Info'.\n5. Save and redeploy the workflow.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    }
+  ]
+}
