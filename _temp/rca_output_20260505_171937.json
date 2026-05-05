@@ -1,0 +1,454 @@
+{
+  "analysis": [
+    {
+      "run_id": "08584236272741907920287757698CU29",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s endsWith expression evaluated a payload field that was null/missing. Because endsWith requires a string, passing null caused the Condition action to fail instead of returning false.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the action named \"Condition\" (type: If) and its expression that calls endsWith.\n3) Make the expression null-safe by wrapping the first argument to endsWith with string(coalesce(...,'')) so a string is always supplied.\n   - If the expression is a single string form, transform:\n     From: @endsWith(<ARG1>, <ARG2>)\n     To:   @endsWith(string(coalesce(<ARG1>, '')), <ARG2>)\n   - If the expression uses JSON array/object syntax, transform the first operand of endsWith similarly by applying string(coalesce(<existingFirstOperand>, '')). Keep the second operand unchanged.\n4) Save and redeploy the workflow.\n5) Test with payloads where the referenced field is present, empty, and missing to verify the Condition no longer fails and simply evaluates to false when the value is null/empty.",
+      "action_type": "update_workflow",
+      "confidence": 0.9
+    },
+    {
+      "run_id": "08584236272898650830947901308CU17",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If action named \"Condition\" evaluates an endsWith(...) expression whose first argument is null for this run. endsWith requires a string input, but the upstream data property referenced by the condition was missing/nullable, resulting in endsWith(null, <suffix>) and a type error.",
+      "fix_plan": "1) Locate the \"Condition\" (type If) action in the workflow definition.\n2) Extract the existing endsWith expression: endsWith(A, B) where A is the current first argument and B is the suffix.\n3) Replace it with a null-safe form: endsWith(string(coalesce(A, '')), B). This guarantees a string is passed even when A is null.\n4) Redeploy the updated workflow definition.\n5) Re-run the failed instance or trigger a new run to validate no error occurs when the input property is missing.",
+      "action_type": "update_workflow",
+      "confidence": 0.84
+    },
+    {
+      "run_id": "08584236273329880612417784418CU27",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression calls endsWith on a dynamic value that evaluated to null in this run (the referenced property was missing/empty in the payload). Because endsWith requires string inputs, the null value caused the expression to fail at runtime.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the action named \"Condition\" (type \"If\").\n3) In its condition expression, find the endsWith(...) function.\n4) Make the expression null-safe by wrapping any potentially null argument with coalesce. For example, change:\n   endsWith(<leftArg>, '<suffix>')\n   to:\n   endsWith(coalesce(<leftArg>, ''), '<suffix>')\n   (If the right/suffix argument can also be null, use coalesce(<rightArg>, '') as well.)\n5) Save and redeploy the workflow.\n6) Re-run a failed instance to validate that null payloads no longer cause the Condition to fail.",
+      "action_type": "update_workflow",
+      "confidence": 0.84
+    },
+    {
+      "run_id": "08584236497072928925924145474CU15",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith(...) expression on a value that can be null (likely from the trigger or an upstream reference). Because the Condition has no predecessors (runAfter is empty), the referenced input was missing/undefined in this run, so endsWith received null instead of a string and the Condition failed.",
+      "fix_plan": "1) Open the workflow definition JSON and locate actions.Condition.\n2) Inside actions.Condition, find the expression that uses endsWith(left, right).\n3) Modify the left operand to be null-safe by wrapping it with coalesce(..., ''), so endsWith always receives a string.\n   - Example change (conceptual):\n     From: endsWith(<left_expr>, <suffix>)\n     To:   endsWith(coalesce(<left_expr>, ''), <suffix>)\n4) If the expression is represented in string form, update it to: \"@endsWith(coalesce(<left_expr>, ''), '<suffix>')\".\n5) Save and redeploy the workflow.\n6) Validate with a test run where the referenced field is present and another where it is missing/null; confirm the Condition no longer errors and simply evaluates to false when input is null.",
+      "action_type": "update_workflow",
+      "confidence": 0.74
+    },
+    {
+      "run_id": "08584236497167413650172545756CU20",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith() expression where the first argument (a payload-derived value) is null for this run. Because endsWith() requires a string, the null value caused a data/type mismatch and the action failed. No null/empty guard or default conversion was applied before calling endsWith().",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the action named \"Condition\" and its condition expression that calls endsWith(<leftArg>, <suffix>).\n3) Make the expression null-safe by wrapping the first argument with a default and string cast:\n   - Replace: @endsWith(<leftArg>, '<suffix>')\n   - With:    @endsWith(string(coalesce(<leftArg>, '')), '<suffix>')\n   (Use the existing <leftArg> expression exactly as-is inside coalesce().)\n4) If the intended behavior is that a null should evaluate to false, optionally add an explicit guard:\n   - @and(not(empty(<leftArg>)), endsWith(string(<leftArg>), '<suffix>'))\n5) Save and redeploy the workflow.\n6) Re-run the failed message to validate the condition now handles nulls without error.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236497265082351535648809CU25",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If action named 'Condition' uses an endsWith() expression whose first argument evaluated to null (the referenced token/path was missing in the incoming payload). Because endsWith requires a string input, the null value caused the action to fail.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Condition and read its expression property.\n3) For every occurrence of endsWith(<arg1>, <arg2>) in that expression, transform the first argument to a null-safe string by wrapping it as: endsWith(string(coalesce(<arg1>, '')), <arg2>).\n   - Example transformation: @endsWith(triggerBody()?['fileName'], '.csv') \u2192 @endsWith(string(coalesce(triggerBody()?['fileName'], '')), '.csv')\n4) Save and redeploy the updated workflow definition.\n5) Re-run with a payload where the previously referenced property may be missing to confirm that the condition now evaluates to false instead of failing.",
+      "action_type": "update_workflow",
+      "confidence": 0.74
+    },
+    {
+      "run_id": "08584236497388401957986250909CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression calls endsWith() with a first argument that evaluated to null. Because this is the first action (runAfter is empty), the referenced value comes from the trigger (or a parameter) that was missing in this run, causing endsWith() to fail on a null instead of a string.",
+      "fix_plan": "1) Retrieve the workflow definition JSON. 2) Locate actions.Condition.expression. 3) Modify the expression so the first argument to endsWith() is safely coerced to a string, e.g., replace @endsWith(<ARG1>, <ARG2>) with @endsWith(coalesce(string(<ARG1>), ''), <ARG2>). Do not change <ARG2>. 4) Save and redeploy the workflow. 5) Re-run the workflow to validate that when the source value is missing/null, the condition evaluates without failing (endsWith on empty string returns false).",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236497516716082952477152CU24",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action uses an endsWith() expression whose left operand evaluated to null (likely a missing/empty field from the trigger or a prior action). Logic Apps endsWith() requires a string; passing null throws the failure observed.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the Condition action and its expression that calls endsWith().\n3) Update the expression to make the left operand null-safe by converting null to an empty string.\n   - Change from: @endsWith(<valueExpression>, '<suffix>')\n   - Change to:   @endsWith(string(<valueExpression>), '<suffix>')\n   (Alternatively: @endsWith(coalesce(<valueExpression>, ''), '<suffix>'))\n4) Save and redeploy the workflow.\n5) Test with payloads where <valueExpression> is present and where it is missing/null to confirm the Condition evaluates without failing (returns false when null).",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584236497640634874140120380CU00",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition (If) action evaluates an endsWith() expression whose left-hand value comes from a payload field that was null/missing in this run. Because the expression does not guard against nulls, endsWith() received a null instead of a string and the Condition failed during evaluation.",
+      "fix_plan": "1) Locate the Condition action in the workflow definition at actions.Condition.\n2) Read its expression property (the Workflow Definition Language string) and identify all occurrences of endsWith(<LHS>, <SUFFIX>).\n3) For each occurrence, make the expression null-safe by:\n   - Wrapping the left-hand side with coalesce: endsWith(coalesce(<LHS>, ''), <SUFFIX>)\n   - Optionally add a non-empty guard for stricter logic: and(not(empty(<LHS>)), endsWith(coalesce(<LHS>, ''), <SUFFIX>))\n4) Update the workflow JSON so that actions.Condition.expression reflects the null-safe expression(s).\n5) Deploy the updated workflow.\n6) Re-run the failed instance (or enable resubmission) to confirm the Condition now evaluates without error when the field is missing/null.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236497763832357860787198CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition (If) action evaluates an endsWith() expression whose first argument comes from the trigger payload. In this run, that referenced field resolved to null (missing/empty in the payload), and endsWith requires a non-null string, causing the action to fail.",
+      "fix_plan": "1) Retrieve the workflow definition and locate the action named \"Condition\".\n2) Inspect its expression and identify the endsWith(<lhs>, <rhs>) call.\n3) Rewrite the expression to guard against nulls by coercing the first argument to a string with a safe default:\n   - Replace: endsWith(<lhs>, <rhs>)\n   - With: endsWith(string(coalesce(<lhs>, '')), <rhs>)\n   Example when checking a file name: endsWith(string(coalesce(triggerOutputs()?['body/fileName'], '')), '.csv')\n4) Save and redeploy the workflow.\n5) Optionally, add a preliminary check (not(empty(<lhs>))) if you want the Condition to explicitly fail the branch when the value is missing, e.g., and(not(empty(<lhs>)), endsWith(string(coalesce(<lhs>, '')), <rhs>)).\n6) Re-run the failed instance or allow the next trigger to run.",
+      "action_type": "update_workflow",
+      "confidence": 0.73
+    },
+    {
+      "run_id": "08584236497886934113838410905CU24",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action uses an endsWith(...) function where the first argument evaluated to null from the incoming payload. The endsWith function requires strings and throws when given null, so the If expression failed due to missing/null data for the referenced field.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Condition.expression containing the endsWith(...) call.\n3) Replace the first argument of endsWith with a null-safe string, e.g., endsWith(string(coalesce(<original_first_argument>, '')), <second_argument>). If the second argument can be dynamic and possibly null, wrap it similarly: string(coalesce(<second_argument>, '')).\n4) Save and deploy the updated workflow.\n5) Re-run the workflow with a test payload where the referenced field is null to confirm the Condition evaluates (returns false) instead of failing.\n6) Optionally, add a preceding Compose step that defines a sanitized value (e.g., SafeValue = string(coalesce(<original_first_argument>, ''))) and reference SafeValue in the Condition to simplify the expression.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584236498011777935827967718CU22",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith() expression where the first argument resolves to null for this run (most likely a missing or empty field from the trigger payload). Because endsWith() requires a string, passing null caused the If action to fail. The action has no runAfter dependencies, so it executed immediately against the trigger output that lacked the expected property.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Condition (type: If) and open its condition expression.\n3) For every occurrence of endsWith(<arg1>, <arg2>):\n   - Wrap the first argument with a null-safe default so it is always a string, e.g. change to endsWith(coalesce(<arg1>, ''), <arg2>). Example pattern: endsWith(coalesce(triggerBody()?['fileName'], ''), '.csv').\n   - Alternatively add a guard: and(not(empty(<arg1>)), endsWith(<arg1>, <arg2>)).\n4) Save and deploy the updated workflow definition.\n5) Re-run the failed instance or trigger a new run to validate the Condition now evaluates without throwing on null inputs.\n6) (Optional hardening) If multiple properties are referenced, apply the same coalesce/empty-check to each endsWith() usage.",
+      "action_type": "update_workflow",
+      "confidence": 0.77
+    },
+    {
+      "run_id": "08584236498124876450698630973CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If action \"Condition\" evaluates an expression using endsWith(...) where the first argument resolved to null for this run (the upstream payload did not include the referenced property). Because endsWith requires a string, the template engine threw \"expected a string but received null,\" causing the Condition action to fail.",
+      "fix_plan": "1) Retrieve the Condition action definition in the workflow JSON (the If action named \"Condition\").\n2) Read its expression that contains endsWith(<value>, <suffix>).\n3) Rewrite each endsWith call to make the first argument always a string, even when null, by wrapping it with string(coalesce(...,'')) and normalizing case for safe comparison. Specifically, transform:\n   @endsWith(<value>, <suffix>)\n   into:\n   @endsWith(toLower(string(coalesce(<value>, ''))), toLower(string(<suffix>)))\n   (Keep <value> and <suffix> as they are in the current expression.)\n4) Save and deploy the updated workflow definition.\n5) Re-run the failed instance or trigger a new run to validate that when the property is missing, the condition evaluates to false instead of failing.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236498213781670012367335CU29",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action uses the endsWith() expression on a value that was null because the referenced input field was missing/undefined in the run\u2019s payload. The expression did not guard against nulls, causing the function to throw instead of evaluating to false.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the action with name \"Condition\" (type: If).\n3) Update the Condition expression to be null-safe by wrapping the first argument in coalesce() (or gate with not(empty())). For example, replace:\n   @endsWith(<currentFirstArg>, '<expected-suffix>')\n   with either of:\n   - @endsWith(coalesce(string(<currentFirstArg>), ''), '<expected-suffix>')\n     (preferred: prevents null from causing a failure and evaluates to false when input is missing)\n   or\n   - @and(not(empty(<currentFirstArg>)), endsWith(string(<currentFirstArg>), '<expected-suffix>'))\n4) Ensure any direct property access in <currentFirstArg> uses a null-safe pattern (e.g., body('Trigger')?['property']) when applicable.\n5) Save and redeploy the workflow.\n6) Re-run the failed payload to confirm the Condition now evaluates without error (returns false when the value is null).",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584236498302097201533120278CU04",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith() expression where the first argument resolved to null because the referenced field in the incoming payload was missing or null. Since endsWith() requires a string, the null input caused the condition to fail at runtime.",
+      "fix_plan": "1) Locate the Condition action in the workflow definition and find the endsWith() expression currently used.\n2) Add a null/empty guard to the first argument so it is always a string:\n   - Preferred: wrap with coalesce: \"@endsWith(coalesce(<yourStringExpr>, ''), <suffix>)\"\n   - Or use a compound check: \"@and(not(empty(<yourStringExpr>)), endsWith(<yourStringExpr>, <suffix>))\"\n3) If case-insensitive comparison is desired, normalize both sides: \"@endsWith(toLower(coalesce(<yourStringExpr>, '')), toLower(<suffix>))\".\n4) Update the workflow JSON for the Condition action with the guarded expression and deploy the change.\n5) Test with payloads where the referenced field is present, missing, and explicitly null to confirm the condition evaluates (false when missing/null) without throwing an error.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584236498388899131946594471CU29",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action uses an endsWith() expression whose first argument evaluated to null at runtime because the referenced input field was missing/empty. Since endsWith requires a string, passing null caused the action to fail.",
+      "fix_plan": "1) Open the workflow definition and locate actions[\"Condition\"]. 2) Inspect the Condition expression that calls endsWith(). 3) Make the expression null-safe by wrapping the first argument with coalesce to guarantee a string. Example change: from @endsWith(<existingFirstArg>, '<suffix>') to @endsWith(coalesce(<existingFirstArg>, ''), '<suffix>'). 4) Alternatively, add a guard so the condition only evaluates endsWith when the value is present: @and(not(equals(<existingFirstArg>, null)), endsWith(<existingFirstArg>, '<suffix>')). 5) Save and redeploy the workflow. 6) Re-run the workflow (or enable resubmit of failed runs) to confirm the Condition no longer fails when the input field is null/missing.",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584236498504367253462642949CU07",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression uses endsWith(...) on a value that evaluated to null in this run (likely a missing field from the trigger/prior action output). Because no null guard is applied, endsWith requires a string and fails when given null.",
+      "fix_plan": "1) Open the workflow definition JSON and locate actions.Condition.expression.\n2) Identify the endsWith call(s). Let the first argument currently be E and the suffix be S.\n3) Replace each endsWith(E, S) with endsWith(string(coalesce(E, '')), S) so that null inputs are coerced to an empty string.\n4) If the intent requires the value to be present, optionally strengthen the condition to and(not(empty(E)), endsWith(string(coalesce(E, '')), S)).\n5) Save and redeploy the workflow.\n6) Re-run the failed run to confirm the Condition now handles missing/nullable inputs without error.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236498641250634408655963CU08",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If action's condition uses the endsWith() function on a value that was null at runtime (likely a missing/optional field from the trigger or a prior action). endsWith requires a non-null string argument, so the null input caused a type mismatch and the condition failed.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the action actions[\"Condition\"]. For this action, access its condition expression (typically at actions.Condition.expression).\n3) In the expression tree, find every endsWith(...) call. For each occurrence, modify the first argument to be null-safe:\n   - If the current form is endsWith(<arg>, <suffix>), change it to endsWith(coalesce(<arg>, ''), <suffix>).\n   - Alternatively, if you prefer a guard: and(not(empty(<arg>)), endsWith(<arg>, <suffix>)). Use one consistent approach across all endsWith calls.\n4) Validate the updated expression syntax using Logic Apps expression validator.\n5) Update the workflow with the modified JSON definition.\n6) Redeploy the workflow and re-run the failed instance (or trigger a new run) to confirm the condition evaluates without error when the value is null.\n7) (Optional) If the field is expected to be absent frequently, document this behavior and keep the null-safe pattern for future maintenance.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    },
+    {
+      "run_id": "08584236498788262562636301899CU30",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith(...) expression where the input being tested is null (likely a missing/empty property from the trigger or a prior action). Because endsWith requires a string, passing null caused a BadRequest and the condition failed.",
+      "fix_plan": "1) Open the Logic App in Code View and locate the Condition action.\n2) Find the endsWith(<originalExpression>, '<suffix>') expression inside the Condition.\n3) Make the expression null-safe by wrapping the first argument with coalesce to provide a default empty string:\n   - Replace: endsWith(<originalExpression>, '<suffix>')\n   - With:    endsWith(coalesce(<originalExpression>, ''), '<suffix>')\n   (Alternatively, use string(<originalExpression>) if preferred.)\n4) Save and deploy the workflow.\n5) Re-run the Logic App to confirm the Condition no longer errors when the source value is null and simply evaluates to false.",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584236498934497181051174121CU18",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression uses endsWith() on a value that resolved to null (likely a missing/optional field from the trigger payload). Because there\u2019s no null-safe guard, endsWith received null instead of a string and failed.",
+      "fix_plan": "1) Retrieve the Condition action definition.\n2) Find any endsWith(<arg1>, <arg2>) expressions used in the Condition.\n3) For each occurrence, wrap the first argument with coalesce to ensure a string is always passed:\n   - Replace: endsWith(<arg1>, <arg2>)\n   - With   : endsWith(coalesce(<arg1>, ''), <arg2>)\n   Example using trigger body path: @endsWith(coalesce(triggerBody()?['fileName'], ''), '.csv')\n4) If the logic should skip when the value is missing, alternatively guard it with: and(not(empty(<arg1>)), endsWith(<arg1>, <arg2>)).\n5) Update the workflow JSON for the Condition action to use the corrected expression.\n6) Redeploy the workflow and re-run the failed scenario to verify success.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236500032325319692555867CU11",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith() expression whose left-hand operand resolved to null at runtime (missing/optional property from the trigger or a prior action). Because endsWith expects a string, the null input caused the Condition to fail. The action has no runAfter dependencies, increasing the likelihood that it evaluated before the value was produced.",
+      "fix_plan": "Automated remediation steps:\n1) Read the Condition action definition and locate its expression containing endsWith(<A>, <B>).\n2) Make the expression null-safe by wrapping <A> with an emptiness check:\n   - Replace: endsWith(<A>, <B>)\n   - With: and(not(empty(<A>)), endsWith(<A>, <B>))\n   This guarantees endsWith only runs when <A> is a non-empty string.\n3) If you prefer coalescing, alternatively transform to: endsWith(coalesce(<A>, ''), <B>). Use one of the two approaches consistently.\n4) If <A> references outputs('SomeAction') or body('SomeAction'), add an execution dependency so the value exists before evaluation:\n   - Set Condition.runAfter = { \"SomeAction\": [\"Succeeded\"] } (merge with existing dependencies if any).\n5) If <A> references triggerBody()?['prop'] that may be absent, keep the null-safe guard from step 2/3; no runAfter change is needed.\n6) Save and redeploy the workflow, then re-run the failed instance.",
+      "action_type": "update_workflow",
+      "confidence": 0.7
+    },
+    {
+      "run_id": "08584236500557939183387841102CU17",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action contains an endsWith() expression whose first argument resolved to null because the referenced input property from the trigger/payload was missing. With no runAfter dependencies, the Condition reads directly from the trigger output; when that field is absent, endsWith(null, '<suffix>') throws and the action fails instead of evaluating to false.",
+      "fix_plan": "1) Open the workflow definition and locate actions.Condition.expression. 2) Make the endsWith() call null-safe by updating the expression to one of the following patterns: a) Use coalesce to default null to empty string: \"@endsWith(coalesce(<your-expression>, ''), '<suffix>')\"; or b) Add an explicit guard: \"@and(not(empty(<your-expression>)), endsWith(string(<your-expression>), '<suffix>'))\". 3) If the source is triggerBody()?['<property>'], verify the path is correct and may be optional; keep the null-safe handling regardless. 4) Save and redeploy the workflow. 5) Test with a payload where the property is missing to confirm the Condition no longer fails and evaluates to false.",
+      "action_type": "update_workflow",
+      "confidence": 0.73
+    },
+    {
+      "run_id": "08584236500678252463814289758CU26",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith() expression whose first argument resolved to null (missing/invalid input from the trigger or a prior output). Since endsWith() requires a string, the null value caused a type mismatch and the action failed.",
+      "fix_plan": "1) Open the workflow definition and locate the Condition action (actions[\"Condition\"]).\n2) Find the condition expression inside this action that calls endsWith(<valueExpr>, <suffixExpr>).\n3) Modify the first argument so it is always a string by wrapping it with string(coalesce(..., '')):\n   - Replace: endsWith(<valueExpr>, <suffixExpr>)\n   - With:    endsWith(string(coalesce(<valueExpr>, '')), <suffixExpr>)\n   Example (if referencing a trigger property): endsWith(string(coalesce(triggerBody()?['fileName'], '')), '.csv')\n4) If preserving false when input is missing is required, optionally guard with non-empty check:\n   - and(not(empty(<valueExpr>)), endsWith(string(coalesce(<valueExpr>, '')), <suffixExpr>))\n5) Ensure any object navigation uses safe accessors (e.g., triggerBody()?['prop']?['nested']).\n6) Save and redeploy the workflow.\n7) Re-run with events where the target property is present and missing to confirm the Condition no longer fails and evaluates as expected.",
+      "action_type": "update_workflow",
+      "confidence": 0.83
+    },
+    {
+      "run_id": "08584236500796186869360593851CU15",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression uses endsWith(...) on a value coming from the trigger/body that was null (missing or undefined). endsWith requires a string and throws a template expression error when given null, causing the Condition to fail.",
+      "fix_plan": "1) Open the Logic App in the designer and edit the Condition action.\n2) Locate the expression that calls endsWith(<payloadField>, '<suffix>').\n3) Update the expression to guard against null by coalescing to an empty string. Example pattern:\n   endsWith(coalesce(<payloadFieldExpression>, ''), '<suffix>')\n   - If you also need case-insensitive matching, use:\n     endsWith(toLower(coalesce(<payloadFieldExpression>, '')), toLower('<suffix>'))\n4) If the condition should only evaluate when the field exists, optionally combine with a non-empty check:\n   and(not(empty(coalesce(<payloadFieldExpression>, ''))), endsWith(coalesce(<payloadFieldExpression>, ''), '<suffix>'))\n5) Save the workflow and run a test with:\n   - Payload where the field is present and matches the suffix (should be true)\n   - Payload where the field is present and does not match (should be false)\n   - Payload where the field is missing/null (should safely evaluate to false, no error).\n6) Redeploy the updated workflow.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236500946239978991931340CU04",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression calls endsWith on a value that was null because the referenced field in the incoming payload was missing or empty. The condition did not guard against null before invoking endsWith, which requires a string.",
+      "fix_plan": "1) Open the Logic App definition and locate actions.Condition.expression.\n2) Identify the endsWith(<value>, <suffix>) call used in the Condition.\n3) Modify the expression to handle null by wrapping the first argument with coalesce (or string), e.g.:\n   - Before: @endsWith(<valuePath>, '<suffix>')\n   - After:  @endsWith(coalesce(<valuePath>, ''), '<suffix>')\n   Optionally add a non-empty guard for clarity:\n   @and(not(empty(coalesce(<valuePath>, ''))), endsWith(coalesce(<valuePath>, ''), '<suffix>'))\n4) Save and redeploy the workflow.\n5) Validate with sample payloads including cases where the referenced field is missing or null to ensure the Condition no longer fails.\n6) Re-run the failed instance or trigger a new run.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    },
+    {
+      "run_id": "08584236501066347510990390405CU07",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action uses the endsWith() function on a payload field that was null/missing for this run. endsWith requires a string input, but the referenced value resolved to null because the expected field was not present in the incoming payload, and the expression does not guard against nulls.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the action actions.Condition and its condition expression that calls endsWith(...).\n3) For every endsWith(A, B) in that expression, wrap the first argument with a null-safe conversion so it is always a string: change to endsWith(string(coalesce(A, '')), B).\n   - Example: change @endsWith(triggerBody()?['fileName'], '.csv') to @endsWith(string(coalesce(triggerBody()?['fileName'], '')), '.csv').\n4) Save and redeploy the workflow.\n5) Validate by running test cases where the referenced field is present, absent, and empty to confirm the Condition no longer fails and evaluates to false when the value is missing.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236501187033009010373922CU17",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If/Condition action uses an endsWith() expression on a value taken from the trigger payload, but the referenced field resolved to null at runtime (the field was missing or empty). Because endsWith() requires a string, the null input caused the Condition action to fail.",
+      "fix_plan": "1) Open the workflow definition and locate the Condition action\u2019s expression.\n2) Identify the argument passed to endsWith(), which currently references a field from the trigger (e.g., triggerBody()?['<fieldName>']).\n3) Modify the expression to handle nulls by defaulting to an empty string before calling endsWith(). Example change:\n   - From: endsWith(triggerBody()?['<fieldName>'], '<suffix>')\n   - To: endsWith(coalesce(triggerBody()?['<fieldName>'], ''), '<suffix>')\n   (Alternatively, use if(equals(triggerBody()?['<fieldName>'], null), false, endsWith(triggerBody()?['<fieldName>'], '<suffix>')).)\n4) Save and redeploy the workflow.\n5) Re-run the failed instance or trigger a new run to verify the Condition now evaluates safely when the field is missing or null.",
+      "action_type": "update_workflow",
+      "confidence": 0.64
+    },
+    {
+      "run_id": "08584236501308399233573330943CU07",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If/Condition expression calls endsWith on a value that evaluated to null at runtime. Because endsWith requires a string, the null input coming from the referenced field/output caused a data-type mismatch and the Condition action failed. The expression lacks a null-safe guard (e.g., coalesce/string) before invoking endsWith.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Condition.expression where endsWith is used.\n3) Update the endsWith call to be null-safe by wrapping the first argument with string(coalesce(..., '')) so it always evaluates to a string.\n   - Example transformation:\n     - From: endsWith(<original_value_expr>, '<suffix>')\n     - To:   endsWith(string(coalesce(<original_value_expr>, '')), '<suffix>')\n4) If the Condition expression contains multiple endsWith calls, apply the same transformation to each.\n5) Save and deploy the updated workflow definition.\n6) Re-run a failed instance (or a representative test run) to confirm the Condition now evaluates without error when the source field is null or missing.\n7) Optionally, add an explicit non-empty check if required by business logic, e.g., and(not(empty(string(coalesce(<original_value_expr>, '')))), endsWith(string(coalesce(<original_value_expr>, '')), '<suffix>')).",
+      "action_type": "update_workflow",
+      "confidence": 0.64
+    },
+    {
+      "run_id": "08584236501471302633530899011CU29",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If condition uses the endsWith function on a field that was null in this run. Logic Apps requires a string for endsWith; when the referenced input (e.g., a property from the trigger body) is missing or null, the function throws and the Condition action fails.",
+      "fix_plan": "1) Open the workflow definition and locate the actions.Condition node.\n2) Inspect the Condition's expression and find every occurrence of endsWith(X, Y).\n3) Rewrite each occurrence to be null-safe so the condition evaluates to false instead of failing:\n   - Preferred rewrite: and(not(empty(X)), endsWith(X, Y))\n   - Alternatively: endsWith(coalesce(X, ''), Y)\n4) Save and redeploy the Logic App.\n5) Re-run with a sample payload that omits the field to verify the Condition no longer fails and simply evaluates to false.\n6) (Optional hardening) If appropriate, add upstream validation (Parse JSON or explicit checks) to ensure required fields are present before the Condition runs.",
+      "action_type": "update_workflow",
+      "confidence": 0.74
+    },
+    {
+      "run_id": "08584236501593714188341775438CU09",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith() expression where at least one of the arguments is coming in as null (likely a missing/empty field from the trigger or a prior action). endsWith requires string inputs; when the referenced property is null, the expression throws a type error instead of returning a boolean.",
+      "fix_plan": "1) Retrieve the workflow definition JSON for this Logic App. 2) Locate the Condition action at actions.Condition. 3) Find the endsWith(...) expression inside actions.Condition.expression. 4) Wrap any dynamic inputs to endsWith with coalesce to guarantee string typing. Example transformation: from endsWith(<dynamicSource>, 'suffix') to endsWith(coalesce(<dynamicSource>, ''), 'suffix'). If the suffix is also dynamic, use coalesce(<dynamicSuffix>, ''). 5) Optionally harden further by short-circuiting on empties: and(not(empty(<dynamicSource>)), endsWith(<dynamicSource>, <suffix>)). 6) Update the workflow definition (ARM/Bicep/Code view) with the modified expression and deploy. 7) Re-run the workflow to confirm that when the referenced value is missing, the condition evaluates (false) instead of failing.",
+      "action_type": "update_workflow",
+      "confidence": 0.72
+    },
+    {
+      "run_id": "08584236501711156048869504003CU21",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith() expression whose first parameter resolved to null for this run. Logic Apps requires a string for endsWith(); passing null (due to a missing/empty property from the trigger or a prior action) caused a BadRequest. The expression lacks a null/empty guard or type coercion.",
+      "fix_plan": "1) Retrieve the workflow definition JSON. 2) Locate actions[\"Condition\"]. 3) Find the endsWith() expression inside the Condition. 4) Update it to handle nulls by wrapping the first argument with a guard or coercion. Use one of these safe patterns (keeping the original value expression as <valueExpr> and suffix as <suffix>): a) @and(not(empty(<valueExpr>)), endsWith(<valueExpr>, <suffix>)) or b) @endsWith(coalesce(string(<valueExpr>), ''), <suffix>). 5) Save and deploy the updated workflow definition. 6) Re-run with test payloads including cases where <valueExpr> is null/empty to confirm the Condition no longer fails and evaluates to false instead of throwing. 7) If the value comes from a specific action, optionally add data validation earlier to default missing values.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236501833320099198588057CU02",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s endsWith() expression evaluated a null for one of its string parameters (most likely the left-hand value coming from the trigger or a prior action). Because endsWith() requires strings, the null input caused a BadRequest at runtime when the referenced payload property was missing/empty in this run.",
+      "fix_plan": "1) Retrieve the workflow definition JSON for this Logic App.\n2) Locate the actions.Condition node and read its expression that uses endsWith(...).\n3) Make the expression null-safe by wrapping both arguments with string(coalesce(..., '')). Example transformation:\n   - Current: @endsWith(A, B)\n   - Replace with: @endsWith(string(coalesce(A, '')), string(coalesce(B, '')))\n   If you want to ensure logical correctness (avoid treating null as empty), optionally add an emptiness check:\n   - @and(not(empty(A)), endsWith(string(coalesce(A, '')), string(coalesce(B, ''))))\n4) Update the Logic App workflow definition with the modified Condition expression (via ARM/Bicep/template deployment or Workflow REST API PUT).\n5) Save and redeploy the workflow.\n6) Re-run the failed scenario to confirm the Condition now evaluates without error when the source property is absent or null.",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584236501935901239082015661CU02",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression uses endsWith(...) and the first argument evaluated to null due to a missing/empty upstream value (e.g., an optional trigger or action output). endsWith requires a non-null string and throws when given null, so the Condition failed before evaluating to true/false.",
+      "fix_plan": "1) Locate the Condition action in the workflow definition. 2) Read its inputs.expression string. 3) In that expression, find every occurrence of endsWith(<left>, <right>). 4) Rewrite each to endsWith(coalesce(string(<left>), ''), string(<right>)). This guarantees a string even when the original value is null. 5) Save and redeploy the workflow. 6) Re-run the failed instance to verify the Condition now evaluates safely and returns false when the input is missing.",
+      "action_type": "update_workflow",
+      "confidence": 0.73
+    },
+    {
+      "run_id": "08584236502023006221391321493CU24",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If Condition evaluates an expression using endsWith on a value that was null in this run. Because the action has no predecessors (runAfter is empty), it likely references the trigger payload directly. The expression lacks a null guard, so when the referenced field was missing/nullable, endsWith received null instead of a string and the Condition failed.",
+      "fix_plan": "1) Open the Logic App workflow definition and locate the action named \"Condition\".\n2) Edit the Condition expression. For every occurrence of endsWith(X, 'suffix'), ensure X is never null by guarding or defaulting it:\n   - Preferred: and(not(empty(X)), endsWith(X, 'suffix'))\n   - Or: endsWith(coalesce(X, ''), 'suffix')\n   Replace X with the exact expression currently used (e.g., triggerBody()?['field']).\n3) Save and deploy the updated workflow.\n4) Re-run the failed instance (or trigger a new run) to confirm the Condition now handles null inputs without failing.",
+      "action_type": "update_workflow",
+      "confidence": 0.84
+    },
+    {
+      "run_id": "08584236502104831834848414111CU23",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith(...) expression where the left-hand value was null at runtime. The referenced field from the incoming payload was missing/undefined, so endsWith received null instead of a string, causing the evaluation to fail.",
+      "fix_plan": "1) Open the Logic App workflow definition. 2) Locate the action named \"Condition\" and find its expression that uses endsWith(<left>, <right>). 3) Make the expression null-safe by coalescing both operands to empty strings and casting to string: replace endsWith(<left>, <right>) with endsWith(string(coalesce(<left>, '')), string(coalesce(<right>, ''))). 4) Example: if the original was endsWith(triggerBody()?['fileName'], '.csv'), change it to endsWith(string(coalesce(triggerBody()?['fileName'], '')), '.csv'). 5) Save and redeploy the workflow. 6) (Optional) If the field is mandatory, add a preceding check not(empty(<left>)) to explicitly fail or branch when the input is missing.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    },
+    {
+      "run_id": "08584236502190585576624425825CU04",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith(...) expression on a value that can be null due to missing/invalid input in the payload. Since endsWith requires string inputs, passing a null operand caused the expression evaluation to fail.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the \"Condition\" action and its expression that uses endsWith(...).\n3) Update the expression to defensively handle nulls by wrapping operands with coalesce() and safe-navigation:\n   - From: endsWith(<valuePath>, '<suffix>')\n   - To: endsWith(coalesce(<valuePath>, ''), coalesce('<suffix>', ''))\n   If the suffix is a constant, only the first argument needs coalesce: endsWith(coalesce(<valuePath>, ''), '<suffix>'). Use safe-navigation for object access, e.g., coalesce(triggerBody()?['fileName'], '').\n4) Save and redeploy the workflow.\n5) Re-run a failed instance to confirm the Condition evaluates to false when the value is missing instead of throwing an error.\n6) (Optional) Add a preliminary check not(empty(<valuePath>)) if you want to branch when the input is absent.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584236502279852535015566213CU31",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s endsWith() check failed because its left-hand input evaluated to null in this run (the referenced field from the incoming payload was missing/empty). endsWith expects a string, so passing null caused the action to fail.",
+      "fix_plan": "1) Open the workflow definition and locate the action named \"Condition\" (type: If).\n2) Identify the Condition.expression that currently uses endsWith(<operand>, <suffix>), where <operand> is a direct reference to a dynamic value from the trigger/body.\n3) Replace the expression so it guards against null and casts to string:\n   - New pattern: @and(not(empty(<operand>)), endsWith(string(<operand>), <suffix>))\n   - Preserve the existing <operand> and <suffix> values; only wrap the operand with not(empty(...)) and string(...).\n4) Save and redeploy the workflow.\n5) (Optional) In the false/else branch, add handling for cases where the input is null (e.g., log and terminate or skip) to avoid silent drops.",
+      "action_type": "update_workflow",
+      "confidence": 0.83
+    },
+    {
+      "run_id": "08584236502366603791491460247CU07",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "In the Condition (If) action, the expression uses endsWith() where the first argument evaluated to null at runtime. endsWith requires a string input, so receiving null produced a BadRequest. This occurred because the referenced value in the condition (the left-hand argument of endsWith) was not present/initialized in this run.",
+      "fix_plan": "1) Open the workflow in Code view and locate the action named \"Condition\".\n2) In the Condition's expression, find every endsWith invocation. It will be either a string expression like \"@endsWith(<arg1>, '<suffix>')\" or object form { \"endsWith\": [ \"<arg1>\", \"<suffix>\" ] }.\n3) Wrap the first argument with string(coalesce(...,'')) to guarantee a string even when null:\n   - String form: change \"@endsWith(<arg1>, '<suffix>')\" to \"@endsWith(string(coalesce(<arg1>, '')), '<suffix>')\".\n   - Object form: replace the first array element with \"@string(coalesce(<arg1>, ''))\" so it becomes { \"endsWith\": [ \"@string(coalesce(<arg1>, ''))\", \"<suffix>\" ] }.\n4) If the first argument references a body/trigger property, use the safe navigation operator where applicable (e.g., triggerBody()?['field']) inside coalesce.\n5) Save and redeploy the workflow.\n6) Re-run the failed instance or trigger a new run to validate the condition now handles nulls and no longer throws BadRequest.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237144019684140998122315CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Get_file_content_using_path",
+      "root_cause": "The Get_file_content_using_path action attempted to read a file using a path that did not exist at runtime. The Path parameter resolved to an invalid/non-existent location, so the connector returned HTTP 404 NotFound, which then caused downstream actions to fail.",
+      "fix_plan": "1) Retrieve the Logic App definition for this workflow.\n2) Locate actions[\"Get_file_content_using_path\"].\n3) Inspect the action inputs and capture the current path value/expression (typically inputs.queries.path or the designer \"Path\" field). Use the run history inputs/outputs to evaluate the expression and determine the exact resolved path during the failed run.\n4) Correct the path: \n   - If it is a hard-coded path, replace it with the correct absolute path that exists (e.g., \"/Shared Documents/Folder/File.ext\").\n   - If it is built from dynamic content, update the expression to reference the correct property (e.g., use @{triggerBody()?['Path']} or the prior action output that contains the actual path). Remove any unnecessary manual URL-encoding that may corrupt the path.\n5) If the target is SharePoint/OneDrive, ensure the site/drive/library context in the action matches where the file actually resides (keep the same connection but make sure the action\u2019s dataset/site parameters align with the intended location). Adjust the action\u2019s inputs so the resolved path points to that location.\n6) Update dependent actions\u2019 runAfter so they only execute when Get_file_content_using_path has status Succeeded to prevent cascading failures.\n7) Save, run a test with a known-existing file path, and verify the action returns 200 and downstream steps succeed.",
+      "action_type": "update_workflow",
+      "confidence": 0.72
+    },
+    {
+      "run_id": "08584237146712992883322399615CU17",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition (If) action evaluates an endsWith(...) expression whose first argument resolved to null at runtime because the referenced field from the incoming payload was missing/empty. The endsWith function requires a string; receiving null throws an error, causing the Condition to fail.",
+      "fix_plan": "1) Locate the action named \"Condition\" in the workflow definition.\n2) Inspect its expression and identify all occurrences of endsWith(<arg1>, <arg2>).\n3) Make the expression null-safe by wrapping the first argument with coalesce to force a string:\n   - Original: @endsWith(<expr>, '.ext')\n   - Update to: @endsWith(coalesce(<expr>, ''), '.ext')\n   (Optionally enforce case-insensitivity: @endsWith(toLower(coalesce(<expr>, '')), toLower('.ext')))\n4) Save and redeploy the workflow.\n5) Re-run the failed instance (or trigger a new run) to confirm the Condition no longer fails when the source field is missing/null.",
+      "action_type": "update_workflow",
+      "confidence": 0.74
+    },
+    {
+      "run_id": "08584237146836153263518041187CU14",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith() expression whose first argument resolved to null from the incoming payload. Because endsWith requires a string, the null value caused a BadRequest template expression error and the Condition failed.",
+      "fix_plan": "1) Open the workflow in Code View.\n2) Locate the Condition action's expression that uses endsWith(param1, param2).\n3) Make the expression null-safe by either:\n   - Wrapping the first argument with coalesce: endsWith(coalesce(param1, ''), param2)\n   OR\n   - Adding an emptiness guard: and(not(empty(param1)), endsWith(param1, param2))\n   (Replace param1/param2 with the existing arguments in your Condition expression.)\n4) Save and redeploy the workflow.\n5) Re-run with a payload where the target field is missing or null to verify the Condition no longer fails and evaluates to false instead of erroring.\n6) (Optional) If the field is expected, add upstream validation/defaulting so the field is always a string before the Condition.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237146964265401283263847CU23",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If condition uses the endsWith() expression where one of its operands evaluated to null (likely a missing/nullable property from the trigger or a previous action output). Because endsWith requires string inputs, passing null caused a template expression type mismatch and the Condition action failed.",
+      "fix_plan": "1) Open the workflow definition and locate the Condition action.\n2) In the Condition expression, find all usages of endsWith(<arg1>, <arg2>).\n3) Update the expression to guard against nulls before calling endsWith by adding emptiness checks, for example:\n   - Replace: endsWith(<arg1>, <arg2>)\n   - With: and(not(empty(<arg1>)), not(empty(<arg2>)), endsWith(<arg1>, <arg2>))\n   (If <arg2> is a constant literal suffix, not(empty(<arg2>)) can be omitted.)\n4) Alternatively, to force string types, wrap operands with coalesce to default to empty strings:\n   - endsWith(coalesce(<arg1>, ''), coalesce(<arg2>, ''))\n   Use this only if defaulting to empty is acceptable; otherwise prefer the not(empty(...)) guard.\n5) Save and redeploy the workflow.\n6) Re-run with test payloads where the referenced property is null and non-null to confirm the Condition no longer fails and behaves as intended.",
+      "action_type": "update_workflow",
+      "confidence": 0.77
+    },
+    {
+      "run_id": "08584237148328648254011825715CU22",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition (If) action uses an endsWith(...) expression where the first argument resolved to null at runtime (missing/empty value from the trigger or a prior step). Because endsWith requires a non-null string, receiving null caused the Condition action to fail before it could evaluate to true/false.",
+      "fix_plan": "1) Retrieve the workflow definition JSON and locate actions.Condition.expression.\n2) Identify the endsWith(A, B) call inside the expression.\n3) Rewrite the first argument to be null-safe by converting it to a string: endsWith(string(A), B).\n   - Example: endsWith(triggerBody()?['fileName'], '.csv') -> endsWith(string(triggerBody()?['fileName']), '.csv')\n4) Save and deploy the updated workflow definition.\n5) Re-run the workflow with a case where the value is null to confirm the Condition no longer fails and correctly evaluates to false.\n6) Optionally, add monitoring or validation on the source field to detect when it is missing, but the primary fix is the string() wrap to prevent null from breaking endsWith.",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584237148455809313133728718CU22",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression uses endsWith() with a first argument that evaluated to null. endsWith requires a string input; because the upstream value was missing/nullable, the function threw a bad request error when evaluated.",
+      "fix_plan": "1) Open the workflow definition and locate the Condition action\u2019s expression that calls endsWith(<arg1>, <arg2>). 2) Make the expression null-safe by wrapping the first parameter in coalesce: endsWith(coalesce(<arg1>, ''), <arg2>). 3) If additional safety is desired, guard the check: and(not(empty(<arg1>)), endsWith(coalesce(<arg1>, ''), <arg2>)). 4) Save and deploy the updated workflow. 5) Re-run the workflow with a sample payload where the field can be null to confirm no failure occurs and the Condition evaluates correctly.",
+      "action_type": "update_workflow",
+      "confidence": 0.84
+    },
+    {
+      "run_id": "08584237148580363883153382070CU29",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression uses endsWith(...) on a value from the incoming payload that was null or missing. Logic Apps throws when endsWith receives null, so the condition evaluation failed instead of returning false.",
+      "fix_plan": "1) Locate the Condition action in the workflow definition (actions.Condition).\n2) Open its expression property where endsWith(...) is used.\n3) For each endsWith(A,B) call, wrap both arguments to be null-safe:\n   - Rewrite to: endsWith(string(coalesce(A, '')), string(coalesce(B, '')))\n   This guarantees both inputs are strings and prevents null from causing a failure.\n4) If the first argument is the only dynamic value (suffix is literal), you may apply the guard only to A: endsWith(string(coalesce(A, '')), 'yourSuffix').\n5) Optionally enforce a false result when value is missing by using: and(not(empty(A)), endsWith(string(A), string(B))).\n6) Save the workflow, deploy, and re-run the failed scenario to confirm the Condition now evaluates safely when inputs are missing or null.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584237149082976402825133439CU22",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition (If) action evaluates an endsWith(...) expression where the first argument resolved to null because the expected payload field was missing or not a string. Since endsWith requires a string, the null value caused the action to fail.",
+      "fix_plan": "1) Edit the workflow definition and locate the Condition action's expression using endsWith(...).\n2) Make the expression null-safe by coalescing the first parameter to an empty string and, optionally, normalizing case. Example pattern:\n   @endsWith(toLower(coalesce(string(triggerOutputs()?['body']?['<fieldName>']), '')), '.csv')\n   Or guard with emptiness to avoid evaluation on null:\n   @and(not(empty(coalesce(triggerOutputs()?['body']?['<fieldName>'], ''))), endsWith(toLower(coalesce(string(triggerOutputs()?['body']?['<fieldName>']), '')), '.csv'))\n3) If the property comes from a prior action output, use its null-safe path (e.g., actions('PreviousAction')?['outputs']?['body']?['<fieldName>']).\n4) Save and deploy the updated workflow.\n5) Test with payloads where <fieldName> is present and where it is missing to verify the Condition now evaluates to false rather than failing.",
+      "action_type": "update_workflow",
+      "confidence": 0.64
+    },
+    {
+      "run_id": "08584237149380036693633530544CU15",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action\u2019s expression uses endsWith() with a left-hand argument that evaluated to null (likely a missing/undefined trigger or prior action output). Because endsWith requires a string, the null input caused the If action to fail.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions[\"Condition\"].inputs.expression (the Condition/If expression). It currently contains an endsWith(<leftArg>, <suffix>) call where <leftArg> can be null.\n3) Update the expression to guard against null by coercing or defaulting the left operand to an empty string and optionally ensuring it\u2019s not empty before evaluating. For example, replace:\n   @endsWith(<leftArg>, '<suffix>')\n   with:\n   @and(not(empty(<leftArg>)), endsWith(string(coalesce(<leftArg>, '')), '<suffix>'))\n   Example when checking a file name from the trigger body:\n   @and(not(empty(triggerBody()?['fileName'])), endsWith(string(coalesce(triggerBody()?['fileName'], '')), '.csv'))\n4) Save the updated definition and redeploy the Logic App.\n5) Re-run a failed instance or a test run to verify the Condition no longer errors when the property is missing/null.\n6) (Optional hardening) If case-insensitive suffix checks are desired, wrap the left operand with toLower():\n   @and(not(empty(<leftArg>)), endsWith(toLower(string(coalesce(<leftArg>, ''))), toLower('<suffix>')))",
+      "action_type": "update_workflow",
+      "confidence": 0.84
+    },
+    {
+      "run_id": "08584237149685720927221269418CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action evaluates an endsWith() expression where the first argument resolved to null during this run (the expected input value from the trigger/prior step was missing). Because endsWith requires a string, the null input caused the action to fail. The workflow lacks a null/empty guard around the value being checked.",
+      "fix_plan": "1) Load the workflow definition and locate the Condition action.\n2) Find the endsWith(...) expression used by this Condition.\n3) Update the expression to handle nulls by wrapping the first argument with a safe default, e.g.: endsWith(coalesce(<current_first_argument>, ''), '<expectedSuffix>').\n   - Alternatively, guard the check: and(not(empty(<current_first_argument>)), endsWith(<current_first_argument>, '<expectedSuffix>')).\n4) Save and redeploy the workflow.\n5) Validate with test runs including:\n   - A payload where the target property is present and matches the suffix.\n   - A payload where the property is present but does not match.\n   - A payload where the property is missing/null (Condition should evaluate safely without failing).",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584237149959030969016959900CU08",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The Condition action's expression calls endsWith() with a null left operand. The referenced value from the trigger/body is missing or null, and endsWith requires both parameters to be strings. Because Condition runs first (no runAfter), it is using a trigger-derived value that was not present, causing the action to fail.",
+      "fix_plan": "1) Open the workflow definition and locate the Condition action's expression that uses endsWith(). 2) Modify the expression to be null-safe by wrapping the first argument with coalesce to ensure a string is passed. Example transformation: from: @endsWith(<left_expr>, <suffix_expr>) to: @endsWith(coalesce(<left_expr>, ''), <suffix_expr>) 3) If <left_expr> directly indexes the trigger body (e.g., triggerBody()['property']), switch to safe navigation: triggerOutputs()?['body/property'] inside the coalesce call. Example: @endsWith(coalesce(triggerOutputs()?['body/property'], ''), '<suffix>') 4) Save and deploy the workflow. 5) Re-run with a payload where the property is present and another where it is missing/null to confirm the Condition evaluates without error (returns false when null/empty).",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584237149996451941503619776CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Condition",
+      "root_cause": "The If/Condition action evaluates an endsWith() expression whose first argument resolved to null at runtime (missing/empty input from the trigger or a prior action). Since endsWith() requires a string, the null input caused the Condition action to fail.",
+      "fix_plan": "1) Locate the Condition action in the workflow definition at actions.Condition. 2) Read the condition expression at actions.Condition.expression. 3) For each occurrence of endsWith(<arg1>, <arg2>), wrap the first argument with a null-safe default: endsWith(coalesce(<arg1>, ''), <arg2>). Example: change endsWith(triggerBody()?['fileName'], '.csv') to endsWith(coalesce(triggerBody()?['fileName'], ''), '.csv'). 4) Ensure any property access already uses the safe navigation operator (?) so missing properties return null rather than error; if not, add ? where applicable (e.g., triggerBody()?['prop'], outputs('Action')?['body/prop']). 5) Save and redeploy the workflow. 6) Re-run the workflow with the same inputs to confirm the Condition evaluates without failure.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    }
+  ]
+}

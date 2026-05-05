@@ -1,0 +1,633 @@
+{
+  "fix_results": [
+    {
+      "run_id": "08584236272741907920287757698CU29",
+      "status": "success",
+      "details": "Updated the Condition action's expression to make the first argument of both endsWith checks null-safe using string(coalesce(triggerBody()?['fileName'], '')).",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"or\":[{\"endsWith\":[\"@string(coalesce(triggerBody()?['fileName'], ''))\",\".xlsx\"]},{\"endsWith\":[\"@string(coalesce(triggerBody()?['fileName'], ''))\",\".csv\"]}]}",
+          "reason": "Ensures endsWith always receives a string by wrapping the first operand with string(coalesce(...,'')), preventing failures when fileName is null or missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236272898650830947901308CU17",
+      "status": "success",
+      "details": "Made the Condition action's endsWith checks null-safe by using string(coalesce(triggerBody()?['fileName'], '')) for the first argument.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"or\":[{\"endsWith\":[\"@string(coalesce(triggerBody()?['fileName'], ''))\",\".xlsx\"]},{\"endsWith\":[\"@string(coalesce(triggerBody()?['fileName'], ''))\",\".csv\"]}]}",
+          "reason": "Wraps the first argument of endsWith with string(coalesce(...)) so it is always a string, preventing null type errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236273329880612417784418CU27",
+      "status": "success",
+      "details": "Updated the Condition action's expression to use coalesce on triggerBody()?['fileName'], ensuring endsWith never receives null.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"or\":[{\"endsWith\":[\"@coalesce(triggerBody()?['fileName'], '')\",\".xlsx\"]},{\"endsWith\":[\"@coalesce(triggerBody()?['fileName'], '')\",\".csv\"]}]}",
+          "reason": "Wraps the potentially null fileName in coalesce so endsWith always receives a string and avoids runtime failures when the property is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236497072928925924145474CU15",
+      "status": "success",
+      "details": "Updated Condition.expression to use coalesce on the left operand of both endsWith checks, ensuring null/missing fileName becomes an empty string and the condition evaluates without error.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"or\":[{\"endsWith\":[\"@coalesce(triggerBody()?['fileName'], '')\",\".xlsx\"]},{\"endsWith\":[\"@coalesce(triggerBody()?['fileName'], '')\",\".csv\"]}]}",
+          "reason": "Wraps the endsWith left operand with coalesce(..., '') so null or missing fileName evaluates safely instead of causing the Condition to fail."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236497167413650172545756CU20",
+      "status": "success",
+      "details": "Updated the Condition action's expression to wrap triggerBody()?['fileName'] with string(coalesce(...,'')) in both endsWith checks so null values no longer cause a data/type error.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"or\":[{\"endsWith\":[\"@string(coalesce(triggerBody()?['fileName'], ''))\",\".xlsx\"]},{\"endsWith\":[\"@string(coalesce(triggerBody()?['fileName'], ''))\",\".csv\"]}]}",
+          "reason": "Ensures endsWith receives a non-null string by wrapping the left argument with string(coalesce(...,'')) to prevent type mismatch when the payload value is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236497265082351535648809CU25",
+      "status": "success",
+      "details": "No changes required. The Condition action\u2019s expression already wraps the first argument of each endsWith call with string(coalesce(..., '')), making it null-safe and preventing failures when fileName is missing.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584236497388401957986250909CU13",
+      "status": "success",
+      "details": "Updated Condition.expression to wrap the first argument of both endsWith checks with coalesce(string(...), ''), preventing null from causing a runtime failure.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"or\":[{\"endsWith\":[\"@coalesce(string(triggerBody()?['fileName']), '')\",\".xlsx\"]},{\"endsWith\":[\"@coalesce(string(triggerBody()?['fileName']), '')\",\".csv\"]}]}",
+          "reason": "Coerces the first argument of endsWith to a non-null string so the condition evaluates safely when the trigger value is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236497516716082952477152CU24",
+      "status": "success",
+      "details": "Updated Condition.expression so both endsWith checks wrap the left operand with coalesce(string(...), '') to handle null values safely.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "{\"or\":[{\"endsWith\":[\"@coalesce(string(triggerBody()?['fileName']), '')\",\".xlsx\"]},{\"endsWith\":[\"@coalesce(string(triggerBody()?['fileName']), '')\",\".csv\"]}]}",
+          "reason": "Makes the endsWith left operand null-safe by converting null to an empty string, preventing runtime failures when fileName is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236497640634874140120380CU00",
+      "status": "success",
+      "details": "No changes required. The Condition action\u2019s expression already uses coalesce(string(triggerBody()?['fileName']), ''), making the endsWith checks null-safe for both .xlsx and .csv cases.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584236497763832357860787198CU10",
+      "status": "success",
+      "details": "Updated Condition.expression to wrap the left operand with string(coalesce(...,'')) so endsWith always receives a non-null string.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@or(endsWith(string(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(string(coalesce(triggerBody()?['fileName'], '')), '.csv'))\"",
+          "reason": "Coerces the potentially null trigger value to a safe empty string before endsWith, preventing null from reaching endsWith and causing the failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236497886934113838410905CU24",
+      "status": "success",
+      "details": "Updated the Condition action's expression to be null-safe by wrapping the fileName reference with string(coalesce(...,'')) so endsWith always receives strings.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@or(endsWith(string(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(string(coalesce(triggerBody()?['fileName'], '')), '.csv'))\"",
+          "reason": "Wraps the first argument to endsWith with string(coalesce(...,'')) so null fileName values do not cause the condition to fail."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236498011777935827967718CU22",
+      "status": "success",
+      "details": "Hardened Condition.expression by guarding each endsWith with not(empty(triggerBody()?['fileName'])) so null inputs no longer cause the If action to fail.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@or(and(not(empty(triggerBody()?['fileName'])), endsWith(string(triggerBody()?['fileName']), '.xlsx')), and(not(empty(triggerBody()?['fileName'])), endsWith(string(triggerBody()?['fileName']), '.csv')))\"",
+          "reason": "Adds a not(empty()) guard so endsWith is never evaluated with a null first argument, preventing failures when the trigger payload lacks fileName."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236498124876450698630973CU13",
+      "status": "success",
+      "details": "Updated the Condition action's expression to coalesce and lowercase the evaluated value and suffix in each endsWith call so missing properties no longer cause a failure.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "@or(and(not(empty(triggerBody()?['fileName'])), endsWith(toLower(string(coalesce(string(triggerBody()?['fileName']), ''))), toLower(string('.xlsx')))), and(not(empty(triggerBody()?['fileName'])), endsWith(toLower(string(coalesce(string(triggerBody()?['fileName']), ''))), toLower(string('.csv')))))",
+          "reason": "Wraps the endsWith arguments with string(coalesce(...,'')) and toLower so null values become empty strings and comparison is case-insensitive, preventing the null type error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236498213781670012367335CU29",
+      "status": "success",
+      "details": "Updated the Condition action's expression to wrap the first argument of endsWith with coalesce(string) and null-safe access, preventing null inputs from causing a runtime error.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.csv'))\"",
+          "reason": "Coalesces the potentially null fileName and uses null-safe access so endsWith never receives null, causing the condition to evaluate to false instead of throwing when the value is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236498302097201533120278CU04",
+      "status": "success",
+      "details": "Updated the Condition action's expression to guard against null/missing fileName using coalesce and toLower so the endsWith checks no longer error on null inputs.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.csv'))\"",
+          "reason": "Wraps the evaluated field with coalesce and normalization so endsWith always receives a string, preventing null-caused runtime failures."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236498388899131946594471CU29",
+      "status": "success",
+      "details": "Updated the Condition action's expression to be null-safe by wrapping the first argument to endsWith with coalesce(...,'') and normalizing case, avoiding failures when fileName is missing or null.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "@or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.csv'))",
+          "reason": "Wraps the first argument with coalesce to ensure endsWith always receives a string even when fileName is null or missing, preventing the Condition from failing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236498504367253462642949CU07",
+      "status": "success",
+      "details": "Updated Condition.expression to guard against null/empty fileName and coerce to string before endsWith checks.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.csv')))\"",
+          "reason": "Adds a null/empty guard and coerces the value to string so endsWith never receives null, preventing the payload error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236498641250634408655963CU08",
+      "status": "success",
+      "details": "Updated the Condition action's expression to make all endsWith calls null-safe by wrapping their first argument with coalesce(..., ''), ensuring proper evaluation even when triggerBody()?['fileName'] is null.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.csv')))\"",
+          "reason": "Wraps the first argument of each endsWith with coalesce(..., '') so endsWith never receives null, preventing the type mismatch when the fileName is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236498788262562636301899CU30",
+      "status": "success",
+      "details": "Updated the Condition expression to make endsWith null-safe by applying coalesce('') to triggerBody()?['fileName'] before toLower/endsWith, so a missing fileName no longer causes a failure.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.csv')))\"",
+          "reason": "Wraps the evaluated value in coalesce('') before endsWith so null inputs are converted to an empty string, preventing BadRequest when the source value is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236498934497181051174121CU18",
+      "status": "success",
+      "details": "Patched the Condition action to use null-safe endsWith checks by coalescing triggerBody()['fileName'] to '' before lowercasing and comparison.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.csv')))\"",
+          "reason": "Ensures endsWith never receives null by coalescing the file name to an empty string (then lowercasing), preventing null-argument failures."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500032325319692555867CU11",
+      "status": "success",
+      "details": "Updated the Condition expression to use coalesce on triggerBody()['fileName'] with a simplified OR check so endsWith never evaluates a null; no runAfter change needed since the value comes from the trigger.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.csv'))\"",
+          "reason": "Ensures endsWith only receives a string by coalescing a possible null fileName to an empty string, preventing the null-operand failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500557939183387841102CU17",
+      "status": "success",
+      "details": "Updated the Condition expression to be null-safe using coalesce so endsWith is never passed a null when triggerBody()['fileName'] is missing.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.csv'))\"",
+          "reason": "Default missing fileName to an empty string so endsWith never receives null and the Condition evaluates to false instead of failing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500678252463814289758CU26",
+      "status": "success",
+      "details": "Updated the Condition action's expression to wrap the file name with string(coalesce(...,'')) inside toLower(), ensuring endsWith never receives null.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "@or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.csv'))",
+          "reason": "Wraps the endsWith first argument with string(coalesce(...,'')) so it is always a string, preventing null type errors while preserving case-insensitive comparison."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500796186869360593851CU15",
+      "status": "success",
+      "details": "Updated the Condition action's expression to guard against null and ensure case-insensitive suffix checks using coalesce and toLower, so endsWith no longer throws when fileName is absent.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), toLower('.xlsx')), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), toLower('.csv')))\"",
+          "reason": "Coalesces the potentially null triggerBody()['fileName'] to an empty string and normalizes case before endsWith, preventing template errors when the field is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500946239978991931340CU04",
+      "status": "success",
+      "details": "Updated the Condition action's expression to coalesce the fileName and include a not-empty check before endsWith, ensuring null/empty values do not cause failures.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(coalesce(triggerBody()?['fileName'], ''))), or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), toLower('.xlsx')), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), toLower('.csv'))))\"",
+          "reason": "Adds a non-empty guard and coalesces the fileName to an empty string so endsWith is never invoked on null, preventing the runtime error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236501066347510990390405CU07",
+      "status": "success",
+      "details": "Updated the Condition action's expression so both endsWith calls use a null-safe string conversion for the fileName, preventing runtime errors when the field is absent.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(coalesce(triggerBody()?['fileName'], ''))), or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), toLower('.xlsx')), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), toLower('.csv'))))\"",
+          "reason": "Ensures endsWith always receives a string by wrapping its first argument with string(coalesce(...,'')) so the condition doesn't fail when fileName is null or missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236501187033009010373922CU17",
+      "status": "success",
+      "details": "Made the Condition expression null-safe by coalescing triggerBody()?['fileName'] to '' before applying endsWith checks.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "@and(not(empty(coalesce(triggerBody()?['fileName'], ''))), or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.csv')))",
+          "reason": "Defaults the fileName to an empty string before endsWith so null inputs do not cause the Condition to fail."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236501308399233573330943CU07",
+      "status": "success",
+      "details": "Made the Condition expression null-safe by wrapping the first argument of both endsWith calls with string(coalesce(...,'')) so endsWith always receives a string.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(coalesce(triggerBody()?['fileName'], ''))), or(endsWith(string(coalesce(toLower(coalesce(triggerBody()?['fileName'], '')), '')), '.xlsx'), endsWith(string(coalesce(toLower(coalesce(triggerBody()?['fileName'], '')), '')), '.csv')))\"",
+          "reason": "Wraps each endsWith first argument with string(coalesce(...,'')) to guarantee a string even when the source value is null, preventing the data-type mismatch."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236501471302633530899011CU29",
+      "status": "success",
+      "details": "Updated Condition.expression to wrap endsWith arguments with coalesce(toLower(fileName), ''), making the check null-safe so missing fileName does not throw.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(coalesce(toLower(triggerBody()?['fileName']), ''), '.xlsx'), endsWith(coalesce(toLower(triggerBody()?['fileName']), ''), '.csv')))\"",
+          "reason": "Coalesces the fileName to an empty string before endsWith so null inputs no longer cause the condition to fail and instead evaluate to false."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236501593714188341775438CU09",
+      "status": "success",
+      "details": "Updated Condition.expression to coalesce the dynamic fileName before applying toLower, ensuring endsWith receives string inputs and avoiding null type errors.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.csv')))\"",
+          "reason": "Ensures toLower and endsWith always receive strings by coalescing the dynamic fileName before lowercasing, preventing type errors when the trigger value is null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236501711156048869504003CU21",
+      "status": "success",
+      "details": "Updated Condition.expression to wrap the endsWith first argument with toLower(coalesce(string(...), '')) for both checks, ensuring nulls and non-strings are safely handled and avoiding BadRequest.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(coalesce(string(triggerBody()?['fileName']), '')), '.xlsx'), endsWith(toLower(coalesce(string(triggerBody()?['fileName']), '')), '.csv')))\"",
+          "reason": "Coerces fileName to a string and defaults to '' before endsWith so the function always receives a string, preventing null/type evaluation errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236501833320099198588057CU02",
+      "status": "success",
+      "details": "Made the Condition action\u2019s endsWith checks null-safe by updating the expression to coerce both arguments to strings using string(coalesce(...,'')) and applying toLower only after coalescing.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(string(coalesce(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '')), string(coalesce('.xlsx',''))), endsWith(string(coalesce(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '')), string(coalesce('.csv','')))))\"",
+          "reason": "Wraps both endsWith arguments with string(coalesce(...,'')) and lowers after coalescing so null or missing fileName no longer causes a BadRequest at runtime."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236501935901239082015661CU02",
+      "status": "success",
+      "details": "Updated the Condition action's expression to guard both endsWith calls with coalesce(string(...), '') on the left and string(...) on the right, preventing null from breaking evaluation.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(coalesce(string(toLower(string(coalesce(triggerBody()?['fileName'], '')))), ''), string('.xlsx')), endsWith(coalesce(string(toLower(string(coalesce(triggerBody()?['fileName'], '')))), ''), string('.csv'))))\"",
+          "reason": "Wraps each endsWith left argument with coalesce(string(...), '') and ensures the right argument is string(...) so null inputs no longer cause a runtime error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236502023006221391321493CU24",
+      "status": "success",
+      "details": "Updated Condition.expression to guard against null by coalescing triggerBody()['fileName'] to an empty string before evaluating endsWith for .xlsx and .csv (case-insensitive).",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.csv')))\"",
+          "reason": "Ensures endsWith always receives a non-null string by coalescing the file name to '' and lowercasing, preventing failures when the trigger field is missing or null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236502104831834848414111CU23",
+      "status": "success",
+      "details": "Updated Condition.expression to make both endsWith operands null-safe using string(coalesce(...,'')) to prevent failures when triggerBody()?['fileName'] is null or missing.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(string(coalesce(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '')), string(coalesce('.xlsx', ''))), endsWith(string(coalesce(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '')), string(coalesce('.csv', '')))))\"",
+          "reason": "Coalesces and casts both operands of endsWith to strings so a missing fileName no longer causes a null input error at runtime."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236502190585576624425825CU04",
+      "status": "success",
+      "details": "Updated Condition.expression to coalesce the potentially null fileName before endsWith, using safe navigation and coalesce so the condition evaluates to false instead of failing when fileName is missing.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(coalesce(toLower(string(coalesce(triggerBody()?['fileName'], ''))), ''), '.xlsx'), endsWith(coalesce(toLower(string(coalesce(triggerBody()?['fileName'], ''))), ''), '.csv')))\"",
+          "reason": "Ensures endsWith always receives string operands by coalescing potential null fileName to an empty string, preventing runtime failures when the payload omits or nulls fileName."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236502279852535015566213CU31",
+      "status": "success",
+      "details": "Updated Condition.expression to guard against null and cast the operand to string before endsWith for .xlsx and .csv checks.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(string(triggerBody()?['fileName'])), '.xlsx'), endsWith(toLower(string(triggerBody()?['fileName'])), '.csv')))\"",
+          "reason": "Casts the operand to string and guards against null before endsWith so the Condition won\u2019t fail when fileName is missing or empty."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236502366603791491460247CU07",
+      "status": "success",
+      "details": "Updated Condition.expression to coalesce the fileName before lowercasing and endsWith checks, ensuring a non-null string is passed to endsWith for both .xlsx and .csv validations.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.csv')))\"",
+          "reason": "Wraps the endsWith first argument with toLower(string(coalesce(...,''))) so it is never null, preventing BadRequest when fileName is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237144019684140998122315CU10",
+      "status": "failed",
+      "details": "\"Action 'Get_file_content_using_path' not found in workflow. Available: ['Condition']\"",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584237146712992883322399615CU17",
+      "status": "success",
+      "details": "Made the Condition expression null-safe by wrapping the first argument of both endsWith calls with coalesce and applying toLower to both sides to avoid failures when fileName is missing or empty.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), toLower('.xlsx')), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), toLower('.csv'))))",
+          "reason": "Wraps the first argument of endsWith with coalesce and normalizes case so it never evaluates with null when fileName is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237146836153263518041187CU14",
+      "status": "success",
+      "details": "Updated the Condition action's expression to make endsWith null-safe by coalescing and casting the first argument to a string.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(coalesce(string(triggerBody()?['fileName']), '')), toLower('.xlsx')), endsWith(toLower(coalesce(string(triggerBody()?['fileName']), '')), toLower('.csv'))))\"",
+          "reason": "Wraps the first argument to endsWith with coalesce(string(...), '') so a missing or null fileName becomes an empty string, preventing the BadRequest template error and making the condition evaluate to false instead of failing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237146964265401283263847CU23",
+      "status": "success",
+      "details": "Updated Condition.expression to guard endsWith operands with coalesce('') and a not(empty(...)) check so null fileName values no longer break evaluation.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.csv')))\"",
+          "reason": "Guards against null and forces string inputs so endsWith never receives null, preventing the template expression type mismatch."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237148328648254011825715CU22",
+      "status": "success",
+      "details": "Updated Condition.expression to wrap the first argument of both endsWith calls with string() to make them null-safe.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "@and(not(empty(triggerBody()?['fileName'])), or(endsWith(string(toLower(coalesce(triggerBody()?['fileName'], ''))), '.xlsx'), endsWith(string(toLower(coalesce(triggerBody()?['fileName'], ''))), '.csv')))",
+          "reason": "Wrapping the first argument of endsWith with string() ensures null values are converted to a string, preventing the Condition from failing during evaluation."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237148455809313133728718CU22",
+      "status": "success",
+      "details": "Made the Condition expression null-safe by coalescing the fileName before toLower/endsWith and guarding with not(empty()), preventing endsWith from receiving null.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.xlsx'), endsWith(toLower(coalesce(triggerBody()?['fileName'], '')), '.csv')))\"",
+          "reason": "Wraps the first argument to endsWith with coalesce and guards with not(empty()) so null fileName values no longer cause a bad request during evaluation."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237148580363883153382070CU29",
+      "status": "success",
+      "details": "Updated the Condition action's expression to wrap the dynamic argument with string(coalesce(...)) inside toLower for both endsWith calls, preventing null inputs from causing runtime errors.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(triggerBody()?['fileName'])), or(endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerBody()?['fileName'], ''))), '.csv')))\"",
+          "reason": "Coerces the file name to a non-null string before evaluation so endsWith never receives null and the condition safely evaluates when the payload value is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237149082976402825133439CU22",
+      "status": "success",
+      "details": "Made the Condition expression null-safe by coalescing the fileName to '', applying toLower, and using endsWith on the safe value to avoid runtime failures when fileName is missing.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(coalesce(triggerOutputs()?['body']?['fileName'], ''))), or(endsWith(toLower(coalesce(string(triggerOutputs()?['body']?['fileName']), '')), '.xlsx'), endsWith(toLower(coalesce(string(triggerOutputs()?['body']?['fileName']), '')), '.csv')))\"",
+          "reason": "Coalesces the potential null fileName to an empty string and normalizes case so endsWith never receives null, preventing the Condition from failing when the field is missing or not a string."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237149380036693633530544CU15",
+      "status": "success",
+      "details": "Updated Condition.expression to guard against null and convert fileName to string before endsWith; no other actions changed.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "@and(not(empty(coalesce(triggerOutputs()?['body']?['fileName'], ''))), or(endsWith(toLower(string(coalesce(triggerOutputs()?['body']?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerOutputs()?['body']?['fileName'], ''))), '.csv')))",
+          "reason": "Coerces the left operand to a non-null string using string(coalesce(...)) before endsWith, preventing failures when fileName is missing or null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237149685720927221269418CU10",
+      "status": "success",
+      "details": "Hardened the Condition expression to coalesce null fileName to an empty string and guard with not(empty) before endsWith, avoiding failures when the trigger value is absent.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(coalesce(triggerOutputs()?['body']?['fileName'], ''))), or(endsWith(toLower(string(coalesce(triggerOutputs()?['body']?['fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerOutputs()?['body']?['fileName'], ''))), '.csv')))\"",
+          "reason": "Ensures endsWith always receives a string by coalescing potential nulls and guarding with not(empty), preventing failures when fileName is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237149959030969016959900CU08",
+      "status": "success",
+      "details": "Made the Condition expression null-safe by wrapping the endsWith left operand with coalesce and switching to triggerOutputs()?['body/fileName'] to prevent failures when fileName is absent or null.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(coalesce(triggerOutputs()?['body/fileName'], ''))), or(endsWith(toLower(string(coalesce(triggerOutputs()?['body/fileName'], ''))), '.xlsx'), endsWith(toLower(string(coalesce(triggerOutputs()?['body/fileName'], ''))), '.csv')))\"",
+          "reason": "Wraps the endsWith left operand in coalesce and uses safe trigger path triggerOutputs()?['body/fileName'] so endsWith always receives a string even when fileName is missing or null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237149996451941503619776CU10",
+      "status": "success",
+      "details": "Updated Condition.expression to coalesce the entire first argument passed to each endsWith, ensuring null-safe evaluation while keeping existing safe-navigation intact.",
+      "patches_applied": [
+        {
+          "action_name": "Condition",
+          "property_path": "expression",
+          "new_value": "\"@and(not(empty(coalesce(triggerOutputs()?['body/fileName'], ''))), or(endsWith(coalesce(toLower(string(coalesce(triggerOutputs()?['body/fileName'], ''))), ''), '.xlsx'), endsWith(coalesce(toLower(string(coalesce(triggerOutputs()?['body/fileName'], ''))), ''), '.csv')))\"",
+          "reason": "Wraps the first argument of each endsWith with coalesce(...,'') so a null input is converted to an empty string, preventing the Condition from failing on null."
+        }
+      ]
+    }
+  ]
+}

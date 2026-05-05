@@ -1,0 +1,153 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "$connections": {
+      "defaultValue": {},
+      "type": "Object"
+    }
+  },
+  "triggers": {
+    "When_an_HTTP_request_is_received": {
+      "type": "Request",
+      "kind": "Http",
+      "inputs": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "fileName": {
+              "type": "string"
+            },
+            "folderPath": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "actions": {
+    "Condition": {
+      "actions": {
+        "Get_file_content_using_path": {
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connection": {
+                "name": "@parameters('$connections')['googledrive']['connectionId']"
+              }
+            },
+            "method": "get",
+            "path": "/datasets/default/GetFileContentByPath",
+            "queries": {
+              "path": "@{triggerBody()?['folderPath']}/@{triggerBody()?['fileName']}",
+              "inferContentType": true,
+              "queryParametersSingleEncoded": true
+            }
+          }
+        },
+        "Send_an_email_(V2)": {
+          "runAfter": {
+            "Get_file_content_using_path": [
+              "Succeeded"
+            ]
+          },
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connection": {
+                "name": "@parameters('$connections')['office365']['connectionId']"
+              }
+            },
+            "method": "post",
+            "body": {
+              "To": "thiruniraiselvi.m@kaaviansys.com",
+              "Subject": "Excel File - @{triggerBody()?['fileName']}",
+              "Body": "<p>Hi, Please find the attached Excel file @{triggerBody()?['fileName']}</p>",
+              "Attachments": [
+                {
+                  "Name": "@triggerBody()?['fileName']",
+                  "ContentBytes": "@base64(body('Get_file_content_using_path'))"
+                }
+              ],
+              "Importance": "Normal"
+            },
+            "path": "/v2/Mail"
+          }
+        },
+        "Response_Success": {
+          "runAfter": {
+            "Send_an_email_(V2)": [
+              "Succeeded"
+            ]
+          },
+          "type": "Response",
+          "kind": "Http",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "status": "success",
+              "message": "File @{triggerBody()?['fileName']} sent successfully"
+            }
+          }
+        },
+        "Response_Email_Failure": {
+          "runAfter": {
+            "Send_an_email_(V2)": [
+              "Failed"
+            ]
+          },
+          "type": "Response",
+          "kind": "Http",
+          "inputs": {
+            "statusCode": 500,
+            "body": {
+              "status": "failed",
+              "error": {
+                "code": "ERR_EMAIL_FAILED",
+                "message": "Invalid or unreachable email address"
+              }
+            }
+          }
+        }
+      },
+      "runAfter": {},
+      "else": {
+        "actions": {
+          "Response_Invalid_File_Type": {
+            "type": "Response",
+            "kind": "Http",
+            "inputs": {
+              "statusCode": 400,
+              "body": {
+                "status": "failed",
+                "error": {
+                  "code": "ERR_INVALID_FILE_TYPE",
+                  "message": "Only .xlsx and .csv files are allowed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "expression": {
+        "or": [
+          {
+            "endsWith": [
+              "@triggerBody()?['fileName']",
+              ".xlsx"
+            ]
+          },
+          {
+            "endsWith": [
+              "@triggerBody()?['fileName']",
+              ".csv"
+            ]
+          }
+        ]
+      },
+      "type": "If"
+    }
+  },
+  "outputs": {}
+}

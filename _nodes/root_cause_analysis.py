@@ -54,10 +54,6 @@ Respond only with valid JSON matching the schema.
 
 
 def _build_workflow_summary(workflow_definition: dict) -> str:
-    """
-    Extract a compact, LLM-friendly summary of workflow actions.
-    Avoids sending the full (potentially huge) workflow JSON to the LLM.
-    """
     actions = (
         workflow_definition.get("properties", {})
         .get("definition", {})
@@ -65,9 +61,11 @@ def _build_workflow_summary(workflow_definition: dict) -> str:
     )
     summary = {}
     for name, body in actions.items():
+        inputs = body.get("inputs", {})
+        inputs_keys = list(inputs.keys()) if isinstance(inputs, dict) else []
         summary[name] = {
             "type": body.get("type", ""),
-            "inputs_keys": list(body.get("inputs", {}).keys()),
+            "inputs_keys": inputs_keys,
             "runAfter": list(body.get("runAfter", {}).keys()),
         }
     return json.dumps(summary, indent=2)

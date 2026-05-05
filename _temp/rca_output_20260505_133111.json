@@ -1,0 +1,454 @@
+{
+  "analysis": [
+    {
+      "run_id": "08584236493775758571377954560CU29",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action\u2019s expression uses div(...) and one of its two arguments evaluated to null at runtime. Because div() requires numeric inputs, the null value (coming from a missing/empty upstream value) caused the Compose action to fail. The expression does not guard against null or coerce inputs to numbers.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the action at actions.Compose.\n3) Read the Compose.inputs value. It currently contains a div(...) expression of the form: @div(ARG1, ARG2).\n4) Transform the expression to handle nulls and enforce numeric types:\n   - Replace @div(ARG1, ARG2) with:\n     @if(or(equals(ARG1, null), equals(ARG2, null)), 0, div(float(coalesce(ARG1, 0)), float(coalesce(ARG2, 1))))\n   Notes:\n   - Keep ARG1 and ARG2 exactly as they appear in the current expression (e.g., triggerBody()?['fieldA'], outputs('SomeAction')?['count']).\n   - This change returns 0 when either input is null, otherwise divides two numeric-coerced values. Denominator coalesces to 1 to avoid divide-by-zero.\n5) Update the workflow definition with the modified Compose.inputs expression and redeploy.\n6) Re-run the failed instance or trigger a new run to validate the fix.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236495811817500476447733CU20",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a div() expression whose second argument (denominator) resolved to null at runtime. Because Compose runs first (no runAfter), it is referencing a value from the trigger or parameters that was missing or null in the incoming payload, causing the template expression engine to throw: div() received a null second parameter.",
+      "fix_plan": "1) Open the workflow definition and locate the action named \"Compose\".\n2) Inspect its inputs expression; identify the div(<NUM_EXPR>, <DEN_EXPR>) pattern.\n3) Update the expression to guard the denominator against null using coalesce:\n   - Replace div(<NUM_EXPR>, <DEN_EXPR>) with div(<NUM_EXPR>, coalesce(<DEN_EXPR>, parameters('denominatorDefault'))).\n4) Add (or ensure) a workflow parameter named denominatorDefault with a safe non-null value (e.g., 1):\n   parameters.denominatorDefault = { \"type\": \"int\", \"defaultValue\": 1 }\n5) (Optional but recommended) If division by zero is possible, further protect the expression:\n   - Use if(or(equals(coalesce(<DEN_EXPR>, parameters('denominatorDefault')), 0), equals(<DEN_EXPR>, null)), 0, div(<NUM_EXPR>, coalesce(<DEN_EXPR>, parameters('denominatorDefault'))))\n6) Save and redeploy the workflow.\n7) Re-run the failed instance with the same payload to confirm the error no longer occurs when the denominator is missing/null.",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584236499061999348324309609CU29",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a template expression using div(<first>, <second>) where the second argument evaluated to null at runtime. Because Compose has no predecessors, the expression is likely referencing a trigger output (or a misnamed property) that was missing, resulting in a null denominator, which the div function does not accept.",
+      "fix_plan": "1) Open the workflow definition and locate the Compose action's inputs expression containing div().\n2) Verify the dynamic content path used for the second parameter (denominator). If the property name is incorrect, update it to the correct path so it resolves to a numeric value.\n3) Add null-safety to the denominator to prevent null from reaching div(). Replace the current expression with a guarded version. Example pattern:\n   div(float(<numerator-expression>), float(coalesce(<denominator-expression>, 1)))\n   - If division by zero is also possible, use:\n   if(or(equals(<denominator-expression>, null), equals(float(<denominator-expression>), 0)), 0, div(float(<numerator-expression>), float(<denominator-expression>)))\n4) Save and redeploy the workflow.\n5) Re-run with a payload where the denominator was previously missing to confirm the run succeeds and produces the expected result.",
+      "action_type": "update_workflow",
+      "confidence": 0.63
+    },
+    {
+      "run_id": "08584236499184022943933133876CU11",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() template expression where the second parameter (denominator) evaluated to null during this run. Because div() requires a numeric, non-null denominator, the null value caused the template expression error and the action failed. The expression does not guard against null (or zero) denominators from upstream data.",
+      "fix_plan": "1) Open the Logic App workflow definition and locate the action named \"Compose\".\n2) Identify its inputs expression; it currently follows the pattern: div(A, B), where B is the denominator that evaluated to null.\n3) Update the inputs to guard against null (and zero) denominators and ensure numeric types. Replace the expression:\n   div(A, B)\n   with the expression:\n   if(or(equals(B, null), equals(coalesce(B, 0), 0)), 0, div(float(A), float(B)))\n   - A is the original first argument expression.\n   - B is the original second argument expression.\n4) Save and redeploy the workflow.\n5) Re-run with the same payload to confirm the run succeeds and the Compose returns 0 when the denominator is null/zero, or the computed division otherwise.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584236499945232128506730681CU05",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses the div() template function and one of its operands evaluated to null at runtime because the expected numeric field in the trigger payload was missing or null. Since Compose runs immediately (no runAfter dependencies) and has no null/zero guarding, div() received a null instead of a number and failed.",
+      "fix_plan": "1) Open the workflow definition and locate the action named \"Compose\".\n2) Inspect the Compose.inputs expression; it currently uses a form like @{div(<leftOperand>, <rightOperand>)}.\n3) Rewrite the inputs to defensively handle nulls and zero denominator by wrapping operands with coalesce() and int(), and short-circuiting when values are invalid. Algorithmic transform:\n   - Let A = <leftOperand>, B = <rightOperand> (the current operands inside div()).\n   - Replace the expression with:\n     @{if(or(equals(coalesce(A, null), null), equals(coalesce(B, null), null), equals(int(coalesce(B, 0)), 0)), 0, div(int(A), int(B)))}\n   This returns 0 (or another desired default) when either operand is null or when the denominator is 0; otherwise it performs the division.\n4) If the intended behavior is to fail fast instead of defaulting, replace the 0 fallback with an explicit failure path handled elsewhere, or gate this Compose behind a Condition that verifies both operands are not null and denominator != 0.\n5) Save and redeploy the workflow, then re-run with the same payload to confirm the Compose no longer fails on null values.",
+      "action_type": "update_workflow",
+      "confidence": 0.73
+    },
+    {
+      "run_id": "08584236500126292628243116589CU06",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action evaluates a div() expression where the denominator (second parameter) resolved to null during this run. Because Compose has no predecessors (runAfter is empty), it is referencing a value from the trigger or parameters that was missing, causing div() to fail with a null second argument.",
+      "fix_plan": "1) Retrieve the Logic App definition.\n2) Locate action \"Compose\" and its inputs expression that calls div(<numeratorExpr>, <denominatorExpr>).\n3) Update the inputs to defensively handle null/zero denominator.\n   Replace:\n     @div(<numeratorExpr>, <denominatorExpr>)\n   With:\n     @if(equals(coalesce(<denominatorExpr>, 0), 0), div(<numeratorExpr>, 1), div(<numeratorExpr>, coalesce(<denominatorExpr>, 1)))\n   - This coalesces a null denominator to 1 and avoids divide-by-zero by substituting 1 when the denominator is missing or zero.\n4) Save and redeploy the workflow.\n5) (Optional, if business rules require hard failure instead of defaulting) Add a Condition before Compose to check is null/zero denominator and Terminate with a descriptive message; otherwise execute Compose with the original div().",
+      "action_type": "update_workflow",
+      "confidence": 0.77
+    },
+    {
+      "run_id": "08584236500208372571170978533CU01",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a div() expression whose second parameter evaluated to null during this run (likely sourced from trigger or a prior action output). The div() function requires numeric arguments and fails when the denominator is null, causing template evaluation to error.",
+      "fix_plan": "1) Retrieve the workflow definition (ARM GET on /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.Logic/workflows/{workflowName}?api-version=2019-05-01).\n2) Locate the property at path $.properties.definition.actions.Compose.inputs.\n3) The current value is an expression like \"@{div(<X>, <Y>)}\". Extract the first argument <X> and the second argument <Y> exactly as they appear.\n4) Replace the inputs with a null-safe expression that guards the denominator:\n   \"@{if(or(equals(<Y>, null), equals(<Y>, 0)), null, div(<X>, <Y>))}\"\n   - This prevents evaluation when the denominator is null (or zero) and returns null instead of failing.\n5) Update the workflow (ARM PATCH with the modified $.properties.definition).\n6) Redeploy and run a validation test with a payload where the previous denominator was null to confirm the run completes and the Compose returns null instead of failing.\n7) (Optional) If business rules require a different fallback, replace the null in step 4 with the desired default value and keep the same guard pattern.",
+      "action_type": "update_workflow",
+      "confidence": 0.73
+    },
+    {
+      "run_id": "08584236500297638630033116881CU15",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a div() expression where at least one operand evaluated to null at runtime (missing/empty upstream value). Because the expression did not coalesce or validate inputs to numeric values, Logic Apps failed the action when div() received a null parameter.",
+      "fix_plan": "1) Locate the action named \"Compose\" in the workflow definition.\n2) Read its inputs expression (Compose.inputs). It currently uses the function @div(<arg1>, <arg2>).\n3) Modify the expression to defensively handle nulls and non-numeric inputs by wrapping both arguments:\n   - New pattern: @div(coalesce(float(<arg1>), 0), if(equals(coalesce(float(<arg2>), 0), 0), 1, float(<arg2>)))\n   - This ensures: numerator defaults to 0 if null/non-numeric; denominator defaults to 1 if null or 0 to avoid failure.\n4) Implementation guidance for automation:\n   - Parse the top-level div() call in Compose.inputs and identify its two top-level arguments <arg1> and <arg2> without altering their inner expressions.\n   - Replace the original expression with the above pattern, substituting the discovered <arg1> and <arg2> in the indicated positions.\n5) Save and redeploy the workflow definition.\n6) Re-run the failed instance or trigger a new run to verify the Compose action completes successfully.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584236500383682143808196314CU22",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression whose second argument evaluated to null because the expected denominator value from the incoming payload was missing/empty. The expression did not guard against null or non-numeric input, causing template evaluation to fail.",
+      "fix_plan": "1) Open the workflow definition and locate the action named \"Compose\".\n2) Read its inputs expression; identify the current form @div(<numeratorExpr>, <denominatorExpr>).\n3) Update the inputs to make the denominator null-safe and numeric by wrapping it with coalesce() and float(). Replace the expression with:\n   @div(float(<numeratorExpr>), float(coalesce(<denominatorExpr>, 1)))\n   (Keep the original numeratorExpr and denominatorExpr as they are, only wrap as shown.)\n4) Save and redeploy the workflow.\n5) Optionally, add trigger/body schema validation to ensure the denominator field is present and numeric to prevent future bad payloads.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584236500468173416440486408CU01",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action evaluates a div() expression where the second argument (denominator) resolves to null from the incoming data. Because there is no null/zero guard and Compose runs without any prerequisite validation, the expression engine throws an error when div() receives a null second parameter.",
+      "fix_plan": "1) Retrieve the workflow definition and locate the action named \"Compose\".\n2) Inspect its inputs expression to find the div() call. Extract:\n   - E1 = the current first argument to div()\n   - E2 = the current second argument to div() (the denominator that evaluated to null)\n3) Insert a validation step before any division:\n   - Add a new Condition action named \"Validate_Denominator\" with expression: \"@and(not(empty(E2)), not(equals(E2, 0)))\" (reuse E2 exactly as extracted). This checks the denominator is present and non-zero.\n4) Move the existing \"Compose\" action into the True branch (actions) of \"Validate_Denominator\". Keep its original inputs (div(E1, E2)).\n5) In the False branch, add a Terminate action named \"Terminate_InvalidDenominator\" with status \"BadRequest\" and message \"Denominator is missing or zero.\"\n6) Remove the original root-level \"Compose\" (since it is now inside the Condition) and ensure no other actions list it in runAfter; the new Condition should be the first action (or hooked to the trigger), and the moved Compose should have runAfter only within the True branch per default branch ordering.\n7) Optionally cast to numeric to avoid type issues: in the True branch, set Compose inputs to \"@{div(float(E1), float(E2))}\".\n8) Save and redeploy the workflow, then re-run with the same payload to verify: when denominator is null/0 the workflow terminates gracefully; when valid, Compose succeeds.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    },
+    {
+      "run_id": "08584237161962133615312366080CU18",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div(numerator, denominator) expression where the second parameter (denominator) evaluated to null at runtime due to a missing/empty field in the incoming payload. The workflow does not guard against null (or missing) values for the denominator, causing the Compose to fail.",
+      "fix_plan": "1) Load the workflow definition JSON and locate actions.Compose.inputs (the expression currently contains div(<N>, <D>)).\n2) Parse the existing expression to identify the numerator <N> and denominator <D> used inside div(<N>, <D>).\n3) Replace the current inputs with a null-safe, zero-safe expression:\n   if(equals(int(coalesce(<D>, 0)), 0), 0, div(int(coalesce(<N>, 0)), int(coalesce(<D>, 1))))\n   - This ensures the denominator is never null; if it is null or 0, the result returns 0 instead of failing.\n4) Save and redeploy the updated workflow definition.\n5) Re-run the failed instance with the same inputs (or execute a test run) to confirm the action succeeds and returns the expected value.\n6) Optionally, add validation earlier in the flow to populate default values for the denominator field before it reaches Compose.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584237164256473900560724993CU31",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action's expression uses div(numerator, denominator) where the denominator expression evaluated to null at runtime. Because div() requires a numeric second parameter, the absence of a null/empty guard on the denominator caused the function to fail.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate the action named \"Compose\" and read its inputs expression.\n3) Transform any occurrence of div(N, D) so that the denominator is validated and cast before use. Replace it with:\n   if(equals(float(coalesce(D, 0)), 0), null, div(float(N), float(D)))\n   - N: the existing numerator expression currently passed to div().\n   - D: the existing denominator expression currently passed to div().\n   This ensures: (a) null denominators become 0 for the check, (b) division is skipped when denominator is null/zero, and (c) both operands are numeric.\n4) Update the Compose action's inputs to the new guarded expression.\n5) Save and redeploy the Logic App.\n6) Re-run the failed instance or trigger a new run to verify the Compose action completes without error.\n\nExample pattern change (do not alter business logic of N/D, only wrap them):\n- From: div(N, D)\n- To:   if(equals(float(coalesce(D, 0)), 0), null, div(float(N), float(D)))",
+      "action_type": "update_workflow",
+      "confidence": 0.9
+    },
+    {
+      "run_id": "08584237177473247119271530147CU03",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression where the second (denominator) argument evaluated to null from the incoming data. Logic Apps requires a numeric value for the div() denominator; a null value causes a BadRequest and the action fails.",
+      "fix_plan": "1) Locate the Compose action in the workflow definition.\n2) Read its inputs expression and identify the current div(A, B) pattern (A = numerator expression, B = denominator expression).\n3) Replace the inputs with a guarded expression that prevents null/zero denominators and casts to numbers:\n   - New inputs expression: \"@{if(or(empty(B), equals(float(B), 0)), null, div(float(A), float(B)))}\"\n   - Implementation detail for automation: programmatically parse the existing Compose expression, capture the first and second arguments of div() as A and B, then rewrite the expression by wrapping it as shown above, substituting A and B back into the template.\n4) Save and redeploy the workflow.\n5) (Optional) If a null denominator is not acceptable for downstream logic, add a separate validation step prior to Compose to surface a clear error message when B is null or zero, or add a trigger condition to only run when B is present and non-zero.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237180523234366095105474CU30",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action\u2019s expression uses div() and, at runtime, the second (denominator) argument evaluated to null. There is no null/zero guard in the expression, so the engine returned BadRequest when attempting to divide by a null value.",
+      "fix_plan": "1) Retrieve the workflow definition and read the current value of definition.actions.Compose.inputs (the expression string).\n2) Parse the Compose expression to locate the div(firstArg, secondArg) call.\n3) Replace it with a guarded expression that handles null/zero denominator, for example:\n   @if(equals(coalesce(secondArg, 0), 0), 0, div(firstArg, secondArg))\n   Implementation detail:\n   - Extract firstArg and secondArg from the existing div() call.\n   - Construct the new expression by substituting those two exact arguments into the template above.\n4) Update definition.actions.Compose.inputs with the new guarded expression.\n5) Save and redeploy the Logic App workflow.\n6) Re-run the failed instance (or trigger a new run) to verify the Compose action completes without error.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237190335317166375677066CU04",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action evaluates a div(numerator, denominator) expression where the denominator expression resolves to null at runtime (missing/empty value in the incoming payload). The div function requires a non-null numeric second parameter, so the null denominator caused the Compose action to fail.",
+      "fix_plan": "1) Open the workflow definition and locate the action named \"Compose\".\n2) Read the current Compose expression. It will be of the form @div(<FirstExpr>, <SecondExpr>).\n3) Modify the Compose inputs to ensure the second parameter is never null by wrapping it with coalesce. New expression: @div(<FirstExpr>, coalesce(<SecondExpr>, 1)).\n   - <FirstExpr> is the original first argument of div.\n   - <SecondExpr> is the original second argument of div.\n4) Save and redeploy the workflow.\n5) Validate with a test run where the original denominator source is missing/null to confirm the run succeeds (result will compute using a fallback denominator of 1). If a different fallback is desired, adjust the coalesce default accordingly or add a preceding Condition action to skip division when the denominator is missing.",
+      "action_type": "update_workflow",
+      "confidence": 0.64
+    },
+    {
+      "run_id": "08584237191206077018057808012CU02",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action evaluates a div() expression where the second argument (denominator) resolved to null from the inbound payload, and the expression does not guard against nulls. The div() function requires a numeric second parameter, so the null value caused the Compose action to fail.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Compose.inputs. It currently uses a div(<numeratorExpr>, <denominatorExpr>) expression.\n3) Update the expression to ensure the denominator is never null by wrapping it with coalesce and casting to a number. For example, change:\n   @{div(<numeratorExpr>, <denominatorExpr>)}\n   to:\n   @{div(float(<numeratorExpr>), float(coalesce(<denominatorExpr>, 1)))}\n   - Replace <numeratorExpr> and <denominatorExpr> with the existing expressions in the Compose action.\n   - If business logic requires a different fallback, replace 1 with the correct default value.\n4) Save and redeploy the Logic App workflow.\n5) Resubmit the failed run (or trigger a new run) to verify the Compose action succeeds when the denominator is missing/null.",
+      "action_type": "update_workflow",
+      "confidence": 0.84
+    },
+    {
+      "run_id": "08584237191346445304827772356CU15",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses an expression with div(<first>, <second>), and at runtime the second argument expression evaluated to null because the expected numeric field in the inbound data (from the trigger or a prior action output) was missing/empty. There is no null-guard or default applied to the second parameter, so Logic Apps attempted div(..., null) and failed.",
+      "fix_plan": "1) Retrieve the workflow definition for action 'Compose' (definition.actions.Compose.inputs).\n2) Inspect the Compose expression and locate the div() call. Identify the first and second parameter expressions as F and S respectively.\n3) Update the Compose expression to coerce to numbers and guard against null/zero in the divisor. Replace the current expression with:\n   div(float(F), float(if(equals(coalesce(S, 0), 0), 1, S)))\n   - This ensures S is not null (or zero) before division; adjust the fallback value (1) if a different business default is required.\n4) Save and redeploy the workflow.\n5) Validate with test runs: (a) payload where S is present and numeric, (b) payload where S is null/missing, (c) payload where S is 0, confirming the Compose no longer fails.",
+      "action_type": "update_workflow",
+      "confidence": 0.73
+    },
+    {
+      "run_id": "08584237191660289332329730124CU00",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression whose second (denominator) argument evaluated to null for this run due to missing/empty data from the payload, and the expression has no null guard. Logic Apps requires non-null numeric arguments for div(), so the action failed.",
+      "fix_plan": "1) Open the workflow definition and locate the action named \"Compose\".\n2) Update its inputs expression to guard the denominator against null/zero before calling div(). Replace the current expression of the form:\n   @{div(<firstParamExpr>, <secondParamExpr>)}\n   with:\n   @{if(or(empty(<secondParamExpr>), equals(<secondParamExpr>, 0)), null, div(<firstParamExpr>, <secondParamExpr>))}\n   - Keep <firstParamExpr> and <secondParamExpr> exactly as they are today in your workflow.\n3) Save and redeploy the workflow.\n4) Test with:\n   - A payload where the denominator is present and non-zero (Compose should output the correct division result).\n   - A payload where the denominator is missing/null or zero (Compose should output null and not fail, or adjust the fallback value if your downstream expects a number).\n5) If downstream actions cannot accept null, adjust the fallback in the if() to a domain-appropriate default (e.g., 0) or add a Condition before Compose to Terminate with a clear message when the denominator is invalid.",
+      "action_type": "update_workflow",
+      "confidence": 0.74
+    },
+    {
+      "run_id": "08584237192068539831112198801CU08",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action evaluates a div() expression where the second parameter (divisor) resolved to null at runtime, violating the function requirement for a numeric, non-null value. This likely came from a missing or null upstream field used as the divisor.",
+      "fix_plan": "1) Retrieve the Logic App workflow definition JSON.\n2) Locate actions.Compose.inputs (the expression currently using div()).\n3) Transform the expression so the second argument to div() is never null by wrapping it with int(coalesce(..., 1)), and cast both operands to int. Specifically, change:\n   \"@div(A, B)\"  \u2192  \"@div(int(A), int(coalesce(B, 1)))\"\n   where A and B are the existing first and second argument expressions; do not alter their source, only wrap as shown.\n4) Save and redeploy the Logic App.\n5) Re-run the failed instance to confirm the issue is resolved.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237192528125951922751749CU25",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action\u2019s expression calls div(numerator, denominator) where the second argument (denominator) evaluated to null at runtime due to a missing/empty value from the trigger (no prior actions provide it). Because the expression does not guard against null, the div function failed.",
+      "fix_plan": "1) Read the workflow definition and locate actions.Compose.inputs (the single expression used by the Compose action). 2) Parse the expression and confirm the top-level function is div with two arguments: <arg1> (numerator) and <arg2> (denominator). 3) Replace the entire inputs expression with a null-safe form that skips division when the denominator is null: if(equals(coalesce(<arg2>, null), null), null, div(<arg1>, <arg2>)). 4) Save and deploy the updated workflow definition. 5) Re-run the failed run with the same inputs to verify the Compose action no longer errors when the denominator is missing/null.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584237192994535237546785908CU19",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a div(...) expression that expects two numeric operands. In this run, one of the operands resolved to null from the incoming data, so the div function received a null instead of a number and threw a BadRequest, stopping downstream actions.",
+      "fix_plan": "- Retrieve the workflow definition and locate the action named \"Compose\".\n- Read its inputs expression; it should be a div(N, D) call with two arguments (numerator N and denominator D).\n- Replace the current Compose inputs with a guarded expression that handles nulls and prevents divide-by-zero:\n  Expression: @{if(equals(coalesce(D, 0), 0), 0, div(float(coalesce(N, 0)), float(D)))}\n  Where N is the existing first argument and D is the existing second argument of the current div call.\n  Implementation steps for an automated updater:\n  1) Parse the existing Compose inputs string to extract the two arguments of div(...): N and D.\n  2) Construct the new expression string by injecting N and D into the template above.\n  3) Set actions.Compose.inputs to the new expression string and save the workflow.\n- Deploy the updated workflow and re-run the failed inputs to confirm it no longer errors when nulls are received.\n- Optionally add logging on the Compose output to detect when the fallback (0 due to null/zero denominator) is used.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237193737511532798106080CU15",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action evaluates a div() expression where the second parameter (denominator) resolves to null at runtime. With no prior actions, the denominator is likely sourced from the trigger body or a parameter that was missing or null, causing div() to throw BadRequest.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Compose.inputs (the expression using div()).\n3) Modify the expression so the second parameter is guarded with a default numeric value using coalesce and numeric casting. Example transformation:\n   - From: @div(<numerator_expr>, <denominator_expr>)\n   - To:   @div(float(<numerator_expr>), float(coalesce(<denominator_expr>, 1)))\n4) If division by zero is also possible, further guard it:\n   - @div(float(<numerator_expr>), float(if(equals(coalesce(<denominator_expr>, 1), 0), 1, coalesce(<denominator_expr>, 1))))\n5) Save the updated workflow and redeploy.\n6) Re-run a failed instance with the same payload to validate it no longer fails when the denominator is null.",
+      "action_type": "update_workflow",
+      "confidence": 0.74
+    },
+    {
+      "run_id": "08584237194708357051720547293CU00",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression where the second parameter evaluated to null (likely from missing/empty upstream data), and div() requires a numeric denominator, resulting in a BadRequest.",
+      "fix_plan": "1) Open the Logic App workflow in Code View.\n2) Locate actions.Compose.inputs; it currently contains a div(A, B) expression.\n3) Make the expression null-safe and type-safe by guarding the denominator and casting operands. Replace the existing expression with the following pattern, preserving the original arguments A (numerator) and B (denominator):\n   @{if(equals(coalesce(B, 0), 0), 0, div(float(coalesce(A, 0)), float(B)))}\n   - Here, A and B are exactly the original first and second arguments of div(). This change prevents null (and zero) denominators and ensures numeric types.\n4) Save and redeploy the workflow.\n5) Re-run the workflow to confirm the Compose action succeeds with null or missing denominator values.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237195324476194117315519CU20",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses the div() expression and its second argument evaluated to null at runtime (likely from a missing/empty value in the trigger payload). Because div() requires a numeric denominator, the null value caused the Compose action to fail.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Compose.inputs (the expression should be a div(...) invocation).\n3) Let E1 be the current first argument to div, and E2 be the current second argument to div.\n4) Replace the inputs expression with a null/zero-safe pattern that validates E2 before division:\n   \"@{if(or(equals(E2, null), equals(coalesce(E2, 0), 0)), null, div(float(E1), float(E2)))}\"\n   - This ensures: if E2 is null or 0, the action returns null instead of failing; otherwise it performs the division.\n5) Alternatively, if a default denominator is preferred, wrap E2 with coalesce to a safe non-zero default (example default 1):\n   \"@{div(float(E1), float(coalesce(E2, 1)))}\"\n6) Save and redeploy the workflow.\n7) (Optional, recommended) Update the trigger/input contract to require the denominator field and validate it as a number to prevent null values reaching the Compose action.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    },
+    {
+      "run_id": "08584237195859166529197478205CU20",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a div() expression where the second argument evaluated to null at runtime because the expected value from the incoming payload was missing. Logic Apps requires a numeric (non-null) second parameter for div(), so the null value caused a BadRequest template expression error.",
+      "fix_plan": "1) Open the workflow definition and locate actions.Compose.inputs (the expression currently shaped as \"@{div(<NUMERATOR_EXPR>, <DENOMINATOR_EXPR>)}\").\n2) Parse the existing expression to extract the first argument as <NUMERATOR_EXPR> and the second argument as <DENOMINATOR_EXPR>.\n3) Replace the Compose inputs with a guarded expression to handle null (and zero) denominators:\n   \"@{if(or(equals(<DENOMINATOR_EXPR>, null), equals(<DENOMINATOR_EXPR>, 0)), 0, div(<NUMERATOR_EXPR>, <DENOMINATOR_EXPR>))}\"\n   - This prevents calling div() when the denominator is null or zero; it returns 0 instead. Adjust the fallback value if a different default is required.\n4) Save and redeploy the workflow.\n5) (Optional) Add upstream validation to ensure the denominator field is present and numeric in the trigger/payload to avoid null values in future runs.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    },
+    {
+      "run_id": "08584237196331537354781850079CU18",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a div() expression whose operands are sourced from the trigger payload. Because Compose is the first action (runAfter is empty), at least one of those operands evaluated to null due to missing/empty input data in the trigger, and the expression does not guard against null values. This caused div() to fail when a null parameter was passed.",
+      "fix_plan": "1) Retrieve the Logic App workflow definition JSON.\n2) Locate actions.Compose.inputs. Confirm it is a single expression string that starts with \"@div(\" and has two arguments.\n3) Parse the existing div() expression to extract the two operand expressions, preserving them exactly as written. Call them ARG1 and ARG2.\n4) Replace actions.Compose.inputs with the following safe expression, substituting ARG1 and ARG2 with the extracted operands:\n   \"@{if(or(equals(coalesce(ARG1, null), null), equals(coalesce(ARG2, null), null), equals(int(coalesce(ARG2, 0)), 0)), null, div(int(ARG1), int(ARG2)))}\"\n   - This returns null (or you may choose a default) if either operand is null or if the denominator is 0; otherwise it performs the integer division.\n5) Save and deploy the updated workflow definition.\n6) (Optional hardening) If the trigger is an HTTP/Request trigger, add/enable a JSON schema with required numeric properties for the operands so runs fail early with a clear validation error when inputs are missing.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237197123672295735326481CU25",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a div() expression whose second (denominator) argument evaluated to null at runtime. The value referenced for the denominator (from the trigger body/variables/previous output) was missing or not initialized, and the expression did not guard against null, causing the template expression error.",
+      "fix_plan": "1) Open the workflow definition and locate the Compose action.\n2) Identify the current div(N, D) expression used in Compose.inputs.\n3) Add a workflow parameter to provide a safe fallback when the denominator is missing:\n   - In the definition's parameters section, add:\n     \"DefaultDenominator\": { \"type\": \"number\", \"defaultValue\": 1 }\n4) Update the Compose.inputs expression to guard against null and ensure numeric types. Replace div(N, D) with:\n   div(float(<N>), float(coalesce(<D>, parameters('DefaultDenominator'))))\n   - <N> is the original numerator sub-expression.\n   - <D> is the original denominator sub-expression.\n5) Optionally, if dividing by zero must be avoided as well, wrap with an additional check:\n   if(equals(float(coalesce(<D>, parameters('DefaultDenominator'))), 0), null, div(float(<N>), float(coalesce(<D>, parameters('DefaultDenominator')))))\n6) Save and deploy the updated workflow.\n7) Re-run the failed instance with the same payload to verify the error no longer occurs.",
+      "action_type": "update_workflow",
+      "confidence": 0.66
+    },
+    {
+      "run_id": "08584237199229669163328090840CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action evaluates a div() expression where at least one of the two parameters resolved to null at runtime (likely from an optional/absent trigger or prior output). Because div() requires numeric inputs, the null value caused a BadRequest during template evaluation.",
+      "fix_plan": "1) Locate the action actions.Compose in the workflow definition.\n2) Read its inputs expression; it is currently of the form \"@{div(<arg1>, <arg2>)}\".\n3) Replace it with a null-safe, typed expression that guards both parameters:\n   \"@{div(float(coalesce(<arg1>, 0)), float(coalesce(<arg2>, 1)))}\"\n   - <arg1> is the current numerator expression.\n   - <arg2> is the current denominator expression.\n   - coalesce() replaces nulls; numerator defaults to 0, denominator defaults to 1 to avoid division-by-zero.\n4) Save and redeploy the workflow definition.\n5) Re-run the failed run or trigger a new run to validate the fix.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    },
+    {
+      "run_id": "08584237199515714973231189365CU00",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a div() expression where the second (denominator) argument evaluated to null from the incoming payload, resulting in div(<num>, null). Logic Apps requires numeric values for div() and throws BadRequest when a parameter is null.",
+      "fix_plan": "- Retrieve the workflow definition and locate the actions.Compose object.\n- Inspect Compose.inputs and identify the div(<num_expr>, <den_expr>) expression.\n- Replace it with a null-safe expression that guards against null/zero denominators and casts to numbers:\n  @{if(or(equals(coalesce(<den_expr>, 0), 0), equals(<num_expr>, null)), null, div(float(<num_expr>), float(<den_expr>)))}\n  - Substitute <num_expr> with the existing first argument of div().\n  - Substitute <den_expr> with the existing second argument of div().\n- Save and redeploy the updated workflow.\n- Optionally, add upstream validation to ensure the denominator source is present and numeric, or set a business-approved default via coalesce if null is acceptable (e.g., div(float(<num_expr>), float(coalesce(<den_expr>, 1)))).\n- Re-run the failed instance or replay the message once the update is deployed.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237201946461322587055983CU23",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a div() expression where the second argument evaluated to null (likely because the referenced field from a prior step/trigger was missing or null). Logic Apps requires a numeric, non-null second parameter for div(), so the action failed with BadRequest.",
+      "fix_plan": "1) Open the workflow definition and locate actions.Compose.inputs (the expression currently using @div(<first>, <second>)).\n2) Replace the expression with a null-safe guard so the second parameter is never null or zero:\n   @if(equals(coalesce(<second>, 0), 0), 0, div(<first>, <second>))\n   - Keep <first> and <second> as the same references currently used in the Compose.\n3) Save and redeploy the workflow.\n4) Re-run the failed instance or trigger a new run to validate the fix.\n5) Optional: add run history logging (e.g., another Compose/Trace) to capture when the denominator is null/zero for upstream data quality monitoring.",
+      "action_type": "update_workflow",
+      "confidence": 0.9
+    },
+    {
+      "run_id": "08584237202479672920859830531CU20",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression where the second operand (denominator) evaluated to null at runtime (likely from a missing/empty value in the referenced payload), and div() requires a numeric denominator. This caused a BadRequest when the expression was evaluated.",
+      "fix_plan": "1) Export or open the Logic App definition JSON.\n2) Locate the action named \"Compose\" and read its inputs expression; it will be of the form div(A, B).\n3) Replace that expression using a null/zero guard on the denominator:\n   - New expression pattern: if(or(equals(coalesce(B, 0), 0), equals(B, null)), 0, div(float(coalesce(A, 0)), float(B)))\n   - This ensures B is neither null nor zero before dividing; otherwise returns 0 (adjust fallback if business logic requires a different default).\n4) If A or B originate from dynamic content/paths, keep them unchanged in place of A and B; only wrap them as shown.\n5) Save the workflow and redeploy.\n6) Re-run a failed sample to validate the run completes without BadRequest and returns the expected guarded result.",
+      "action_type": "update_workflow",
+      "confidence": 0.9
+    },
+    {
+      "run_id": "08584237204402962655976263062CU22",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div(numerator, denominator) expression where the second argument resolved to null at runtime (the source field in the payload was missing/empty). Because div() requires a numeric denominator and no null/zero guard was implemented, the action failed with BadRequest.",
+      "fix_plan": "1) Open the workflow definition JSON.\n2) Locate actions.Compose and read its current inputs expression; it is in the form: \"@div(N_EXPR, D_EXPR)\".\n3) Extract N_EXPR (current numerator expression) and D_EXPR (current denominator expression).\n4) Replace the Compose inputs with a null/zero-safe expression that coerces to numbers and prevents division when the denominator is null or zero:\n   \"@{if(equals(float(coalesce(D_EXPR, 0)), 0), 0, div(float(N_EXPR), float(coalesce(D_EXPR, 0))))}\"\n   - This treats a missing/null denominator as 0 and returns 0 instead of failing; when a valid non-zero denominator is present, it performs the division.\n5) Save and deploy the updated workflow.\n6) Re-run the failed instance (or a replay with the same payload) to confirm the Compose action no longer fails when the denominator is missing/null.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584237208064525025709134325CU19",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression whose denominator evaluated to 0 from the incoming data, and there is no guard against zero or null values. This caused a divide-by-zero BadRequest at runtime.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Compose.inputs; it currently evaluates a div(<numerator_expr>, <denominator_expr>).\n3) Update the inputs expression to guard against zero or null denominators. Use a conditional check and fallback value, for example:\n   @{if(equals(coalesce(<denominator_expr>, 0), 0), 0, div(<numerator_expr>, <denominator_expr>))}\n   - Replace <numerator_expr> and <denominator_expr> with the existing expressions used in the current div().\n   - If business logic requires a different fallback (e.g., null or a Terminate step), adjust the true branch accordingly.\n4) Save and redeploy the Logic App.\n5) Optionally re-run the failed instance or trigger a new run to verify the fix.",
+      "action_type": "update_workflow",
+      "confidence": 0.92
+    },
+    {
+      "run_id": "08584237208223281784475102443CU17",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a template expression using div(numerator, denominator) where the denominator evaluated to 0 for this run, causing a division-by-zero error and the runtime to return BadRequest.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Compose.inputs and extract the existing div(...) expression.\n3) Identify the numerator (first argument) and denominator (second argument) used in div(...).\n4) Replace the Compose inputs with a guarded expression that avoids evaluating div when the denominator is zero or missing. Use:\n   @if(or(empty(<denExpr>), equals(toString(<denExpr>), '0')), 0, div(<numExpr>, <denExpr>))\n   - Replace <numExpr> with the original numerator expression.\n   - Replace <denExpr> with the original denominator expression.\n5) Save and redeploy the updated workflow definition.\n6) Re-run a failed instance to validate the fix and confirm no BadRequest occurs when denominator is 0; result should be 0 (or adjust the fallback to a desired default if different business behavior is required).",
+      "action_type": "update_workflow",
+      "confidence": 0.88
+    },
+    {
+      "run_id": "08584237208630837803536778235CU27",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression. In this run the denominator argument evaluated to 0 (or empty), due to invalid/missing input from upstream data, and there is no guard against zero/empty denominators. This caused a division-by-zero runtime failure.",
+      "fix_plan": "1) Retrieve the workflow definition and locate action \"Compose\".\n2) Inspect its inputs and identify the div(<numerator>, <denominator>) expression (the second parameter is the denominator).\n3) Replace the inputs with a guarded expression that avoids division by zero, for example:\n   if(or(empty(<denominator>), equals(float(<denominator>), 0)), null, div(float(<numerator>), float(<denominator>)))\n   - Choose the fallback you prefer (e.g., null, 0, or a specific sentinel) based on downstream requirements.\n4) Save and redeploy the workflow definition.\n5) Optionally add a tracking/logging Compose or Terminate step to surface when the denominator is invalid, so bad payloads are visible without failing the entire run.\n6) Re-run a sample with the previously failing payload to confirm the run completes and the guarded branch is taken when denominator is zero/empty.",
+      "action_type": "update_workflow",
+      "confidence": 0.77
+    },
+    {
+      "run_id": "08584237209020892308280195966CU05",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a template expression that performs a division where the denominator evaluated to 0 at runtime, causing a BadRequest (division-by-zero). As Compose is the first step, this exception halted the workflow and all dependent actions were skipped.",
+      "fix_plan": "1) Retrieve the current workflow definition and read actions[\"Compose\"].inputs to identify the div(<numerator>, <denominator>) expression.\n2) Rewrite the Compose inputs to defensively guard against a zero/empty denominator. Algorithm:\n   - Let N be the numerator subexpression from the existing div call.\n   - Let D be the denominator subexpression from the existing div call.\n   - Replace the original inputs with: if(or(equals(D, 0), equals(D, '0'), empty(D)), null, div(N, D))\n   This returns null (or another defined fallback) instead of throwing when D is zero/empty.\n3) If a non-null numeric fallback is required by downstream actions, replace null with an agreed default (e.g., 0) and adjust downstream logic accordingly.\n4) Save and deploy the updated workflow.\n5) Validate with two test runs: (a) denominator=0/empty to confirm the workflow continues without errors, (b) denominator>0 to confirm correct division.\n6) Monitor runs to ensure no further division-by-zero errors occur.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237209441834894682882167CU17",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action evaluates a div() template expression where the denominator resolved to 0 (or null) from the incoming data. Because the expression lacks a guard for zero/null denominators, the runtime threw a division-by-zero error.",
+      "fix_plan": "1) Open the workflow definition and locate actions.Compose.inputs.\n2) Identify each div(<NUMERATOR>, <DENOMINATOR>) occurrence in the Compose expression.\n3) Wrap each division with a zero/null guard so division only occurs when the denominator is nonzero:\n   - Replace: \"@{div(<NUMERATOR>, <DENOMINATOR>)}\"\n   - With:    \"@{if(or(equals(coalesce(<DENOMINATOR>, 0), 0)), 0, div(<NUMERATOR>, <DENOMINATOR>))}\"\n   This returns 0 when the denominator is 0 or null; otherwise performs the division.\n4) Save and redeploy the workflow.\n5) Re-run the failed instance with the same inputs to confirm the Compose action now completes without error.\n6) (Optional) Add monitoring or a separate validation step earlier in the flow to log/handle zero denominators explicitly if business logic requires a different fallback than 0.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    },
+    {
+      "run_id": "08584237209824240971171411666CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action evaluates a div() expression whose denominator resolves to 0 from the incoming data. Because there is no guard against zero (or missing) denominator values, the Workflow Definition Language runtime throws a divide-by-zero error and the action fails.",
+      "fix_plan": "1) Locate the action named \"Compose\" in the workflow definition (actions.Compose).\n2) Read its inputs expression. It will be of the form: @div(<numeratorExpr>, <denominatorExpr>).\n3) Extract the two argument sub-expressions: set N = <numeratorExpr> and D = <denominatorExpr> exactly as they appear.\n4) Replace the Compose.inputs value with a guarded expression that avoids divide-by-zero:\n   @if(or(equals(D, 0), empty(D)), null, div(N, D))\n   - Keep N and D as the exact extracted sub-expressions from step 3.\n   - If a non-null default is preferred, replace null with an agreed default (e.g., 0) or terminate with a friendly message instead.\n5) Optionally, add validation for observability: insert a Condition or Terminate step before Compose that checks or(equals(D, 0), empty(D)) and returns a clear error message when true.\n6) Save and deploy the updated workflow.\n7) Test with sample payloads where D=0, D missing/null, and D>0 to confirm behavior: zero/missing should no longer crash; positive denominator should compute normally.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237210281704192856047226CU08",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action\u2019s inputs use a div() expression whose second argument (denominator) evaluated to 0 for this run. There is no guard against zero/null denominators, so the runtime threw a division-by-zero error when evaluating Compose.",
+      "fix_plan": "1) Retrieve the workflow definition JSON.\n2) Locate actions.Compose.inputs (the expression currently using div(A, B)).\n3) Transform the expression from div(A, B) to a guarded form that prevents zero/null denominators:\n   if(equals(coalesce(B, 0), 0), null, div(A, B))\n   - Optionally cast to float for safety: if(equals(coalesce(B, 0), 0), null, div(float(A), float(B)))\n4) Update the Compose action\u2019s inputs to the new expression (in code view this is the string inside @{...}).\n5) Save and redeploy the Logic App.\n6) Re-run the workflow with the same payload to confirm it no longer fails and returns null (or your chosen fallback) when the denominator is zero.\n7) (Optional) Add a preceding validation step to log or terminate with a friendly message if the denominator is zero, depending on business requirements.",
+      "action_type": "update_workflow",
+      "confidence": 0.79
+    },
+    {
+      "run_id": "08584237210726958969379888065CU00",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action\u2019s inputs contain a div() template expression whose denominator evaluated to 0 at runtime (likely from trigger data), causing a divide-by-zero error. Compose has no runAfter dependencies, so it directly used an input that was missing/zero, leading to the failure.",
+      "fix_plan": "1) Open the workflow definition and locate the action at path: definition.actions.Compose.inputs.\n2) Extract the existing div(<numeratorExpr>, <denominatorExpr>) from the Compose inputs expression.\n3) Replace it with a guarded expression that prevents division by zero:\n   @if(or(empty(<denominatorExpr>), equals(float(<denominatorExpr>), 0)), 0, div(float(<numeratorExpr>), float(<denominatorExpr>)))\n   - Keep <numeratorExpr> and <denominatorExpr> exactly as they are currently referenced in the Compose, only wrapping them as shown.\n4) Save and redeploy the workflow.\n5) Re-run a failed instance to confirm the Compose no longer errors when the denominator is 0 or missing and returns 0 instead. If a different fallback is required (e.g., null or skipping), adjust the first branch of the if() accordingly.",
+      "action_type": "update_workflow",
+      "confidence": 0.71
+    },
+    {
+      "run_id": "08584237211007314231336376158CU26",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() template expression whose denominator is derived from the payload and evaluated to 0 (or was missing and coerced to 0). This caused a division-by-zero BadRequest in the Compose action, terminating the run.",
+      "fix_plan": "1) Locate the actions.Compose node in the workflow definition. 2) Read its inputs expression and identify each occurrence of div(<numerator>, <denominator>). 3) For each occurrence, wrap it with a zero-check guard so the denominator is never 0. Replace: div(X, Y) with: if(equals(float(coalesce(Y, 0)), 0), null, div(float(X), float(Y))). 4) If downstream actions require a numeric value, replace the null fallback with an agreed numeric default (e.g., 0) or branch with a Condition to handle the zero-denominator case explicitly. 5) Save and redeploy the workflow. 6) Re-run affected instances or enable resubmission to verify the flow completes without division-by-zero errors.",
+      "action_type": "update_workflow",
+      "confidence": 0.82
+    },
+    {
+      "run_id": "08584237214500433696066656034CU00",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a template expression that performs a division where the denominator evaluated to 0 for this run. The workflow lacks a zero/empty-value guard on the denominator, causing a divide-by-zero fault in the expression engine.",
+      "fix_plan": "1) Open the workflow definition and locate the action named \"Compose\".\n2) Read the Compose.inputs expression and identify any division operations (e.g., div(<numerator>, <denominator>)).\n3) Refactor each division to guard against zero/empty denominator. Replace:\n   div(<numeratorExpression>, <denominatorExpression>)\n   with:\n   if(or(empty(<denominatorExpression>), equals(<denominatorExpression>, 0)), null, div(<numeratorExpression>, <denominatorExpression>))\n   - If a numeric result is required, replace null with 0 or an agreed fallback value.\n   - Optionally wrap operands with float() if needed for type consistency: div(float(<numeratorExpression>), float(<denominatorExpression>)).\n4) Save and redeploy the workflow definition.\n5) Re-run the failed instance (or a replay with the same inputs) to confirm the Compose action no longer fails when the denominator is 0 or missing.\n6) (Optional) Add upstream validation or a Condition action to skip processing when the denominator is zero, if business logic requires skipping instead of returning a fallback value.",
+      "action_type": "update_workflow",
+      "confidence": 0.81
+    },
+    {
+      "run_id": "08584237214658086102416875352CU06",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() template expression where the denominator evaluated to 0 at runtime. The workflow does not guard against zero (or null) values for the divisor, so the expression failed with a division-by-zero error when the input data provided 0.",
+      "fix_plan": "1) Locate the action actions.Compose in the workflow definition.\n2) Read its inputs expression; it currently uses div(<numerator>, <denominator>).\n3) Replace the inputs with a guarded expression that avoids division when the denominator is zero, for example:\n   \"inputs\": \"@{if(equals(<denominator>, 0), null, div(<numerator>, <denominator>))}\"\n   - If you need to preserve a numeric result instead of null, substitute a business-approved fallback (e.g., 0) in place of null.\n4) If the Compose expression appears inside a larger expression, wrap only the div(...) call: div(A,B) -> if(equals(B, 0), null, div(A, B)).\n5) Save and redeploy the workflow.\n6) Re-run the failed instance with the same inputs to confirm the run completes and that the Compose output is null (or the chosen fallback) when the denominator is zero.",
+      "action_type": "update_workflow",
+      "confidence": 0.84
+    },
+    {
+      "run_id": "08584237214805691534568489584CU17",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a template expression with div(numerator, denominator). At runtime the denominator resolved to 0, which causes Logic Apps to throw a division-by-zero error and fail the run.",
+      "fix_plan": "1) Export or retrieve the current workflow definition JSON.\n2) Locate actions.Compose.inputs. Confirm it contains a div(...) expression (typically in the form \"@{div(X, Y)}\" or \"@div(X, Y)\").\n3) Programmatically wrap the existing div expression with a zero-denominator guard using the second operand (Y): transform \"div(X, Y)\" into \"if(equals(Y, 0), null, div(X, Y))\". This preserves behavior while preventing runtime failure when Y is 0.\n   - Example transformation:\n     - Before: \"@{div(variables('numerator'), variables('denominator'))}\"\n     - After:  \"@{if(equals(variables('denominator'), 0), null, div(variables('numerator'), variables('denominator')))}\"\n4) If the denominator may arrive as a string, optionally harden the check: \"if(equals(string(Y), '0'), null, div(float(X), float(Y)))\".\n5) Save and redeploy the updated workflow definition.\n6) Re-run with a recent payload to verify no failure occurs when the denominator is 0 and that normal non-zero cases still compute correctly.\n7) Optionally add a downstream check to handle null results (e.g., default to 0 or branch logic) if needed by consumers.",
+      "action_type": "update_workflow",
+      "confidence": 0.9
+    },
+    {
+      "run_id": "08584237214980168238999521516CU10",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() template expression where the denominator resolved to 0 (or null/empty), likely due to missing or invalid input from the payload/reference used in the expression. This caused a division-by-zero at runtime.",
+      "fix_plan": "1) Open the workflow definition and locate actions.Compose.inputs (the expression currently using div()).\n2) Identify the two arguments of div():\n   - A = the existing numerator expression\n   - B = the existing denominator expression\n3) Replace the Compose inputs with a guarded expression that prevents division by zero and null/empty denominator values. Use the same A and B you identified:\n   if(or(empty(B), equals(coalesce(B, 0), 0)), null, div(float(A), float(B)))\n   - This returns null when B is missing/empty or equals 0; otherwise it performs the division safely.\n4) Save and redeploy the workflow.\n5) Re-run the failed instance (or trigger a new run) to validate the fix.",
+      "action_type": "update_workflow",
+      "confidence": 0.84
+    },
+    {
+      "run_id": "08584237214984013112770639995CU00",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression whose denominator is evaluated to 0 (or null) from the incoming payload. Because the expression is not guarded against zero/null, the runtime throws a divide-by-zero error.",
+      "fix_plan": "1) Retrieve the workflow definition and locate actions.Compose.inputs.\n2) Extract the current div() expression of the form: \"@div(<numerator_expr>, <denominator_expr>)\".\n3) Replace it with a guarded expression to prevent division by zero/null:\n   \"@if(or(equals(<denominator_expr>, 0), equals(<denominator_expr>, null)), 0, div(<numerator_expr>, <denominator_expr>))\".\n   - Preserve the original <numerator_expr> and <denominator_expr> exactly as they appear.\n4) Save and redeploy the Logic App workflow.\n5) Optionally add input normalization if payload types may be strings: wrap the operands with float(), e.g., \"@if(or(equals(<denominator_expr>, 0), equals(<denominator_expr>, null)), 0, div(float(<numerator_expr>), float(<denominator_expr>)))\".\n6) Re-run the failed instance or trigger a new run to validate the fix.",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584237215071746312980026972CU01",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action contains a template expression using div(numerator, denominator) where the denominator evaluated to 0 from the incoming payload at runtime. Because there is no guard against zero or empty/null values, the expression attempted a divide-by-zero and failed.",
+      "fix_plan": "1) Locate the action named \"Compose\" in the workflow definition and read its inputs expression.\n2) For every occurrence of div(X, Y) in that expression, wrap it with a zero/empty guard so division is only executed when Y is non-zero and non-empty. Use the Logic Apps expression pattern: if(or(empty(Y), equals(Y, 0)), 0, div(X, Y)).\n   - Concretely, replace div(X, Y) with if(or(empty(Y), equals(Y, 0)), 0, div(X, Y)).\n3) If the Compose currently contains only a single div call, set actions.Compose.inputs to the guarded expression string above, preserving the existing X (numerator) and Y (denominator) sub-expressions.\n4) Save and redeploy the workflow.\n5) (Optional) Add run-time tracking to log cases where Y is empty or zero so upstream data issues can be addressed.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584237215190391365515878988CU07",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression where the denominator evaluated to 0 (or null) at runtime due to an invalid/missing input value, causing a division-by-zero failure.",
+      "fix_plan": "1) Open the workflow definition and locate actions.Compose.inputs (the expression currently using div). 2) Transform the expression to guard against zero/null denominators by wrapping the div call in a conditional. 3) If the current expression is @div(<NUMERATOR>, <DENOMINATOR>), replace it with: @if(equals(float(coalesce(<DENOMINATOR>, 0)), 0), 0, div(float(<NUMERATOR>), float(<DENOMINATOR>))) 4) Save and redeploy the workflow. 5) Re-run a test where the denominator is 0 or missing to verify the Compose no longer fails and returns the fallback (0) instead. 6) Optionally adjust the fallback value (0) to null or another domain-specific default if required by business rules.",
+      "action_type": "update_workflow",
+      "confidence": 0.9
+    },
+    {
+      "run_id": "08584237215336776852807063248CU06",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action\u2019s inputs used a Workflow Definition Language div() expression whose second argument (denominator) evaluated to 0. Because there was no guard for zero or empty values, the expression triggered a BadRequest (division by zero) and the run failed.",
+      "fix_plan": "1) Retrieve the Logic App workflow definition JSON.\n2) Locate actions.Compose.inputs. Identify the div(<numerator>, <denominator>) expression currently used.\n3) Replace it with a guarded expression that prevents division by zero. Use this pattern, preserving the original numerator (X) and denominator (Y) subexpressions:\n   \"@{if(or(equals(string(Y),'0'), empty(Y)), null, div(X, Y))}\"\n   - X: the original numerator expression\n   - Y: the original denominator expression\n   - Choose the fallback (null shown above) to match business logic; alternatively use 0 if a numeric default is required.\n4) Save and deploy the updated workflow definition.\n5) Re-run with the same inputs and add tests where Y is 0, '0', or empty to verify the guard prevents failures.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584237215528107298403417662CU23",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action uses a div() expression whose second argument evaluated to 0 at runtime. Logic Apps throws BadRequest on division by zero, causing the Compose action to fail.",
+      "fix_plan": "1) Open the workflow definition for this Logic App.\n2) Locate the actions.Compose.inputs expression. It currently uses the form: @div(<numerator_expr>, <denominator_expr>).\n3) Replace the expression with a guarded form to prevent division by zero:\n   @if(equals(coalesce(<denominator_expr>, 0), 0), 0, div(<numerator_expr>, <denominator_expr>))\n   - This returns 0 when the denominator is null or 0; otherwise it performs the division.\n4) Save and deploy the updated workflow definition.\n5) Re-run the failed instance or trigger a new run to validate the fix.",
+      "action_type": "update_workflow",
+      "confidence": 0.9
+    }
+  ]
+}

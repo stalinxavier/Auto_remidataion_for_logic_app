@@ -1,0 +1,304 @@
+{
+  "classified_errors": [
+    {
+      "run_id": "08584236272741907920287757698CU29",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received null instead of a string, indicating an invalid or missing input value in the payload."
+    },
+    {
+      "run_id": "08584236272898650830947901308CU17",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression expected a string but received null from the input, indicating invalid or missing data."
+    },
+    {
+      "run_id": "08584236273329880612417784418CU27",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the 'endsWith' function received a null instead of a string input, indicating a payload/expression validation issue that requires handling null values."
+    },
+    {
+      "run_id": "08584236497072928925924145474CU15",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received a null value instead of a string, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236497167413650172545756CU20",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Condition' action failed because the endsWith() expression received a Null instead of a string, indicating a data/type mismatch in the payload."
+    },
+    {
+      "run_id": "08584236497265082351535648809CU25",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the 'endsWith' expression received a Null value instead of a string, indicating a missing or improperly formatted input."
+    },
+    {
+      "run_id": "08584236497388401957986250909CU13",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Condition' action failed because the endsWith() expression received a null instead of a string, indicating an invalid or missing input value."
+    },
+    {
+      "run_id": "08584236497516716082952477152CU24",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Condition' action failed because the 'endsWith' expression received a null value instead of a string, indicating missing or malformed input data."
+    },
+    {
+      "run_id": "08584236497640634874140120380CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith() expression received a null value instead of a string, indicating an unexpected or missing payload field."
+    },
+    {
+      "run_id": "08584236497763832357860787198CU10",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the 'endsWith' expression received a null value instead of a string."
+    },
+    {
+      "run_id": "08584236497886934113838410905CU24",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Condition' action failed because the endsWith expression received a null value instead of a string, indicating a data/type mismatch in the input payload."
+    },
+    {
+      "run_id": "08584236498011777935827967718CU22",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith() expression received a null value instead of a string, indicating an invalid or missing input payload."
+    },
+    {
+      "run_id": "08584236498124876450698630973CU13",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Condition action failed due to a template expression error where 'endsWith' expected a string but received null, indicating an invalid or missing input value."
+    },
+    {
+      "run_id": "08584236498213781670012367335CU29",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received a null value instead of a string, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236498302097201533120278CU04",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "Condition action failed because endsWith() expected a string but received null in the input, indicating an invalid or missing value in the payload."
+    },
+    {
+      "run_id": "08584236498388899131946594471CU29",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression expected a string but received null, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236498504367253462642949CU07",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the 'endsWith' function received a null value instead of a string, indicating a missing or improperly formatted input."
+    },
+    {
+      "run_id": "08584236498641250634408655963CU08",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Condition action failed because the 'endsWith' expression expected a string but received null, indicating a payload/value type mismatch."
+    },
+    {
+      "run_id": "08584236498788262562636301899CU30",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Condition' action failed because the 'endsWith' expression expected a string but received null, resulting in a BadRequest error."
+    },
+    {
+      "run_id": "08584236498934497181051174121CU18",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received a null instead of a string, indicating a missing or null input value."
+    },
+    {
+      "run_id": "08584236500032325319692555867CU11",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received a null value instead of a string, indicating invalid or missing input."
+    },
+    {
+      "run_id": "08584236500557939183387841102CU17",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received a null value instead of a string, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236500678252463814289758CU26",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith() expression expected a string but received null, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236500796186869360593851CU15",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Condition action failed due to a template expression error where 'endsWith' received a null instead of a string."
+    },
+    {
+      "run_id": "08584236500946239978991931340CU04",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the 'endsWith' function received a null value instead of a string, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236501066347510990390405CU07",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Condition' action failed because the endsWith expression received a null instead of a string, indicating an invalid or missing input value."
+    },
+    {
+      "run_id": "08584236501187033009010373922CU17",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Condition' action failed because the endsWith() expression received a null instead of a string, indicating invalid or missing input."
+    },
+    {
+      "run_id": "08584236501308399233573330943CU07",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received a null value instead of a string, indicating an unexpected data/type mismatch in the input."
+    },
+    {
+      "run_id": "08584236501471302633530899011CU29",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith function received a null value instead of a string, indicating an invalid or missing input payload."
+    },
+    {
+      "run_id": "08584236501593714188341775438CU09",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Condition action failed because the endsWith expression received a null value instead of a string, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236501711156048869504003CU21",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Condition action failed with BadRequest because the 'endsWith' expression received a null value instead of a string, indicating a missing or invalid input payload."
+    },
+    {
+      "run_id": "08584236501833320099198588057CU02",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith() expression received a null value instead of a string, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584236501935901239082015661CU02",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith function received a null value instead of a string, indicating missing or malformed input to the expression."
+    },
+    {
+      "run_id": "08584236502023006221391321493CU24",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith function received null instead of a string, indicating an unexpected null input payload."
+    },
+    {
+      "run_id": "08584236502104831834848414111CU23",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the 'endsWith' expression received a null value instead of a string, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236502190585576624425825CU04",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received a null value instead of a string, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236502279852535015566213CU31",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Condition' action failed because the 'endsWith' expression expected a string but received null, indicating invalid or missing input data."
+    },
+    {
+      "run_id": "08584236502366603791491460247CU07",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith function expected a string but received null from the inputs, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584237144019684140998122315CU10",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The run failed because 'Get_file_content_using_path' returned NotFound (file not found or invalid path), causing dependent actions to fail."
+    },
+    {
+      "run_id": "08584237146712992883322399615CU17",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Condition action failed because the 'endsWith' function received a null value instead of a string, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584237146836153263518041187CU14",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith function received a null value instead of a string, resulting in a BadRequest template expression error."
+    },
+    {
+      "run_id": "08584237146964265401283263847CU23",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Condition action failed due to a template expression type mismatch: endsWith expected a string but received null."
+    },
+    {
+      "run_id": "08584237148328648254011825715CU22",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Condition action failed because the endsWith expression received a Null value instead of a string, indicating an invalid or missing input."
+    },
+    {
+      "run_id": "08584237148455809313133728718CU22",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith function received a Null value instead of a string, causing a bad request."
+    },
+    {
+      "run_id": "08584237148580363883153382070CU29",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith function received a null value instead of a string, indicating missing or malformed input data."
+    },
+    {
+      "run_id": "08584237149082976402825133439CU22",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith function received a null value instead of a string, indicating an invalid or missing payload field."
+    },
+    {
+      "run_id": "08584237149380036693633530544CU15",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received a null value instead of a string, indicating a missing or invalid input."
+    },
+    {
+      "run_id": "08584237149685720927221269418CU10",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith expression received a null instead of a string, indicating an unexpected or missing input value."
+    },
+    {
+      "run_id": "08584237149959030969016959900CU08",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the 'endsWith' expression received a null value instead of a string."
+    },
+    {
+      "run_id": "08584237149996451941503619776CU10",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Condition action failed because the endsWith() expression received a null value instead of a string, indicating missing or invalid input; validate or coalesce the input to handle nulls."
+    }
+  ]
+}
