@@ -1,0 +1,61 @@
+{
+  "workflow_id": "Logic_Apps_test",
+  "total_failed": 3,
+  "workflow_action_names": [
+    "Parse_JSON",
+    "Response"
+  ],
+  "errors": [
+    {
+      "run_id": "08584235523229079442760295755CU03",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T08:02:42.5712308Z",
+      "end_time": "2026-05-06T08:02:43.030074Z",
+      "failed_actions": [
+        {
+          "action_name": "Parse_JSON",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Parse_JSON' inputs at line '0' and column '0': 'Required property 'content' expects a value but got null. Path ''.'.",
+          "start_time": "2026-05-06T08:02:42.9877354Z"
+        }
+      ],
+      "timestamp": "2026-05-06T08:05:50.332532+00:00"
+    },
+    {
+      "run_id": "08584235543189918541353542147CU30",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T07:29:26.4871209Z",
+      "end_time": "2026-05-06T07:29:26.6312451Z",
+      "failed_actions": [
+        {
+          "action_name": "Parse_JSON",
+          "status_code": "InvalidJSON",
+          "error_message": "The 'content' property of actions of type 'ParseJson' must be valid JSON. The provided value cannot be parsed: 'Unexpected character encountered while parsing value: a. Path '', line 0, position 0.'.",
+          "start_time": "2026-05-06T07:29:26.5784194Z"
+        }
+      ],
+      "timestamp": "2026-05-06T08:05:50.933702+00:00"
+    },
+    {
+      "run_id": "08584236347247813524402062542CU09",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-05T09:09:20.6977114Z",
+      "end_time": "2026-05-05T09:09:20.8512511Z",
+      "failed_actions": [
+        {
+          "action_name": "Parse_JSON",
+          "status_code": "InvalidJSON",
+          "error_message": "The 'content' property of actions of type 'ParseJson' must be valid JSON. The provided value cannot be parsed: 'Unexpected character encountered while parsing value: a. Path '', line 0, position 0.'.",
+          "start_time": "2026-05-05T09:09:20.7861518Z"
+        }
+      ],
+      "timestamp": "2026-05-06T08:05:51.611835+00:00"
+    }
+  ]
+}

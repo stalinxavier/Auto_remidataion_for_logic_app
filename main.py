@@ -20,11 +20,13 @@ import json
 import logging
 import requests
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from _config.config import settings
 from _util.file_ops import load_latest_json
 from graph import build_graph
+from _dashboard.dashboard_routes import router as dashboard_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -37,6 +39,9 @@ app = FastAPI(
     description="LangGraph-powered pipeline: Observer → Classifier → RCA → Fixer",
     version="1.0.0",
 )
+
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.include_router(dashboard_router, prefix="/api")
 
 
 # ── Shared ARM auth ───────────────────────────────────────────────────────────

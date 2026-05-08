@@ -1,0 +1,604 @@
+{
+  "classified_errors": [
+    {
+      "run_id": "08584234550378882107396986370CU04",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter instead of a number, causing a template expression error."
+    },
+    {
+      "run_id": "08584234711850912705537825569CU20",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a division-by-zero in the 'div' template expression, caused by input evaluating the divisor to zero."
+    },
+    {
+      "run_id": "08584234780094879687244578165CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a template expression error where 'div' received a null second parameter instead of a number, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584234780748705055380067605CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed with BadRequest because the 'div' function received a null second parameter instead of a number; validate inputs or handle null values."
+    },
+    {
+      "run_id": "08584234795257735661358079679CU02",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed with a BadRequest due to a division by zero in the template expression using the div() function."
+    },
+    {
+      "run_id": "08584235385053875997677704523CU23",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function received a null second parameter instead of a number, causing a BadRequest."
+    },
+    {
+      "run_id": "08584235385333219480965349639CU20",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed because the 'div' function received a null second parameter, resulting in a BadRequest and preventing dependent actions from running."
+    },
+    {
+      "run_id": "08584235386538985829249502586CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the div() function received a null second parameter instead of a number, causing a BadRequest."
+    },
+    {
+      "run_id": "08584235414623865972379898829CU26",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the float() function was given a value that cannot be converted to a number, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584235416308851849596867504CU13",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'float' function received an invalid value that could not be converted to a number."
+    },
+    {
+      "run_id": "08584235438679110147243424328CU13",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose failed because the 'float' function was given a value that cannot be converted to a number, causing a BadRequest during template evaluation."
+    },
+    {
+      "run_id": "08584235440825010719607675931CU26",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'float' function received an invalid value that cannot be converted to a number."
+    },
+    {
+      "run_id": "08584235452148932996902736173CU25",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed with BadRequest because the 'float' template function received a value that cannot be converted to a number, causing dependent actions to fail."
+    },
+    {
+      "run_id": "08584235454627974168551048695CU09",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "Compose action failed due to an invalid float() conversion in the expression where the provided value could not be converted to a number, causing the run to fail."
+    },
+    {
+      "run_id": "08584235458128827589659884134CU30",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the float() function received a non-numeric value that could not be converted, causing the run to fail."
+    },
+    {
+      "run_id": "08584235508324806066851744584CU09",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'Compose' action failed because the div() function received a null second parameter instead of a number, indicating a missing or invalid input value."
+    },
+    {
+      "run_id": "08584235508488204142720171001CU28",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to division by zero in the 'div' template expression."
+    },
+    {
+      "run_id": "08584235550034911214716195529CU07",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter, causing a BadRequest template evaluation error."
+    },
+    {
+      "run_id": "08584235596815960612696824507CU04",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed with BadRequest because the 'div' expression received a null second parameter instead of a number, indicating an invalid or missing input value."
+    },
+    {
+      "run_id": "08584236322056128862689593174CU18",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function's second parameter was null, indicating missing or invalid input to the expression."
+    },
+    {
+      "run_id": "08584236330957059896571203390CU04",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the div() expression received a null second parameter instead of a number, causing a BadRequest."
+    },
+    {
+      "run_id": "08584236493775758571377954560CU29",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the div() expression received a null second parameter instead of a number, causing a BadRequest due to invalid input."
+    },
+    {
+      "run_id": "08584236495811817500476447733CU20",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584236499061999348324309609CU29",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' expression received a null second parameter instead of a number, causing a BadRequest."
+    },
+    {
+      "run_id": "08584236499184022943933133876CU11",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function received a null second parameter, resulting in a BadRequest and action failure."
+    },
+    {
+      "run_id": "08584236499945232128506730681CU05",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function received a null second parameter instead of a number, causing a BadRequest and dependent actions to fail."
+    },
+    {
+      "run_id": "08584236500126292628243116589CU06",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the div() expression received a null second parameter instead of a number, indicating missing or invalid input."
+    },
+    {
+      "run_id": "08584236500208372571170978533CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function received a null second parameter instead of a numeric value, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584236500297638630033116881CU15",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function received a null instead of a number, resulting in a BadRequest and causing dependent actions to fail."
+    },
+    {
+      "run_id": "08584236500383682143808196314CU22",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' template function received a null second parameter instead of a numeric value, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584236500468173416440486408CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter, indicating invalid or missing input to the expression."
+    },
+    {
+      "run_id": "08584237161962133615312366080CU18",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter instead of a number, causing a BadRequest due to invalid input data."
+    },
+    {
+      "run_id": "08584237164256473900560724993CU31",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter instead of a number, causing a BadRequest and stopping dependent actions."
+    },
+    {
+      "run_id": "08584237177473247119271530147CU03",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a template expression error where 'div' received a null second parameter instead of a numeric value."
+    },
+    {
+      "run_id": "08584237180523234366095105474CU30",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function received a null second parameter instead of a number, indicating missing or invalid input data."
+    },
+    {
+      "run_id": "08584237190335317166375677066CU04",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed with BadRequest because the 'div' expression received a null second parameter instead of a number, causing the run to fail."
+    },
+    {
+      "run_id": "08584237191206077018057808012CU02",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the div() function received a null second parameter instead of a number, indicating missing or invalid input."
+    },
+    {
+      "run_id": "08584237191346445304827772356CU15",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed because the div() function received a null second parameter instead of a number, resulting in a BadRequest due to invalid input."
+    },
+    {
+      "run_id": "08584237191660289332329730124CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the div() function received a null second parameter instead of a number, resulting in a BadRequest and halting dependent actions."
+    },
+    {
+      "run_id": "08584237192068539831112198801CU08",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the div() expression received a null as its second parameter instead of a number, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584237192528125951922751749CU25",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter instead of a numeric value, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584237192994535237546785908CU19",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function received a null second parameter, causing a BadRequest template evaluation error."
+    },
+    {
+      "run_id": "08584237193737511532798106080CU15",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Compose' action failed because the div() function received a null second parameter instead of a number, indicating invalid or missing input data."
+    },
+    {
+      "run_id": "08584237194708357051720547293CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter instead of a number, causing the run to fail and dependent actions not to execute."
+    },
+    {
+      "run_id": "08584237195324476194117315519CU20",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to an invalid 'div' expression where the second parameter was null instead of a number."
+    },
+    {
+      "run_id": "08584237195859166529197478205CU20",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter instead of a number, causing a BadRequest and halting dependent actions."
+    },
+    {
+      "run_id": "08584237196331537354781850079CU18",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because div() received a null second parameter instead of a number, indicating an invalid or missing input."
+    },
+    {
+      "run_id": "08584237197123672295735326481CU25",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Compose' action failed because the div() function received a null second parameter instead of a number; validate or handle null inputs."
+    },
+    {
+      "run_id": "08584237199229669163328090840CU10",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a template expression error: the 'div' function received a null second parameter instead of a number, resulting in BadRequest."
+    },
+    {
+      "run_id": "08584237199515714973231189365CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a template expression error where the 'div' function received a null second parameter instead of a number, causing a BadRequest."
+    },
+    {
+      "run_id": "08584237201946461322587055983CU23",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the div() expression received a null second parameter instead of a number, causing a BadRequest."
+    },
+    {
+      "run_id": "08584237202479672920859830531CU20",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose failed because the 'div' function received a null second parameter instead of a number, causing a BadRequest."
+    },
+    {
+      "run_id": "08584237204402962655976263062CU22",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter instead of a number, causing the run to fail."
+    },
+    {
+      "run_id": "08584237208064525025709134325CU19",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a division-by-zero error in the 'div' expression, causing a BadRequest."
+    },
+    {
+      "run_id": "08584237208223281784475102443CU17",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed due to a divide-by-zero in a template expression, indicating invalid input or logic in the payload."
+    },
+    {
+      "run_id": "08584237208630837803536778235CU27",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a divide-by-zero in the 'div' template expression, indicating the input data produced a zero divisor."
+    },
+    {
+      "run_id": "08584237209020892308280195966CU05",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a division by zero in the div() function, causing a BadRequest and dependent actions to be skipped."
+    },
+    {
+      "run_id": "08584237209441834894682882167CU17",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed with BadRequest due to a divide-by-zero in the 'div' template expression, causing dependent actions to fail."
+    },
+    {
+      "run_id": "08584237209824240971171411666CU13",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a division-by-zero in the 'div' expression, indicating invalid input for the expression."
+    },
+    {
+      "run_id": "08584237210281704192856047226CU08",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a division-by-zero in the 'div' expression, indicating invalid input or expression configuration."
+    },
+    {
+      "run_id": "08584237210726958969379888065CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a divide-by-zero error in the template expression (div), causing a BadRequest."
+    },
+    {
+      "run_id": "08584237211007314231336376158CU26",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "Compose action failed with BadRequest due to a division-by-zero in the 'div' template expression, causing dependent actions to be skipped."
+    },
+    {
+      "run_id": "08584237214500433696066656034CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a divide-by-zero error in a template expression (div), caused by invalid or zero-valued input data."
+    },
+    {
+      "run_id": "08584237214658086102416875352CU06",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "Compose action failed due to a divide-by-zero in the 'div' function while processing template expressions, causing a BadRequest and halting dependent actions."
+    },
+    {
+      "run_id": "08584237214805691534568489584CU17",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed with BadRequest because the template expression used div() attempted to divide by zero."
+    },
+    {
+      "run_id": "08584237214980168238999521516CU10",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "Compose action failed due to a divide-by-zero in the 'div' function within a template expression."
+    },
+    {
+      "run_id": "08584237214984013112770639995CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a division-by-zero error in the 'div' template function, causing the run to fail."
+    },
+    {
+      "run_id": "08584237215071746312980026972CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a division-by-zero in a template expression (div), indicating invalid or unexpected input values."
+    },
+    {
+      "run_id": "08584237215190391365515878988CU07",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a divide-by-zero error in a template expression (div function), indicating invalid or unexpected input."
+    },
+    {
+      "run_id": "08584237215336776852807063248CU06",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed with a BadRequest due to a template expression error where the 'div' function attempted to divide by zero, causing dependent actions to be skipped."
+    },
+    {
+      "run_id": "08584237215528107298403417662CU23",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a divide-by-zero in the 'div' expression, causing a BadRequest during template evaluation."
+    },
+    {
+      "run_id": "08584237215724310028730712233CU22",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a division-by-zero error in the 'div' expression, causing a bad request during template evaluation."
+    },
+    {
+      "run_id": "08584237215822300327284897899CU25",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed because its template expression attempted to divide by zero using the 'div' function, causing the run to fail."
+    },
+    {
+      "run_id": "08584237215931373672675196118CU27",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a division-by-zero in the 'div' template expression, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584237215934035500732021037CU28",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed due to a division-by-zero error in the div() expression, causing dependent actions to not run."
+    },
+    {
+      "run_id": "08584237216026720404587799281CU12",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a division-by-zero in the 'div' template expression, resulting in a BadRequest and run failure."
+    },
+    {
+      "run_id": "08584237216127968660616877408CU12",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because a template expression attempted to divide by zero using the 'div' function."
+    },
+    {
+      "run_id": "08584237216135709083820271479CU12",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a division-by-zero error in the 'div' expression, indicating invalid or unexpected input."
+    },
+    {
+      "run_id": "08584237216212238849419629643CU07",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a divide-by-zero in the 'div' expression, resulting in a BadRequest and preventing dependent actions from running."
+    },
+    {
+      "run_id": "08584237216312693664643218132CU03",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a division-by-zero in the div() template expression, indicating invalid input values."
+    },
+    {
+      "run_id": "08584237216319891982780538139CU11",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed due to a divide-by-zero in the 'div' expression, causing a BadRequest and stopping dependent actions."
+    },
+    {
+      "run_id": "08584237216438753670608469920CU28",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a division by zero in the 'div' template expression."
+    },
+    {
+      "run_id": "08584237216488991799129503716CU24",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed due to a division-by-zero in a template expression (div function), causing the run to fail."
+    },
+    {
+      "run_id": "08584237216548289506235253137CU16",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "Compose action failed due to a divide-by-zero in the div() expression, resulting in a BadRequest and no dependent actions running."
+    },
+    {
+      "run_id": "08584237216648027376057536899CU03",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a division-by-zero in the 'div' expression, causing a BadRequest."
+    },
+    {
+      "run_id": "08584237216719320028958898816CU04",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a divide-by-zero in the 'div' expression during template evaluation."
+    },
+    {
+      "run_id": "08584237216750651690834957474CU02",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a divide-by-zero error in the 'div' expression, resulting in BadRequest and causing dependent actions to skip."
+    },
+    {
+      "run_id": "08584237216913150374898898513CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a division-by-zero in the 'div' template expression, indicating invalid or unexpected input values."
+    },
+    {
+      "run_id": "08584237217023307233069907628CU02",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed due to a divide-by-zero error in the div() expression, causing the run to fail."
+    },
+    {
+      "run_id": "08584237217100432459938507821CU03",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed due to a division-by-zero error in a template expression (div), resulting in BadRequest and stopping dependent actions."
+    },
+    {
+      "run_id": "08584237217120742169551629812CU04",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "Compose action failed due to a divide-by-zero in the div() template expression, causing the run to fail and dependent actions not to execute."
+    },
+    {
+      "run_id": "08584237217236413082558828522CU27",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed with a divide-by-zero error in the 'div' function due to invalid or zero input values."
+    },
+    {
+      "run_id": "08584237217243873892693223222CU12",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because a template expression attempted to divide by zero using the 'div' function."
+    },
+    {
+      "run_id": "08584237217370491638568495048CU24",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a divide-by-zero error in a template expression (div()), indicating invalid input or expression logic."
+    },
+    {
+      "run_id": "08584237217469673435299336896CU05",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a division-by-zero in the div() expression, resulting in a BadRequest during evaluation."
+    },
+    {
+      "run_id": "08584237217567129180204200631CU22",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to a division-by-zero in the 'div' template expression, likely caused by invalid or unexpected input values."
+    },
+    {
+      "run_id": "08584237217682442586041196098CU14",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the expression attempted to divide by zero using the 'div' function, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584237217780535049510645963CU15",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed because the div() function attempted to divide by zero, resulting in a BadRequest and causing the run to fail."
+    },
+    {
+      "run_id": "08584237217867836269494506580CU06",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed due to a divide-by-zero in the div() expression triggered by input values, causing subsequent dependent actions to be skipped"
+    },
+    {
+      "run_id": "08584237217964351230954127760CU17",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed due to a divide-by-zero error in the 'div' template function, indicating invalid or unexpected input values."
+    }
+  ]
+}

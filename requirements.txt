@@ -16,3 +16,6 @@ pydantic>=2.7.0
 
 # Environment
 python-dotenv>=1.0.0
+
+# SAP HANA client
+hdbcli>=2.19.0

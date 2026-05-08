@@ -1,0 +1,94 @@
+{
+  "analysis": [
+    {
+      "run_id": "08584235414623865972379898829CU26",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The 'Compose' action attempted to use the 'float' function on an input value that is not convertible to a float (e.g., a string that does not represent a number, null, or an object).",
+      "fix_plan": "Update the 'Compose' action's input expression to validate or sanitize the input before applying the 'float' function. Use the 'if' or 'coalesce' functions to ensure the input is a valid number or provide a default value if conversion fails.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584235416308851849596867504CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The 'Compose' action attempted to convert an input value to float, but the input data was not a valid numeric string or number. This likely occurred because the input was missing, null, or contained non-numeric characters.",
+      "fix_plan": "Update the 'Compose' action's input expression to validate or sanitize the input before attempting conversion. Use the 'float' function only after confirming the input is numeric, or add a conditional check to handle invalid input gracefully.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584235438679110147243424328CU13",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The 'Compose' action attempted to convert an input value to float, but the input data was not a valid numeric string or number. This likely occurred because the input was either empty, null, or contained non-numeric characters.",
+      "fix_plan": "Update the 'Compose' action's input to ensure it receives a valid numeric value. Add a data validation step before the 'Compose' action to check if the input is a valid float. If not, handle the error or provide a default value.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584235440825010719607675931CU26",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The 'Compose' action attempted to convert an input value to float, but the input was not a valid number (likely a string or null).",
+      "fix_plan": "Update the 'Compose' action's input expression to ensure it only receives valid numeric values. Add a type check or conversion logic (e.g., use 'float()' with error handling or validate input before passing to Compose).",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584235452148932996902736173CU25",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The 'Compose' action attempted to convert an input value to float, but the input was not a valid number (likely a string or null). This caused the conversion to fail.",
+      "fix_plan": "Update the 'Compose' action's input expression to validate or parse the input value before attempting float conversion. Use the 'float' function with a conditional check (e.g., 'if(isFloat(input), float(input), default_value)'). Ensure the input is always a valid number or provide a default value if not.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584235454627974168551048695CU09",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The 'Compose' action attempted to convert an input value to float, but the input payload contained a non-numeric value (e.g., string or null), causing the conversion to fail.",
+      "fix_plan": "Update the 'Compose' action's input expression to validate or sanitize the input payload before attempting float conversion. Use the 'float' function only after confirming the input is numeric, or add a conditional check to handle non-numeric values gracefully.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584235458128827589659884134CU30",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The 'Compose' action attempted to convert an input value to float, but the input payload contained a non-numeric value (e.g., string or null), causing the conversion to fail.",
+      "fix_plan": "Update the 'Compose' action's input expression to validate or sanitize the input before attempting float conversion. Use an expression like 'if(isFloat(triggerOutputs()?['value']), float(triggerOutputs()?['value']), 0)' to ensure only valid numeric values are processed.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584235508324806066851744584CU09",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The 'Compose' action attempted to use the 'div' function with a null input value, which is not allowed. This likely happened because the input to the 'Compose' action was not properly initialized or was missing from a previous step.",
+      "fix_plan": "Update the workflow definition to ensure that the input to the 'Compose' action is always a valid number. Add a check or default value before the 'Compose' action to prevent null values from being passed to the 'div' function.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    },
+    {
+      "run_id": "08584235508488204142720171001CU28",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The Compose action's input expression attempted to divide by zero, which is not allowed and caused the action to fail.",
+      "fix_plan": "Update the Compose action's input expression to check for zero before performing division. Use an if() expression to handle cases where the divisor is zero, returning a default value or error message instead of performing the division.",
+      "action_type": "update_workflow",
+      "confidence": 0.98
+    },
+    {
+      "run_id": "08584235550034911214716195529CU07",
+      "error_type": "Payload Issue",
+      "affected_action": "Compose",
+      "root_cause": "The 'Compose' action attempted to use the 'div' function, but one of its input values was null instead of a number, causing the function to fail.",
+      "fix_plan": "Update the 'Compose' action to validate its inputs before using the 'div' function. Add a condition to check for null values and provide a default value or handle the null case appropriately to prevent the function from receiving null.",
+      "action_type": "update_workflow",
+      "confidence": 0.95
+    }
+  ]
+}

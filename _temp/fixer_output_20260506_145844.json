@@ -1,0 +1,647 @@
+{
+  "fix_results": [
+    {
+      "run_id": "08584235508324806066851744584CU09",
+      "status": "success",
+      "details": "Updated Compose.inputs to a null/zero-safe expression that checks the trigger value before dividing, preventing null-operand and divide-by-zero errors.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(10), empty(triggerBody()?['value']), equals(float(triggerBody()?['value']), 0)), null, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Guards against null/empty operands and division by zero so the Compose expression won\u2019t fail when triggerBody()?['value'] is missing or zero."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235508488204142720171001CU28",
+      "status": "success",
+      "details": "Updated Compose.inputs to a guarded division expression that returns null when triggerBody()?['value'] is empty or zero, removing the unnecessary empty(10) check and preventing divide-by-zero failures.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(triggerBody()?['value']), equals(float(triggerBody()?['value']), 0)), null, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Guards the division by returning null when the denominator is empty or zero, preventing divide-by-zero while preserving the original numerator and denominator expressions."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235550034911214716195529CU07",
+      "status": "success",
+      "details": "Updated the Compose action\u2019s inputs expression to validate the divisor using coalesce and zero checks before performing division, returning null when the divisor is null or zero.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(coalesce(triggerBody()?['value'], null), null), equals(float(coalesce(triggerBody()?['value'], 0)), 0)), null, div(float(10), float(triggerBody()?['value'])))}",
+          "reason": "Adds null/zero checks with coalesce and float casting so div() is only called when the divisor is a valid non-zero number, preventing null divisor failures."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235596815960612696824507CU04",
+      "status": "success",
+      "details": "Updated Compose.inputs to conditionally return null when the denominator is null or zero and to cast both operands to float before division.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(triggerBody()?['value'], null), equals(float(coalesce(triggerBody()?['value'], 0)), 0)), null, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Guards against null or zero denominators and casts to float before division so div() doesn\u2019t evaluate with a null/zero denominator."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236322056128862689593174CU18",
+      "status": "success",
+      "details": "Updated Compose.inputs to ensure the div() denominator uses float(coalesce(triggerBody()?['value'], 1)), eliminating null denominators that caused the payload error.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{div(float(10), float(coalesce(triggerBody()?['value'], 1)))}",
+          "reason": "Wraps the denominator with coalesce and casts to float so it\u2019s never null, preventing div() from receiving a null argument."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236330957059896571203390CU04",
+      "status": "success",
+      "details": "Updated Compose.inputs to a guarded expression using coalesce and zero-check to handle null/zero denominators and avoid division errors.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(equals(float(coalesce(triggerBody()?['value'], 0)), 0), 0, div(float(coalesce(10, 0)), float(coalesce(triggerBody()?['value'], 0))))}",
+          "reason": "Wraps the division with a guard that coerces nulls to 0 and returns 0 when the denominator is null or zero, preventing BadRequest from div() with a null/zero denominator."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236493775758571377954560CU29",
+      "status": "success",
+      "details": "Updated Compose.inputs to wrap the division with an if(or(empty(...), equals(...,0))) guard so the denominator is never null or zero before calling div().",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(empty(float(coalesce(triggerBody()?['value'], 0))), equals(float(coalesce(triggerBody()?['value'], 0)), 0)), 0, div(float(coalesce(10, 0)), float(coalesce(triggerBody()?['value'], 0))))}",
+          "reason": "Guards the division by returning 0 when the denominator is null or zero, preventing div() from receiving an invalid second parameter."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236495811817500476447733CU20",
+      "status": "success",
+      "details": "Updated Compose.inputs to a null-safe expression that converts triggerBody()['value'] to a number with default 0 and conditionally performs division only when the denominator is non-zero.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(not(equals(coalesce(float(triggerBody()?['value']), 0), 0)), div(10, coalesce(float(triggerBody()?['value']), 0)), 0)}",
+          "reason": "Coalesces the float-converted trigger value to 0 and only divides when non-zero, preventing div() from receiving null or causing division by zero."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236499061999348324309609CU29",
+      "status": "success",
+      "details": "Patched Compose.inputs with a guarded division expression to handle null/zero divisors, preventing runtime failures due to invalid payload values.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(coalesce(triggerBody()?['value'], null), null), equals(float(coalesce(triggerBody()?['value'], 0)), 0)), null, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Guards the divisor by returning null when it is missing or zero so div() never receives a null/invalid second parameter."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236499184022943933133876CU11",
+      "status": "success",
+      "details": "Updated Compose.inputs to wrap div() with a null/zero check guard to avoid null parameters and divide-by-zero.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(10, null), equals(triggerBody()?['value'], null), equals(float(triggerBody()?['value']), 0)), null, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a null/zero guard so div() never receives null or zero from runtime data, preventing the template expression error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236499945232128506730681CU05",
+      "status": "success",
+      "details": "Updated Compose.inputs to guard against null/zero denominator using empty() and coalesce(), returning 0 when invalid; this prevents division errors caused by evaluating float on null.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(triggerBody()?['value']), equals(coalesce(triggerBody()?['value'], 0), 0)), 0, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a null/zero guard on the denominator to prevent evaluating float(null) and avoids division by null by returning 0 when the input is missing or zero."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500126292628243116589CU06",
+      "status": "success",
+      "details": "Updated the Compose action's inputs expression to safely handle null/zero denominator by guarding and type-casting, returning null instead of failing.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(empty(triggerBody()?['value']), equals(coalesce(triggerBody()?['value'], 0), 0)), null, div(float(coalesce(10, 0)), float(triggerBody()?['value'])))}",
+          "reason": "Adds a guard that returns null when the denominator is null or zero and casts operands to float to prevent div from receiving invalid inputs."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500208372571170978533CU01",
+      "status": "success",
+      "details": "Updated the Compose action's inputs to guard the div() against null or zero divisors and return 0 when unsafe, preventing the payload expression error.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(coalesce(triggerBody()?['value'], 0), 0), equals(triggerBody()?['value'], null)), 0, div(float(coalesce(10, 0)), float(triggerBody()?['value'])))}\"",
+          "reason": "Wraps the division in a null/zero-safe guard so the divisor is validated and returns 0 instead of causing a BadRequest when null or zero."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500297638630033116881CU15",
+      "status": "success",
+      "details": "Updated Compose.inputs to safely handle null or zero denominator by guarding div() and returning null instead of failing.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(triggerBody()?['value'], null), equals(float(coalesce(triggerBody()?['value'], 0)), 0)), null, div(float(coalesce(10, 0)), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a guard that returns null when the denominator is null or zero, preventing div from being called with an invalid denominator."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500383682143808196314CU22",
+      "status": "success",
+      "details": "Updated the Compose action's inputs expression to guard the denominator with empty(float(triggerBody()?['value'])) and zero checks before performing div(), preventing null denominators from causing failures.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(float(triggerBody()?['value'])), equals(float(triggerBody()?['value']), 0)), null, div(float(coalesce(10, 0)), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds an explicit empty/zero check on the denominator so div() is only evaluated when it is a non-zero number, avoiding null-related BadRequest errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236500468173416440486408CU01",
+      "status": "success",
+      "details": "Replaced the Compose action's inputs expression to safely handle null/zero denominator using coalesce and a conditional, preventing div() from receiving a null value.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, div(float(coalesce(10, 0)), coalesce(float(triggerBody()?['value']), 1)))}\"",
+          "reason": "Guards against null or zero denominator by returning 0; otherwise divides using a non-null denominator to prevent BadRequest from div() with null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237161962133615312366080CU18",
+      "status": "success",
+      "details": "Updated the Compose action's inputs to safely handle null or zero divisors by guarding and casting before division.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(float(triggerBody()?['value']), null), equals(coalesce(float(triggerBody()?['value']), 0), 0)), null, div(float(coalesce(10, 0)), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a null/zero guard and casts to numbers so div() is only executed when the divisor is a valid non-zero number, preventing BadRequest from a null divisor."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237164256473900560724993CU31",
+      "status": "success",
+      "details": "Replaced Compose.inputs with a guarded expression that validates numerator/denominator and avoids division by zero/null.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(coalesce(float(coalesce(10, 0)), null), null), equals(coalesce(float(triggerBody()?['value']), null), null), equals(float(triggerBody()?['value']), 0)), 'Invalid input: numerator/denominator missing or denominator is zero', div(float(coalesce(10, 0)), float(triggerBody()?['value'])))}",
+          "reason": "Adds null and zero checks for both operands and returns a clear error string instead of invoking div() with invalid inputs, preventing the Compose from failing on missing/invalid payload values."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237177473247119271530147CU03",
+      "status": "success",
+      "details": "Updated the Compose action's inputs expression to coerce values to float, coalesce a null denominator to 1, and return 0 when denominator is zero, eliminating the null denominator failure.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, div(float(coalesce(10, 0)), float(coalesce(triggerBody()?['value'], 1))))}",
+          "reason": "Guards against null/zero denominator and coerces both operands to float so div() never receives null, preventing BadRequest."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237180523234366095105474CU30",
+      "status": "success",
+      "details": "Updated Compose.inputs to guard the denominator (triggerBody()['value']) with coalesce and a conditional before division, ensuring div() never sees null or zero.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(equals(coalesce(triggerBody()?['value'], 0), 0), 0, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a null/zero guard on the denominator so div() never receives a null (or zero) value, preventing the payload-related failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237190335317166375677066CU04",
+      "status": "success",
+      "details": "Updated the Compose action's inputs to coalesce and cast the denominator to float with a zero fallback, guarding against null/empty values before performing division.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, div(float(10), float(triggerBody()?['value'])))}",
+          "reason": "Coalescing float(triggerBody()?['value']) to 0 and checking for 0 prevents null/zero denominators and ensures a safe division."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237191206077018057808012CU02",
+      "status": "success",
+      "details": "Updated the Compose action's inputs to compute division using a safe, non-null, non-zero denominator and a multiplier flag so div() is never evaluated with invalid operands.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{mul(div(float(10), if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 1, coalesce(float(triggerBody()?['value']), 0))), if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, 1))}",
+          "reason": "Ensures div() never receives null or zero by using a safe denominator (1 when invalid) and a zero/nonzero flag to preserve semantics, preventing BadRequest from null operands."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237191346445304827772356CU15",
+      "status": "success",
+      "details": "Patched Compose.inputs to a null/zero-safe expression that checks the denominator and returns 0 when missing or zero; otherwise performs the division.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, div(float(10), coalesce(float(triggerBody()?['value']), 0)))}\"",
+          "reason": "Adds a null/zero guard on the denominator using coalesce and equals before performing div(), preventing div() from receiving a null value."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237191660289332329730124CU00",
+      "status": "success",
+      "details": "Updated the Compose action's inputs expression to guard against null or zero divisor before dividing, returning null when invalid and dividing only when valid.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(coalesce(triggerBody()?['value'], null), null), equals(int(coalesce(triggerBody()?['value'], 0)), 0)), null, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a null/zero guard for the divisor and only performs division when it is a valid non-zero number to prevent runtime failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237192068539831112198801CU08",
+      "status": "success",
+      "details": "Patched Compose.inputs to guard against null/zero denominator from triggerBody()['value'] and default to 0 to prevent BadRequest due to div() with null denominator.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(triggerBody()?['value'], null), equals(int(coalesce(triggerBody()?['value'], 0)), 0)), 0, div(float(coalesce(10, 0)), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a null/zero guard on the denominator and a safe fallback so div() never evaluates with a null denominator, returning 0 instead of failing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237192528125951922751749CU25",
+      "status": "success",
+      "details": "Updated the Compose action's inputs to guard against null/zero divisors and to make the div() call safe even with Logic Apps' eager function evaluation.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(triggerBody()?['value'], null), equals(int(coalesce(triggerBody()?['value'], 0)), 0)), 0, div(float(coalesce(10, 0)), if(or(equals(triggerBody()?['value'], null), equals(int(coalesce(triggerBody()?['value'], 0)), 0)), 1, float(triggerBody()?['value']))))}",
+          "reason": "Ensures the div() is always evaluated with a non-null, non-zero divisor (defaults to 1) while returning 0 when the payload value is null or zero, preventing BadRequest from divide-by-null/zero."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237192994535237546785908CU19",
+      "status": "success",
+      "details": "Updated the Compose action's inputs to a null/zero-safe guarded div expression with float casts to prevent failures when the denominator is null or zero.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(if(or(equals(triggerBody()?['value'], null), equals(int(coalesce(triggerBody()?['value'], 0)), 0)), 1, float(triggerBody()?['value']))), equals(float(if(or(equals(triggerBody()?['value'], null), equals(int(coalesce(triggerBody()?['value'], 0)), 0)), 1, float(triggerBody()?['value']))), 0)), null, div(float(float(coalesce(10, 0))), float(if(or(equals(triggerBody()?['value'], null), equals(int(coalesce(triggerBody()?['value'], 0)), 0)), 1, float(triggerBody()?['value']))))}\"",
+          "reason": "Guards the division by returning null when the denominator is missing or zero and enforces numeric types via float(), preventing BadRequest due to null/invalid denominator."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237193737511532798106080CU15",
+      "status": "success",
+      "details": "Patched Compose.inputs to guard against null or zero denominator and ensure numeric conversion; returns 0 fallback instead of dividing by null.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(triggerBody()?['value'], null), equals(int(coalesce(triggerBody()?['value'], 0)), 0)), 0, div(float(10), float(triggerBody()?['value'])))}",
+          "reason": "Adds a null/zero guard around the denominator and coerces to numbers before division, returning 0 when the denominator is invalid to prevent div() from receiving null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237194708357051720547293CU00",
+      "status": "success",
+      "details": "Updated the Compose action's inputs expression to ensure the div() denominator uses float(coalesce(..., 1)), preventing null from propagating into div().",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(triggerBody()?['value'], null), equals(int(coalesce(triggerBody()?['value'], 0)), 0)), 0, div(float(10), float(coalesce(triggerBody()?['value'], 1))))}\"",
+          "reason": "Coalescing the denominator to 1 and converting to float guarantees a numeric value, preventing div() from receiving null and eliminating the template expression error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237195324476194117315519CU20",
+      "status": "success",
+      "details": "Patched Compose.inputs to safely handle null/zero denominator by guarding and casting before division.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(coalesce(triggerBody()?['value'], null), null), equals(float(coalesce(triggerBody()?['value'], 0)), 0)), null, div(float(10), float(triggerBody()?['value'])))}",
+          "reason": "Adds a guard to return null when the denominator is missing or zero and casts to float before division to prevent div() from receiving a null denominator."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237195859166529197478205CU20",
+      "status": "success",
+      "details": "Patched Compose.inputs to wrap the division in an if() that checks for null/zero and returns 0; operands are cast to float to ensure numeric division.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(triggerBody()?['value'], null), equals(triggerBody()?['value'], 0), equals(10, null)), 0, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a null/zero guard and casts operands to float so div() never receives null or a zero denominator, preventing the template expression failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237196331537354781850079CU18",
+      "status": "success",
+      "details": "Updated Compose.inputs to use coalesce on the denominator within div so it is never null, ensuring the expression evaluates successfully.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(triggerBody()?['value'], null), equals(triggerBody()?['value'], 0), equals(10, null)), 0, div(float(10), float(coalesce(triggerBody()?['value'], 1))))}\"",
+          "reason": "Wrap the denominator in coalesce(...,1) to ensure div never receives a null value, preventing the compose from failing due to a null denominator."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237197123672295735326481CU25",
+      "status": "success",
+      "details": "Updated the Compose action's inputs to safely handle missing/null or zero denominator by defaulting to 1 and enforcing float conversion, preventing div() from receiving invalid operands.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{div(float(10), float(if(or(equals(triggerBody()?['value'], null), equals(triggerBody()?['value'], 0)), 1, triggerBody()?['value'])))}\"",
+          "reason": "Defaults the denominator to 1 when the trigger value is null or 0 and casts to float, ensuring div() never receives null or zero."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237199229669163328090840CU10",
+      "status": "success",
+      "details": "Updated Compose.inputs to guard against null, empty, or zero divisors and to coerce inputs to float before division.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(triggerBody()?['value']), equals(float(triggerBody()?['value']), 0)), 0, div(float(coalesce(float(10), 0)), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a null/zero guard and numeric coercion for the divisor so div() never receives null or non-numeric values, preventing BadRequest errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237199515714973231189365CU00",
+      "status": "success",
+      "details": "Updated Compose.inputs to guard against null/zero divisor and cast operands to float, ensuring safe division and resolving the payload issue.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(coalesce(float(triggerBody()?['value']), 0), 0), equals(coalesce(float(coalesce(float(10), 0)), null), null)), 0, div(float(float(coalesce(float(10), 0))), float(coalesce(float(triggerBody()?['value']), 1))))}",
+          "reason": "Adds null/zero guards and casts to floats so div() never receives a null or zero denominator, preventing the template expression error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237201946461322587055983CU23",
+      "status": "success",
+      "details": "Patched Compose.inputs to a robust expression that casts both operands to float and guards the denominator using coalesce and an if-check, defaulting to 1 when null or zero to prevent template errors.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{div(float(10), if(equals(float(coalesce(triggerBody()?['value'], 1)), 0), 1, float(coalesce(triggerBody()?['value'], 1))))}\"",
+          "reason": "Ensures the divisor is never null or zero by coalescing to 1 and guarding with an if-expression, while casting to float to avoid type issues, preventing div() from receiving a null/zero argument."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237202479672920859830531CU20",
+      "status": "success",
+      "details": "Updated Compose.inputs with a null/zero-safe expression that checks triggerBody()['value'] before performing division to prevent Payload Issue errors.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(coalesce(triggerBody()?['value'], null), null), equals(float(coalesce(triggerBody()?['value'], 0)), 0)), null, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Guards against missing or zero denominator from the trigger by returning null, so div() never receives a null/zero value and avoids runtime failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237204402962655976263062CU22",
+      "status": "success",
+      "details": "Updated Compose.inputs to return null when denominator is null or zero and to use coalesce on the denominator within div() to prevent runtime failures.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(coalesce(triggerBody()?['value'], null), null), equals(float(coalesce(triggerBody()?['value'], 0)), 0)), null, div(float(10), float(coalesce(triggerBody()?['value'], 1))))}",
+          "reason": "Guards against null/zero denominators and ensures the div() denominator is safely coerced to a non-null value so the expression won't fail when the trigger value is missing."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237208064525025709134325CU19",
+      "status": "success",
+      "details": "Replaced Compose.inputs with a guarded expression using empty() and zero checks around the denominator to prevent divide-by-zero errors.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(float(coalesce(triggerBody()?['value'], 1))), equals(float(float(coalesce(triggerBody()?['value'], 1))), 0)), null, div(float(10), float(coalesce(triggerBody()?['value'], 1))))}\"",
+          "reason": "Wraps the division with a guard that returns null when the denominator is empty or zero to prevent divide-by-zero."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237208223281784475102443CU17",
+      "status": "success",
+      "details": "Updated the Compose action input to a guarded expression that checks the (computed) denominator and returns 0 if it is zero before performing div.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(equals(coalesce(float(coalesce(triggerBody()?['value'], 1)), 0), 0), 0, div(float(10), float(coalesce(triggerBody()?['value'], 1))))}\"",
+          "reason": "Wraps the division with a guard that returns 0 when the denominator evaluates to 0, preventing division-by-zero runtime errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237208630837803536778235CU27",
+      "status": "success",
+      "details": "No changes required. The Compose action already uses a guarded expression that checks the denominator (coalesced to 0) and returns 0 when it\u2019s zero, preventing division-by-zero errors.",
+      "patches_applied": []
+    },
+    {
+      "run_id": "08584237209020892308280195966CU05",
+      "status": "success",
+      "details": "Updated Compose.inputs to conditionally return 0 when triggerBody()?['value'] is 0 or null, ensuring div() only executes with a valid non-zero denominator.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, div(float(10), float(triggerBody()?['value'])))}\"",
+          "reason": "Adds a guard that returns 0 when the denominator is 0 or null so div() is only evaluated with a non-zero denominator, preventing divide-by-zero errors"
+        }
+      ]
+    },
+    {
+      "run_id": "08584237209441834894682882167CU17",
+      "status": "success",
+      "details": "Updated Compose.inputs to include an explicit guard (coalesce + empty) so division only occurs when the denominator is present and non-zero.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(coalesce(triggerBody()?['value'], 0), 0), empty(triggerBody()?['value'])), 0, div(float(10), float(triggerBody()?['value'])))}",
+          "reason": "Guards against zero or missing denominator by returning 0 when the value is 0/null/empty, preventing divide-by-zero during template evaluation."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237209824240971171411666CU13",
+      "status": "success",
+      "details": "Updated Compose.inputs to guard the div() by numeric-checking the divisor with float(coalesce(...)) and falling back to 0 when the divisor is zero or empty.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(float(coalesce(triggerBody()?['value'], 0)), 0), empty(triggerBody()?['value'])), 0, div(float(10), float(triggerBody()?['value'])))}",
+          "reason": "Casts the divisor to a float before the zero check so '0' (as string) and null are treated as zero, preventing divide-by-zero at runtime."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237210281704192856047226CU08",
+      "status": "success",
+      "details": "Updated the Compose action's inputs to guard against division by zero by checking the denominator with coalesce and equals before performing the division.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(equals(coalesce(triggerBody()?['value'], 0), 0), 0, div(float(10), float(triggerBody()?['value'])))}",
+          "reason": "Adds a guard that returns 0 when the denominator is null or 0, ensuring division only occurs with a non-zero value to prevent divide-by-zero errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237210726958969379888065CU00",
+      "status": "success",
+      "details": "Updated Compose.inputs to a guarded arithmetic pattern that prevents divide-by-zero even with eager evaluation, returning 0 when the denominator is zero or missing.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{mul(div(float(10), if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 1, coalesce(float(triggerBody()?['value']), 0))), if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, 1))}\"",
+          "reason": "Rewrites the expression to avoid divide-by-zero by always dividing by a non-zero denominator and gating the result to 0 when the original denominator is 0 or null."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237211007314231336376158CU26",
+      "status": "success",
+      "details": "Guarded the division in Compose.inputs by wrapping div(N, D) with an if() that checks coalesce(D,0)==0 and returns 0; preserves original numerator and denominator expressions and keeps @{} formatting.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{mul(if(or(equals(coalesce(if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 1, coalesce(float(triggerBody()?['value']), 0)), 0), 0), equals(if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 1, coalesce(float(triggerBody()?['value']), 0)), 0)), 0, div(float(10), if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 1, coalesce(float(triggerBody()?['value']), 0)))), if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, 1))}\"",
+          "reason": "Wraps the div() with a guard that returns 0 when the denominator is 0 or null, preventing division-by-zero errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237214500433696066656034CU00",
+      "status": "success",
+      "details": "Updated Compose.inputs to guard div() with a float-based zero/empty check and return 0 instead of dividing by zero.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{mul(if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, div(float(10), float(triggerBody()?['value']))), if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, 1))}",
+          "reason": "Wraps div() in a zero/empty check using float casting so division is skipped and returns 0 when the denominator is 0 or null, preventing divide-by-zero errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237214658086102416875352CU06",
+      "status": "success",
+      "details": "Updated Compose.inputs to guard the div() call using coalesce/string checks so division only occurs when the denominator is a valid nonzero value.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{mul(if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, if(or(equals(coalesce(float(triggerBody()?['value']), 0), 0), equals(string(coalesce(float(triggerBody()?['value']), '')), '0')), 0, div(float(10), float(triggerBody()?['value'])))), if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, 1))}\"",
+          "reason": "Wraps the div() with a guard that returns 0 when the denominator is 0, null, empty, or '0', preventing divide-by-zero at runtime."
+        }
+      ]
+    },
+    {
+      "run_id": "08584237214805691534568489584CU17",
+      "status": "success",
+      "details": "Updated the Compose action's inputs expression by guarding the div(float(10), float(triggerBody()?['value'])) call with an if(equals(coalesce(...),0),0,div(...)) check to avoid division by zero.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{mul(if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, if(or(equals(coalesce(float(triggerBody()?['value']), 0), 0), equals(string(coalesce(float(triggerBody()?['value']), '')), '0')), 0, if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, div(float(10), float(triggerBody()?['value']))))), if(equals(coalesce(float(triggerBody()?['value']), 0), 0), 0, 1))}",
+          "reason": "Wraps the division with a guard that returns 0 when the denominator is null or 0 to prevent division-by-zero."
+        }
+      ]
+    }
+  ]
+}

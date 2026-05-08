@@ -1,0 +1,58 @@
+{
+  "analysis": [
+    {
+      "run_id": "08584235515210059008513767574CU31",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_JSON",
+      "root_cause": "The Parse_JSON action\u2019s required input \u2018content\u2019 evaluated to null at runtime. The workflow executed Parse_JSON as the first step and attempted to parse a body that was not present (empty or missing from the incoming request) or was referenced via an expression that points to a non-existent path, resulting in a BadRequest.",
+      "fix_plan": "1) Inspect the Parse_JSON action and set inputs.content to the raw request body: \"@triggerBody()\" (or to the correct existing action output if applicable). Avoid referencing properties that may not exist.\n2) Add a guard before Parse_JSON:\n   - Insert a new Condition action named \"Validate_Payload\" with expression \"@not(empty(triggerBody()))\".\n   - On False branch, add a Response action that returns HTTP 400 with a message like \"Request body is required and must be valid JSON.\".\n   - On True branch, place Parse_JSON so it runs only when the payload is present.\n3) Adjust runAfter:\n   - Set Parse_JSON.runAfter to run after \"Validate_Payload\" succeeds (True branch only).\n   - Keep the existing Response (success) action after Parse_JSON as it is, or ensure it runs after Parse_JSON completes.\n4) (Optional but recommended) In the HTTP Request trigger, define a JSON schema that marks required properties. This enforces validation at the trigger and prevents empty payloads from reaching Parse_JSON.\n5) Save and redeploy the workflow, then test with a non-empty JSON body (Content-Type: application/json).",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584235515596745352916628585CU06",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_JSON",
+      "root_cause": "The Parse_JSON action attempted to parse the incoming request body, but its 'content' input evaluated to null because the trigger provided no payload. Since Parse_JSON has no upstream dependency (runAfter is empty), it executed first and received an empty/absent body, causing the action to fail.",
+      "fix_plan": "1) Insert a request-body validation step before Parse_JSON.\n   - Add a new Condition action named 'Validate_Request_Body' as the first action.\n   - Condition expression: @not(empty(triggerBody()))\n2) Route execution based on the condition:\n   - If true (body present): proceed to Parse_JSON.\n     - Update Parse_JSON.runAfter to depend on 'Validate_Request_Body' Succeeded.\n   - If false (body missing): return a 400 response and stop.\n     - Add a new Response action named 'Response_BadRequest' with statusCode 400 and body {\"error\":\"Missing or empty request body\"} in the false branch of the condition.\n3) Keep the existing Response action after Parse_JSON for the success path (no change needed except ensuring it still runs after Parse_JSON).\n4) Optional hardening: If acceptable, set Parse_JSON.content to @coalesce(triggerBody(), json('{}')) to avoid null inputs, but only if an empty object is valid for downstream logic.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584235518391963252998836464CU27",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_JSON",
+      "root_cause": "The Parse_JSON action attempted to parse the incoming request body, but the trigger delivered a null body at runtime. Because the 'content' input evaluated to null (likely @triggerBody()), Parse_JSON failed immediately and the downstream Response action could not run.",
+      "fix_plan": "1) Update the HTTP Request trigger to validate input:\n   - Add a JSON schema on the trigger that reflects the expected request shape and marks required fields. This will cause the workflow to reject empty/missing bodies with a 400 before actions run.\n2) Add a null/empty guard before Parse_JSON:\n   - Insert a Condition action named 'Validate_RequestBody' with expression: @not(empty(triggerBody())).\n   - In the True branch, place the existing Parse_JSON action (content: @triggerBody()) and keep the downstream Response as is.\n   - In the False branch, add a new Response action 'Response_BadRequest' that returns statusCode 400 and a body like {\"error\":\"Request body is required and must be JSON.\"}.\n3) Adjust runAfter:\n   - Configure Parse_JSON to run after 'Validate_RequestBody' succeeded (True branch) only.\n   - Configure 'Response' (the success response) to run after Parse_JSON succeeded.\n4) Optional hardening (if schema cannot be enforced):\n   - If you cannot add a Condition, change Parse_JSON 'content' to @coalesce(triggerBody(), json('{}')) and update downstream logic to handle defaults. Prefer the Condition + 400 response to avoid masking bad input.",
+      "action_type": "update_workflow",
+      "confidence": 0.86
+    },
+    {
+      "run_id": "08584235523229079442760295755CU03",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_JSON",
+      "root_cause": "The Parse_JSON action failed because its 'content' input evaluated to null at run time. With no upstream actions (runAfter is empty), Parse_JSON is effectively reading directly from the trigger; the incoming request had an empty or missing body, so there was nothing to parse.",
+      "fix_plan": "1) Guard against empty requests: Insert a Condition action named 'Validate_Request_Body' before 'Parse_JSON' with expression: @not(empty(triggerBody())).\n2) Wire actions:\n   - Set Parse_JSON.runAfter to { \"Validate_Request_Body\": [\"Succeeded\"] } (true branch only).\n   - In the false branch, add a 'Response_400' action returning statusCode 400 and a body like {\"error\":\"Missing or empty payload\"} and terminate the workflow.\n3) Ensure the content source is correct: Set Parse_JSON.inputs.content to @triggerBody() (or to the intended source if different). Do not allow null.\n4) (Optional hardening) If this is a Request-triggered workflow, define the request trigger schema with required properties so calls without a body are rejected at the trigger layer.",
+      "action_type": "update_workflow",
+      "confidence": 0.78
+    },
+    {
+      "run_id": "08584235543189918541353542147CU30",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_JSON",
+      "root_cause": "The Parse_JSON action attempted to parse the incoming body, but the payload was not valid JSON. The first character of the content was not a '{' or '[', causing an \"unexpected character at start\" error. This indicates the upstream request delivered non-JSON data (e.g., XML/plain text) or included a leading UTF-8 BOM, resulting in malformed input to Parse_JSON.",
+      "fix_plan": "1) Insert a new action before Parse_JSON named Compose_SanitizedBody with expression: replace(trim(string(triggerBody())), decodeUriComponent('%EF%BB%BF'), '').\n2) Insert a Condition action named Condition_IsJson that evaluates: or(startsWith(outputs('Compose_SanitizedBody'), '{'), startsWith(outputs('Compose_SanitizedBody'), '[')).\n3) Move Parse_JSON to the True branch of Condition_IsJson and update its content property to use outputs('Compose_SanitizedBody'). Keep the existing schema as-is.\n4) In the False branch, add a Response action that returns HTTP 400 with a message like \"Invalid payload: expected JSON object/array\" and stop further execution.\n5) Update runAfter so that Parse_JSON runs only after Condition_IsJson succeeds (True branch), and the existing Response action runs after Parse_JSON.\n6) (Optional hardening) Ensure the HTTP/request trigger enforces Content-Type application/json or rejects requests that are not JSON to prevent malformed inputs reaching Parse_JSON.",
+      "action_type": "update_workflow",
+      "confidence": 0.76
+    },
+    {
+      "run_id": "08584236347247813524402062542CU09",
+      "error_type": "Payload Issue",
+      "affected_action": "Parse_JSON",
+      "root_cause": "The Parse_JSON action attempted to parse the request body immediately after the trigger, but the incoming payload was not valid JSON (first character was not { or [), causing an \"unexpected character encountered\" error. This indicates the request body was sent as plain text or another format instead of application/json, or the Parse_JSON content reference points to a string that is not JSON.",
+      "fix_plan": "1) Update workflow to guard against non\u2011JSON requests before parsing:\n   - Insert a Condition action (e.g., Validate_ContentType) before Parse_JSON with expression: contains(toLower(triggerOutputs()['headers']['Content-Type']), 'application/json').\n   - If false, call Response with statusCode = 400 and a message like \"Request body must be valid JSON.\" and terminate the run.\n2) Ensure Parse_JSON is parsing the correct body object:\n   - Set actions.Parse_JSON.inputs.content to the expression: @triggerBody().\n   - Update actions.Parse_JSON.inputs.schema to match the actual JSON structure expected from the caller (define properties and required fields as needed).\n3) Optional (recommended): In the HTTP Request trigger, define a JSON schema so invalid bodies are rejected by the trigger itself and ensure clients send Content-Type: application/json. This reduces the chance of invalid payloads reaching Parse_JSON.",
+      "action_type": "update_workflow",
+      "confidence": 0.7
+    }
+  ]
+}

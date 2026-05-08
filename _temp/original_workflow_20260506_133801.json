@@ -1,0 +1,81 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "$connections": {
+      "defaultValue": {},
+      "type": "Object"
+    }
+  },
+  "triggers": {
+    "When_a_HTTP_request_is_received": {
+      "type": "Request",
+      "kind": "Http",
+      "inputs": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "orderId": {
+              "type": "integer"
+            },
+            "customerName": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "orderId",
+            "customerName",
+            "amount"
+          ]
+        }
+      }
+    }
+  },
+  "actions": {
+    "Parse_JSON": {
+      "type": "ParseJson",
+      "inputs": {
+        "content": "@triggerBody()",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "orderId": {
+              "type": "integer"
+            },
+            "customerName": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "orderId",
+            "customerName",
+            "amount"
+          ]
+        }
+      }
+    },
+    "Response": {
+      "runAfter": {
+        "Parse_JSON": [
+          "Succeeded"
+        ]
+      },
+      "type": "Response",
+      "kind": "Http",
+      "inputs": {
+        "statusCode": 200,
+        "body": {
+          "message": "Order processed successfully",
+          "orderId": "@body('Parse_JSON')?['orderId']",
+          "amount": "@body('Parse_JSON')?['amount']"
+        }
+      }
+    }
+  }
+}

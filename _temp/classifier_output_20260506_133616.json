@@ -1,0 +1,22 @@
+{
+  "classified_errors": [
+    {
+      "run_id": "08584235523229079442760295755CU03",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Parse_JSON action failed with BadRequest because the required 'content' input was null, indicating an invalid or missing payload."
+    },
+    {
+      "run_id": "08584235543189918541353542147CU30",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Parse JSON action failed because the input content was not valid JSON (unexpected character at start), causing dependent actions not to run."
+    },
+    {
+      "run_id": "08584236347247813524402062542CU09",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Parse JSON action failed due to invalid JSON content (unexpected character at the start of the payload)."
+    }
+  ]
+}

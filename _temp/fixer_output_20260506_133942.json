@@ -1,0 +1,43 @@
+{
+  "fix_results": [
+    {
+      "run_id": "08584235523229079442760295755CU03",
+      "status": "success",
+      "details": "Added a null/empty guard to Parse_JSON.inputs.content using an inline expression that defaults to {} when the request body is missing.",
+      "patches_applied": [
+        {
+          "action_name": "Parse_JSON",
+          "property_path": "inputs.content",
+          "new_value": "\"@if(or(equals(triggerBody(), null), equals(string(triggerBody()), '')), json('{}'), triggerBody())\"",
+          "reason": "Defaults to an empty JSON object when the trigger body is null or empty so Parse_JSON never receives a null 'content'."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235543189918541353542147CU30",
+      "status": "success",
+      "details": "Set Parse_JSON.inputs.content to @triggerBody() so the action parses the correct JSON payload.",
+      "patches_applied": [
+        {
+          "action_name": "Parse_JSON",
+          "property_path": "inputs.content",
+          "new_value": "\"@triggerBody()\"",
+          "reason": "Ensures Parse_JSON reads the actual JSON body from the trigger instead of a potentially non-JSON value produced by prior string coercion or fallbacks, preventing the 'unexpected character at start' error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236347247813524402062542CU09",
+      "status": "success",
+      "details": "Wrapped Parse_JSON.inputs.content with a sanitizer that removes UTF-8 BOM and trims leading characters to prevent parsing failures due to unexpected starting character.",
+      "patches_applied": [
+        {
+          "action_name": "Parse_JSON",
+          "property_path": "inputs.content",
+          "new_value": "@{trim(replace(replace(string(triggerBody()), decodeUriComponent('%EF%BB%BF'), ''), '\u000fEFF', ''))}",
+          "reason": "Strips a possible UTF-8 BOM/preamble and leading whitespace so the parsed payload begins with a valid JSON delimiter."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "fix_results": [
+    {
+      "run_id": "08584235438679110147243424328CU13",
+      "status": "success",
+      "details": "Updated Compose.inputs to a safe-parse pattern that trims, removes currency/commas, validates via regex, and only then converts to float (performing the original div(10, value) when valid); defaults to 0 for non-numeric input to prevent runtime failures.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(greater(length(match(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', ''), '^[+-]?(\\\\d+(\\\\.\\\\d+)?|\\\\.\\\\d+)$')), 0), div(float(10), float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', ''))), 0))}\"",
+          "reason": "Sanitizes and validates the value with a numeric regex before conversion; if valid, performs the original 10/value calculation, otherwise returns 0 to avoid float() BadRequest."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235440825010719607675931CU26",
+      "status": "success",
+      "details": "Updated Compose.inputs expression to sanitize and validate the numeric string and to avoid float() on invalid input by using a safe fallback prior to conversion; returns 0 when non-numeric.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(greater(length(match(replace(replace(replace(trim(string(coalesce(triggerBody()?['value'], ''))), ',', ''), '$', ''), ' ', ''), '^[+-]?(\\\\d+(\\\\.\\\\d+)?|\\\\.\\\\d+)$')), 0), div(10, float(if(greater(length(match(replace(replace(replace(trim(string(coalesce(triggerBody()?['value'], ''))), ',', ''), '$', ''), ' ', ''), '^[+-]?(\\\\d+(\\\\.\\\\d+)?|\\\\.\\\\d+)$')), 0), replace(replace(replace(trim(string(coalesce(triggerBody()?['value'], ''))), ',', ''), '$', ''), ' ', ''), '1'))), 0)}\"",
+          "reason": "Sanitizes the input (trim, remove commas, currency symbols, spaces), checks numeric via regex, and only converts to float using a safe fallback to avoid eager evaluation calling float() on non-numeric values, returning 0 when invalid."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235452148932996902736173CU25",
+      "status": "success",
+      "details": "Updated Compose.inputs to a guarded float conversion that handles empty/null/'N/A' and formatted numbers, preventing runtime parse errors.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(triggerBody()?['value']), equals(toLower(trim(string(triggerBody()?['value']))), 'n/a')), 0.0, float(replace(replace(string(triggerBody()?['value']), ',', ''), ' ', '')))}\"",
+          "reason": "Adds a guarded numeric conversion that strips commas/spaces and defaults invalid inputs to 0.0 to prevent float parsing failures."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235454627974168551048695CU09",
+      "status": "success",
+      "details": "Updated the Compose action's inputs expression to a guarded conversion that trims, removes '$' and ',', and returns null for empty or 'N/A' values before applying float().",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(triggerBody()?['value']), equals(toLower(string(triggerBody()?['value'])), 'n/a')), null, float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')))}\"",
+          "reason": "Sanitizes and validates the input (trim, remove commas and dollar signs) and returns null for empty/N/A before calling float, preventing conversion errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235458128827589659884134CU30",
+      "status": "success",
+      "details": "Updated Compose.inputs to use a trimmed/cleaned value and guard against empty or 'n/a', defaulting to 0.0 before applying float()",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(empty(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), equals(toLower(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 'n/a')), 0.0, float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')))}\"",
+          "reason": "Adds a guard that trims and cleans the input and defaults to 0.0 for empty or 'n/a' values so float() is only called on numeric input"
+        }
+      ]
+    },
+    {
+      "run_id": "08584235508324806066851744584CU09",
+      "status": "success",
+      "details": "Updated Compose.inputs to return 1.0 when the cleaned value is missing, 'n/a', or evaluates to zero, ensuring a non-null, non-zero numeric denominator for downstream division.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(empty(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), equals(toLower(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 'n/a'), equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 0)), 1.0, float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')))}",
+          "reason": "Guards against null/'n/a'/zero by returning a safe fallback (1.0) so this value is never null or 0 when used as a denominator, preventing division errors."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235508488204142720171001CU28",
+      "status": "success",
+      "details": "Guarded the Compose expression to prevent divide-by-zero by returning null when the parsed denominator is empty, 'n/a', or zero; otherwise performs the division safely.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(empty(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), equals(toLower(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 'n/a'), equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 0)), null, div(1.0, float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', ''))))}",
+          "reason": "Adds a guard to avoid dividing by zero by checking for empty/non-numeric/zero denominator and returning null when unsafe."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235550034911214716195529CU07",
+      "status": "success",
+      "details": "Patched Compose.inputs to check the cleaned trigger value for null/non-numeric/zero before performing division, preventing div() from receiving a null denominator.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "\"@{if(or(equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), null), equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 0), equals(toLower(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 'n/a')), null, div(1.0, float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', ''))))}\"",
+          "reason": "Adds a guard so div() is only called when the denominator parses to a non-zero float; returns null if the cleaned payload is null, non-numeric, or zero to prevent the runtime error."
+        }
+      ]
+    },
+    {
+      "run_id": "08584235596815960612696824507CU04",
+      "status": "success",
+      "details": "Updated Compose.inputs to coalesce the divisor to 1 when null, avoiding div(..., null) while retaining existing guards.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), null), equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 0), equals(toLower(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 'n/a')), null, div(1.0, coalesce(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 1)))}",
+          "reason": "Wrapping the divisor with coalesce ensures div() never receives a null denominator, preventing the template evaluation failure."
+        }
+      ]
+    },
+    {
+      "run_id": "08584236322056128862689593174CU18",
+      "status": "success",
+      "details": "Patched Compose.inputs to guard the division\u2019s denominator with coalesce(..., 1), ensuring the divisor is never null even when the trigger value is missing.",
+      "patches_applied": [
+        {
+          "action_name": "Compose",
+          "property_path": "inputs",
+          "new_value": "@{if(or(equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), null), equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 0), equals(toLower(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 'n/a')), null, div(1.0, coalesce(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 1)))}",
+          "reason": "Wraps the divisor with coalesce(..., 1) so div() never receives a null second argument, preventing runtime failure."
+        }
+      ]
+    }
+  ]
+}

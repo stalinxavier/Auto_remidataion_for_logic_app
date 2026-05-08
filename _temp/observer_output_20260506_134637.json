@@ -1,0 +1,112 @@
+{
+  "workflow_id": "Logic_Apps_test",
+  "total_failed": 6,
+  "workflow_action_names": [
+    "Parse_JSON",
+    "Response"
+  ],
+  "errors": [
+    {
+      "run_id": "08584235515210059008513767574CU31",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T08:16:04.4730542Z",
+      "end_time": "2026-05-06T08:16:05.3370104Z",
+      "failed_actions": [
+        {
+          "action_name": "Parse_JSON",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Parse_JSON' inputs at line '0' and column '0': 'Required property 'content' expects a value but got null. Path ''.'.",
+          "start_time": "2026-05-06T08:16:05.2793365Z"
+        }
+      ],
+      "timestamp": "2026-05-06T08:16:33.015505+00:00"
+    },
+    {
+      "run_id": "08584235515596745352916628585CU06",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T08:15:25.8046857Z",
+      "end_time": "2026-05-06T08:15:26.0783391Z",
+      "failed_actions": [
+        {
+          "action_name": "Parse_JSON",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Parse_JSON' inputs at line '0' and column '0': 'Required property 'content' expects a value but got null. Path ''.'.",
+          "start_time": "2026-05-06T08:15:25.9648703Z"
+        }
+      ],
+      "timestamp": "2026-05-06T08:16:33.796939+00:00"
+    },
+    {
+      "run_id": "08584235518391963252998836464CU27",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T08:10:46.2829337Z",
+      "end_time": "2026-05-06T08:10:47.0692426Z",
+      "failed_actions": [
+        {
+          "action_name": "Parse_JSON",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Parse_JSON' inputs at line '0' and column '0': 'Required property 'content' expects a value but got null. Path ''.'.",
+          "start_time": "2026-05-06T08:10:47.0213954Z"
+        }
+      ],
+      "timestamp": "2026-05-06T08:16:34.673606+00:00"
+    },
+    {
+      "run_id": "08584235523229079442760295755CU03",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T08:02:42.5712308Z",
+      "end_time": "2026-05-06T08:02:43.030074Z",
+      "failed_actions": [
+        {
+          "action_name": "Parse_JSON",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Parse_JSON' inputs at line '0' and column '0': 'Required property 'content' expects a value but got null. Path ''.'.",
+          "start_time": "2026-05-06T08:02:42.9877354Z"
+        }
+      ],
+      "timestamp": "2026-05-06T08:16:35.360734+00:00"
+    },
+    {
+      "run_id": "08584235543189918541353542147CU30",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T07:29:26.4871209Z",
+      "end_time": "2026-05-06T07:29:26.6312451Z",
+      "failed_actions": [
+        {
+          "action_name": "Parse_JSON",
+          "status_code": "InvalidJSON",
+          "error_message": "The 'content' property of actions of type 'ParseJson' must be valid JSON. The provided value cannot be parsed: 'Unexpected character encountered while parsing value: a. Path '', line 0, position 0.'.",
+          "start_time": "2026-05-06T07:29:26.5784194Z"
+        }
+      ],
+      "timestamp": "2026-05-06T08:16:36.349588+00:00"
+    },
+    {
+      "run_id": "08584236347247813524402062542CU09",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-05T09:09:20.6977114Z",
+      "end_time": "2026-05-05T09:09:20.8512511Z",
+      "failed_actions": [
+        {
+          "action_name": "Parse_JSON",
+          "status_code": "InvalidJSON",
+          "error_message": "The 'content' property of actions of type 'ParseJson' must be valid JSON. The provided value cannot be parsed: 'Unexpected character encountered while parsing value: a. Path '', line 0, position 0.'.",
+          "start_time": "2026-05-05T09:09:20.7861518Z"
+        }
+      ],
+      "timestamp": "2026-05-06T08:16:37.205532+00:00"
+    }
+  ]
+}

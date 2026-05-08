@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-sap-gray-bg text-gray-800 font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
+}
+
+@layer components {
+  .sap-card {
+    @apply bg-white rounded-lg shadow-card border border-gray-100;
+  }
+  .sap-btn-primary {
+    @apply bg-sap-blue text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-sap-blue-dark transition-colors;
+  }
+  .sap-btn-secondary {
+    @apply bg-white text-sap-blue border border-sap-blue px-4 py-2 rounded-md text-sm font-medium hover:bg-sap-blue-light transition-colors;
+  }
+}

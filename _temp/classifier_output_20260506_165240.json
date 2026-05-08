@@ -1,0 +1,64 @@
+{
+  "classified_errors": [
+    {
+      "run_id": "08584235414623865972379898829CU26",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'Compose' action failed because the 'float' function received an invalid parameter that could not be converted."
+    },
+    {
+      "run_id": "08584235416308851849596867504CU13",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Compose' action failed because a value could not be converted to float due to invalid input data."
+    },
+    {
+      "run_id": "08584235438679110147243424328CU13",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'Compose' action failed because a value could not be converted to float due to invalid input data."
+    },
+    {
+      "run_id": "08584235440825010719607675931CU26",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Compose' action failed because a value could not be converted to float due to an invalid input type."
+    },
+    {
+      "run_id": "08584235452148932996902736173CU25",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Compose' action failed because a value could not be converted to float due to an invalid input type."
+    },
+    {
+      "run_id": "08584235454627974168551048695CU09",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'Compose' action failed because a value could not be converted to float, indicating an invalid input payload."
+    },
+    {
+      "run_id": "08584235458128827589659884134CU30",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'Compose' action failed because a value could not be converted to float, indicating an invalid input payload."
+    },
+    {
+      "run_id": "08584235508324806066851744584CU09",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The 'Compose' action failed because the 'div' function received a null value instead of a number."
+    },
+    {
+      "run_id": "08584235508488204142720171001CU28",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The Compose action failed due to a division by zero error in the input expression."
+    },
+    {
+      "run_id": "08584235550034911214716195529CU07",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "The 'Compose' action failed because the 'div' function received a null value instead of a number."
+    }
+  ]
+}

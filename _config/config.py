@@ -35,6 +35,13 @@ class Settings:
     # ARM API version for Logic Apps
     ARM_API_VERSION: str = "2019-05-01"
 
+    # SAP HANA Connection
+    HANA_HOST: str = os.getenv("HANA_HOST", "")
+    HANA_PORT: int = int(os.getenv("HANA_PORT", "443"))
+    HANA_USER: str = os.getenv("HANA_USER", "")
+    HANA_PASSWORD: str = os.getenv("HANA_PASSWORD", "")
+    HANA_SCHEMA: str = os.getenv("HANA_SCHEMA", "CPI_MONITORING")
+
     @classmethod
     def validate(cls) -> list[str]:
         """Return list of missing required env vars."""

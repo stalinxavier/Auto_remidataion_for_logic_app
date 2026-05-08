@@ -1,0 +1,179 @@
+{
+  "workflow_id": "ERROR-FLOW",
+  "total_failed": 10,
+  "workflow_action_names": [
+    "Compose"
+  ],
+  "errors": [
+    {
+      "run_id": "08584235414623865972379898829CU26",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T11:03:43.0926479Z",
+      "end_time": "2026-05-06T11:03:43.4871189Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'The template language function 'float' was invoked with a parameter that is not valid. The value cannot be converted to the target type.'.",
+          "start_time": "2026-05-06T11:03:43.4638696Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:12.698826+00:00"
+    },
+    {
+      "run_id": "08584235416308851849596867504CU13",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T11:00:54.5939441Z",
+      "end_time": "2026-05-06T11:00:55.0743069Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'The template language function 'float' was invoked with a parameter that is not valid. The value cannot be converted to the target type.'.",
+          "start_time": "2026-05-06T11:00:55.0467137Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:13.429343+00:00"
+    },
+    {
+      "run_id": "08584235438679110147243424328CU13",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T10:23:37.5683398Z",
+      "end_time": "2026-05-06T10:23:37.807647Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'The template language function 'float' was invoked with a parameter that is not valid. The value cannot be converted to the target type.'.",
+          "start_time": "2026-05-06T10:23:37.7815406Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:14.338156+00:00"
+    },
+    {
+      "run_id": "08584235440825010719607675931CU26",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T10:20:02.9781535Z",
+      "end_time": "2026-05-06T10:20:04.8139571Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'The template language function 'float' was invoked with a parameter that is not valid. The value cannot be converted to the target type.'.",
+          "start_time": "2026-05-06T10:20:04.7728697Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:15.241617+00:00"
+    },
+    {
+      "run_id": "08584235452148932996902736173CU25",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T10:01:10.5860923Z",
+      "end_time": "2026-05-06T10:01:11.4366902Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'The template language function 'float' was invoked with a parameter that is not valid. The value cannot be converted to the target type.'.",
+          "start_time": "2026-05-06T10:01:11.4112979Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:15.915004+00:00"
+    },
+    {
+      "run_id": "08584235454627974168551048695CU09",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T09:57:02.682057Z",
+      "end_time": "2026-05-06T09:57:03.3429435Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'The template language function 'float' was invoked with a parameter that is not valid. The value cannot be converted to the target type.'.",
+          "start_time": "2026-05-06T09:57:03.3182237Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:16.624797+00:00"
+    },
+    {
+      "run_id": "08584235458128827589659884134CU30",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T09:51:12.5965186Z",
+      "end_time": "2026-05-06T09:51:12.8700449Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'The template language function 'float' was invoked with a parameter that is not valid. The value cannot be converted to the target type.'.",
+          "start_time": "2026-05-06T09:51:12.8468786Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:17.599323+00:00"
+    },
+    {
+      "run_id": "08584235508324806066851744584CU09",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T08:27:32.9982212Z",
+      "end_time": "2026-05-06T08:27:33.7630537Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'The template language function 'div' expects its second parameter to be an integer or a decimal number. The provided value is of type 'Null'. Please see https://aka.ms/logicexpressions#div for usage details.'.",
+          "start_time": "2026-05-06T08:27:33.7238554Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:18.498003+00:00"
+    },
+    {
+      "run_id": "08584235508488204142720171001CU28",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T08:27:16.6583574Z",
+      "end_time": "2026-05-06T08:27:17.2234503Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'Attempt to divide an integral or decimal value by zero in function 'div'.'.",
+          "start_time": "2026-05-06T08:27:17.1618534Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:19.581405+00:00"
+    },
+    {
+      "run_id": "08584235550034911214716195529CU07",
+      "error_message": "An action failed. No dependent actions succeeded.",
+      "error_code": "ActionFailed",
+      "status": "Failed",
+      "start_time": "2026-05-06T07:18:01.9878831Z",
+      "end_time": "2026-05-06T07:18:02.4334541Z",
+      "failed_actions": [
+        {
+          "action_name": "Compose",
+          "status_code": "BadRequest",
+          "error_message": "Unable to process template language expressions in action 'Compose' inputs at line '0' and column '0': 'The template language function 'div' expects its second parameter to be an integer or a decimal number. The provided value is of type 'Null'. Please see https://aka.ms/logicexpressions#div for usage details.'.",
+          "start_time": "2026-05-06T07:18:02.4113639Z"
+        }
+      ],
+      "timestamp": "2026-05-06T11:22:20.431564+00:00"
+    }
+  ]
+}

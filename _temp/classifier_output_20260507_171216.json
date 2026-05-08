@@ -1,0 +1,64 @@
+{
+  "classified_errors": [
+    {
+      "run_id": "08584234550378882107396986370CU04",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function received a null second parameter, resulting in a BadRequest due to invalid input."
+    },
+    {
+      "run_id": "08584234711850912705537825569CU20",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed with BadRequest due to a division-by-zero error in the 'div' expression, causing the workflow to fail."
+    },
+    {
+      "run_id": "08584234780094879687244578165CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed with BadRequest because the 'div' function received a null second parameter instead of a number, causing template evaluation to fail."
+    },
+    {
+      "run_id": "08584234780748705055380067605CU00",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the div() expression received a null second parameter instead of a number, resulting in a BadRequest."
+    },
+    {
+      "run_id": "08584234795257735661358079679CU02",
+      "error_type": "Payload Issue",
+      "severity": "High",
+      "message": "Compose action failed with BadRequest due to a division-by-zero in the 'div' template expression, causing the run to fail."
+    },
+    {
+      "run_id": "08584235385053875997677704523CU23",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed with BadRequest because the 'div' function received a null second parameter instead of a number, causing the template expression to fail."
+    },
+    {
+      "run_id": "08584235385333219480965349639CU20",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "Compose action failed because the 'div' function received a null second parameter instead of a number, indicating an invalid or missing input value."
+    },
+    {
+      "run_id": "08584235386538985829249502586CU01",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the 'div' function received a null second parameter instead of a number, causing a BadRequest and stopping dependent actions."
+    },
+    {
+      "run_id": "08584235414623865972379898829CU26",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed due to an invalid float() conversion because the input value was not numeric, indicating a data type mismatch in the payload."
+    },
+    {
+      "run_id": "08584235416308851849596867504CU13",
+      "error_type": "Payload Issue",
+      "severity": "Medium",
+      "message": "The Compose action failed because the float() function received an invalid value that could not be converted to a number."
+    }
+  ]
+}

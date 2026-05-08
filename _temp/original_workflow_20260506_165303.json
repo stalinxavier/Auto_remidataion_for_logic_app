@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "$connections": {
+      "defaultValue": {},
+      "type": "Object"
+    }
+  },
+  "triggers": {
+    "When_an_HTTP_request_is_received": {
+      "type": "Request",
+      "kind": "Http"
+    }
+  },
+  "actions": {
+    "Compose": {
+      "runAfter": {},
+      "type": "Compose",
+      "inputs": "@{if(or(equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), null), equals(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 0), equals(toLower(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 'n/a')), null, div(1.0, coalesce(float(replace(replace(trim(string(triggerBody()?['value'])), ',', ''), '$', '')), 1)))}"
+    }
+  },
+  "outputs": {}
+}

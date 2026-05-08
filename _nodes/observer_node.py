@@ -75,7 +75,7 @@ def _list_failed_runs(token: str, workflow_name: str) -> list[dict]:
     params = {
         "api-version": settings.ARM_API_VERSION,
         "$filter": "status eq 'Failed'",
-        "$top": "50",
+        "$top": "10",
     }
     resp = requests.get(url, headers={"Authorization": f"Bearer {token}"}, params=params, timeout=30)
     resp.raise_for_status()
